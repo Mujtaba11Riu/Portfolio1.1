@@ -1423,9 +1423,96 @@ nav.scrolled {
 
 
 
+/* ===== CONTACT SECTION BUTTON STYLE ===== */
+
+.contact-item {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.contact-item a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.contact-item .cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 50px;
+    color: #00ffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-item .cert-link:hover {
+    background: rgba(0, 255, 255, 0.2);
+    border-color: #00ffff;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 255, 255, 0.3);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+.contact-item .cert-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 255, 0.2), 
+        transparent);
+    transition: left 0.5s;
+}
+
+.contact-item .cert-link:hover::before {
+    left: 100%;
+}
+
+.contact-item .cert-link h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: inherit;
+    font-weight: 600;
+}
+
+/* Icon spacing */
+.contact-item .cert-link .contact-icon {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-item .cert-link {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+
+
+
+
+
+
+
 
 
 /* ===== FOOTER ===== */
+
+
 .footer {
     background: rgba(0, 0, 0, 0.3);
     padding: 2rem 5%;
@@ -1473,6 +1560,8 @@ nav.scrolled {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
