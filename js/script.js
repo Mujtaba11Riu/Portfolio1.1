@@ -1,97 +1,255 @@
-const laptop = document.querySelector('.laptop');
-const hacker = document.querySelector('.hacker');
-
-
 // ===== TYPING ANIMATION =====
-
-
 const typingTexts = [
-
     "Cyber Security Specialist",
     "Certified Ethical Hacker",
     "Certified Penetration Tester",
     "Web & App Security Tester",
-    "Malware Analyst & Developer ",
-    "Vulnerability Assessment Expert",
+    "Malware Analyst & Developer",
     "Security Researcher"
-
 ];
-
 
 let textIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
 let typingSpeed = 100;
 
+// ===== HERO ANIMATION SWITCH =====
+// Get all animation elements
+const laptop = document.querySelector('.laptop');
+const hackingSimulation = document.querySelector('.hacking-simulation');
+const pentestSimulation = document.querySelector('.pentest-simulation');
+const websecuritySimulation = document.querySelector('.websecurity-simulation');
+const malwareSimulation = document.querySelector('.malware-simulation');
+const researcherSimulation = document.querySelector('.researcher-simulation');
+
+// Binary matrix animation variables
+let clearBinaryAnimation = null;
+
+// Create binary matrix animation function
+function initBinaryMatrix() {
+    const greenMatrix = document.getElementById('green-matrix');
+    const redMatrix = document.getElementById('red-matrix');
+    
+    if (!greenMatrix || !redMatrix) return;
+    
+    // Clear existing cells
+    greenMatrix.innerHTML = '';
+    redMatrix.innerHTML = '';
+    
+    // Create 8x6 grid for both matrices (48 cells)
+    for (let i = 0; i < 48; i++) {
+        const greenCell = document.createElement('div');
+        greenCell.className = 'binary-cell';
+        greenCell.textContent = Math.random() > 0.5 ? '1' : '0';
+        greenMatrix.appendChild(greenCell);
+        
+        const redCell = document.createElement('div');
+        redCell.className = 'binary-cell';
+        redCell.textContent = Math.random() > 0.5 ? '1' : '0';
+        redMatrix.appendChild(redCell);
+    }
+}
+
+// Binary falling animation
+function startBinaryAnimation() {
+    const greenCells = document.querySelectorAll('#green-matrix .binary-cell');
+    const redCells = document.querySelectorAll('#red-matrix .binary-cell');
+    const greenZeros = document.getElementById('green-zeros');
+    const greenOnes = document.getElementById('green-ones');
+    const redZeros = document.getElementById('red-zeros');
+    const redOnes = document.getElementById('red-ones');
+    const dataAnalyzed = document.getElementById('data-analyzed');
+    const patternsFound = document.getElementById('patterns-found');
+    const accuracyRate = document.getElementById('accuracy-rate');
+    const iteration = document.getElementById('iteration');
+    
+    if (!greenCells.length || !redCells.length) return () => {};
+    
+    let iterationCount = 1;
+    
+    // Update counters
+    function updateCounters() {
+        let gZeros = 0, gOnes = 0, rZeros = 0, rOnes = 0;
+        
+        greenCells.forEach(cell => {
+            if (cell.textContent === '0') gZeros++;
+            else gOnes++;
+        });
+        
+        redCells.forEach(cell => {
+            if (cell.textContent === '0') rZeros++;
+            else rOnes++;
+        });
+        
+        if (greenZeros) greenZeros.textContent = gZeros;
+        if (greenOnes) greenOnes.textContent = gOnes;
+        if (redZeros) redZeros.textContent = rZeros;
+        if (redOnes) redOnes.textContent = rOnes;
+        
+        // Update research stats
+        if (dataAnalyzed) dataAnalyzed.textContent = (gZeros + gOnes + rZeros + rOnes) * 10;
+        if (patternsFound) patternsFound.textContent = Math.floor((gOnes + rOnes) / 2);
+        if (accuracyRate) {
+            const accuracy = gOnes + gZeros > 0 ? Math.floor((gOnes / (gOnes + gZeros)) * 100) : 0;
+            accuracyRate.textContent = Math.min(99, accuracy) + '%';
+        }
+        if (iteration) iteration.textContent = iterationCount;
+    }
+    
+    // Random binary fall animation
+    function randomBinaryFall() {
+        // Random green cell falls
+        if (greenCells.length > 0) {
+            const randomGreenIndex = Math.floor(Math.random() * greenCells.length);
+            const greenCell = greenCells[randomGreenIndex];
+            
+            greenCell.textContent = Math.random() > 0.5 ? '1' : '0';
+            greenCell.classList.add('falling');
+            
+            setTimeout(() => {
+                greenCell.classList.remove('falling');
+            }, 1500);
+        }
+        
+        // Random red cell falls
+        if (redCells.length > 0) {
+            const randomRedIndex = Math.floor(Math.random() * redCells.length);
+            const redCell = redCells[randomRedIndex];
+            
+            redCell.textContent = Math.random() > 0.5 ? '1' : '0';
+            redCell.classList.add('falling');
+            
+            setTimeout(() => {
+                redCell.classList.remove('falling');
+            }, 1500);
+        }
+        
+        // Update counters
+        updateCounters();
+        iterationCount++;
+    }
+    
+    // Initial update
+    updateCounters();
+    
+    // Start animation interval
+    const animationInterval = setInterval(randomBinaryFall, 300);
+    
+    // Return cleanup function
+    return () => clearInterval(animationInterval);
+}
 
 function typeText() {
-
     const typingElement = document.querySelector('.typing-text');
     const currentText = typingTexts[textIndex];
 
     // ===== HERO ANIMATION SWITCH =====
+    // Hide all first
+    if (laptop) {
+        laptop.style.display = "block";
+        laptop.style.opacity = "1";
+    }
+    if (hackingSimulation) {
+        hackingSimulation.style.display = "none";
+        hackingSimulation.style.opacity = "0";
+    }
+    if (pentestSimulation) {
+        pentestSimulation.style.display = "none";
+        pentestSimulation.style.opacity = "0";
+    }
+    if (websecuritySimulation) {
+        websecuritySimulation.style.display = "none";
+        websecuritySimulation.style.opacity = "0";
+    }
+    if (malwareSimulation) {
+        malwareSimulation.style.display = "none";
+        malwareSimulation.style.opacity = "0";
+    }
+    if (researcherSimulation) {
+        researcherSimulation.style.display = "none";
+        researcherSimulation.style.opacity = "0";
+        // Clear previous animation if exists
+        if (clearBinaryAnimation) {
+            clearBinaryAnimation();
+            clearBinaryAnimation = null;
+        }
+    }
 
-if (currentText === "Certified Ethical Hacker") {
-    if (laptop) laptop.style.display = "none";
-    if (hacker) hacker.style.display = "flex";
-} else {
-    if (laptop) laptop.style.display = "block";
-    if (hacker) hacker.style.display = "none";
-}
+    // Show specific animation based on text
+    if (currentText === "Certified Ethical Hacker") {
+        if (laptop) laptop.style.display = "none";
+        if (hackingSimulation) {
+            hackingSimulation.style.display = "flex";
+            hackingSimulation.style.opacity = "1";
+        }
+    } 
+    else if (currentText === "Certified Penetration Tester") {
+        if (laptop) laptop.style.display = "none";
+        if (pentestSimulation) {
+            pentestSimulation.style.display = "flex";
+            pentestSimulation.style.opacity = "1";
+        }
+    }
+    else if (currentText === "Web & App Security Tester") {
+        if (laptop) laptop.style.display = "none";
+        if (websecuritySimulation) {
+            websecuritySimulation.style.display = "flex";
+            websecuritySimulation.style.opacity = "1";
+        }
+    }
+    else if (currentText === "Malware Analyst & Developer") {
+        if (laptop) laptop.style.display = "none";
+        if (malwareSimulation) {
+            malwareSimulation.style.display = "flex";
+            malwareSimulation.style.opacity = "1";
+        }
+    }
+    else if (currentText === "Security Researcher") {
+        if (laptop) laptop.style.display = "none";
+        if (researcherSimulation) {
+            researcherSimulation.style.display = "flex";
+            researcherSimulation.style.opacity = "1";
+            // Initialize and start binary matrix animation
+            setTimeout(() => {
+                initBinaryMatrix();
+                clearBinaryAnimation = startBinaryAnimation();
+            }, 100);
+        }
+    }
+    // For "Cyber Security Specialist" and others, laptop will show
 
-    
+    // Typing logic
     if (isDeleting) {
         typingElement.textContent = currentText.substring(0, charIndex - 1);
         charIndex--;
-        typingSpeed = 100;
+        typingSpeed = 50; // Faster deleting
     } else {
         typingElement.textContent = currentText.substring(0, charIndex + 1);
         charIndex++;
-        typingSpeed = 100;
+        typingSpeed = 100; // Normal typing speed
     }
     
+    // When text is complete, wait then start deleting
     if (!isDeleting && charIndex === currentText.length) {
         isDeleting = true;
-        typingSpeed = 2000; // Wait before deleting
-    }
-    
-    
+        typingSpeed = 1500; // Wait 1.5 seconds before deleting
+    } 
+    // When text is deleted, move to next text
     else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         textIndex = (textIndex + 1) % typingTexts.length;
-        typingSpeed = 300; // Wait before typing next
+        typingSpeed = 500; // Wait 0.5 seconds before typing next
     }
     
     setTimeout(typeText, typingSpeed);
 }
 
 // Start typing animation when page loads
-
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(typeText, 1000);
 });
 
-
-// ===== NAVBAR SCROLL EFFECT =====
-
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
-
 // ===== SMOOTH SCROLL FOR NAVIGATION LINKS =====
-
-
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -107,228 +265,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== SCROLL REVEAL ANIMATION =====
-
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Elements to animate on scroll
-
-
-window.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll(
-        '.timeline-item, .cert-card, .project-card, .expertise-item, .achievement-card, .skill-card, .experience-card'
-    );
-    
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
-    });
-});
-
-// ===== ACTIVE NAVIGATION LINK =====
-
-const sections = document.querySelectorAll('section[id]');
-
-function highlightNavigation() {
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-
-        const link = document.querySelector(
-            '.sidebar-menu a[href*="' + sectionId + '"]'
-        );
-
-        if (link) {
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        }
-    });
-}
-
-window.addEventListener('scroll', highlightNavigation);
-
-// ===== SKILL BARS ANIMATION =====
-
-
-function animateSkillBars() {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    skillBars.forEach(bar => {
-        const width = bar.style.width;
-        bar.style.width = '0%';
-        
-        setTimeout(() => {
-            bar.style.width = width;
-        }, 200);
-    });
-}
-
-// Observe skills section
-
-
-const skillsSection = document.querySelector('#skills');
-if (skillsSection) {
-    const skillsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateSkillBars();
-                skillsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    skillsObserver.observe(skillsSection);
-}
-
-// ===== FORM VALIDATION =====
-
-
-const contactForm = document.querySelector('.contact-form');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        
-        if (!name || !email || !message) {
-            alert('Please fill in all fields');
-            return;
-        }
-        
-        if (!isValidEmail(email)) {
-            alert('Please enter a valid email address');
-            return;
-        }
-        
-        // Success message
-
-        alert('Thank you for your message! I will get back to you soon.');
-        contactForm.reset();
-    });
-}
-
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// ===== BACK TO TOP BUTTON =====
-
-const backToTopButton = document.createElement('button');
-backToTopButton.innerHTML = '↑';
-backToTopButton.className = 'back-to-top';
-backToTopButton.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(45deg, #00ffff, #00ff88);
-    color: #0a0e27;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-    z-index: 999;
-    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
-`;
-
-document.body.appendChild(backToTopButton);
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopButton.style.opacity = '1';
-        backToTopButton.style.visibility = 'visible';
-    } else {
-        backToTopButton.style.opacity = '0';
-        backToTopButton.style.visibility = 'hidden';
-    }
-});
-
-backToTopButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// ===== CURSOR TRAIL EFFECT (Optional) =====
-
-
-const cursorDot = document.createElement('div');
-cursorDot.className = 'cursor-dot';
-cursorDot.style.cssText = `
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: #00ffff;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-`;
-
-document.body.appendChild(cursorDot);
-
-let mouseX = 0;
-let mouseY = 0;
-let dotX = 0;
-let dotY = 0;
-
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-function animateCursor() {
-    dotX += (mouseX - dotX) * 0.15;
-    dotY += (mouseY - dotY) * 0.15;
-    
-    cursorDot.style.left = dotX + 'px';
-    cursorDot.style.top = dotY + 'px';
-    
-    requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
-
-
-
-
-
-
 // ===== CONSOLE MESSAGE =====
-
 console.log('%c🔐 Welcome to My Portfolio!', 'color: #00ffff; font-size: 20px; font-weight: bold;');
 console.log('%cInterested in cybersecurity? Let\'s connect!', 'color: #00ff88; font-size: 14px;');
-console.log('%cGitHub: https://github.com/Mujtaba11Riu', 'color: #fff; font-size: 12px;');
+
+
 
 
