@@ -450,8 +450,8 @@ body {
 
 /* Hero Content Styling */
 .hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
     background: linear-gradient(45deg, #00ffff, #00ff88, #00ffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -465,17 +465,17 @@ body {
 }
 
 .hero h2 {
-    font-size: 2rem;
+     font-size: 1.3rem;
     color: #aaa;
-    margin-bottom: 2rem;
-    min-height: 60px;
+    margin-bottom: 1rem;
+    min-height: 40px;
 }
 
 .hero-description p {
-    font-size: 1.2rem;
+     font-size: 1rem;
     color: #ccc;
-    margin-bottom: 3rem;
-    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
 
 .cta-buttons {
@@ -485,10 +485,10 @@ body {
 }
 
 .btn {
-    padding: 1rem 2.5rem;
+     padding: 0.6rem 1.5rem;
     border: none;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.3s;
     text-decoration: none;
