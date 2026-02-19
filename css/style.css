@@ -107,40 +107,45 @@ body {
 }
 
 /* ===== DRAWER NAVIGATION ===== */
+
 .drawer-icons {
     position: fixed;
-    left: 20px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 9999;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
 }
 
 .nav-pill {
-    width: 52px;
-    height: 52px;
+    width: 42px;
+    height: 42px;
     background: rgba(20, 30, 60, 0.9);
     border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 50px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     overflow: hidden;
     text-decoration: none;
     transition: width 0.35s ease, box-shadow 0.35s ease;
 }
 
 .nav-pill .icon {
-    min-width: 52px;
-    height: 52px;
+    min-width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: #aaa;
 }
+
+
+
+
 
 .nav-pill .text {
     white-space: nowrap;
@@ -3283,36 +3288,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ===== SECTION TITLES ===== */
 .section-title {
     font-size: 3rem;
@@ -3380,110 +3355,116 @@ body {
     border-color: #00ffff;
     box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
 }
-
 .expertise-item .icon {
-    font-size: 3rem;
-    display: block;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    min-width: 30px;
 }
 
 .expertise-item h4 {
-    font-size: 1.3rem;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
     color: #00ffff;
-    margin-bottom: 0.5rem;
+    display: inline;
 }
 
-.expertise-item p {
-    color: #aaa;
-    font-size: 0.95rem;
-}
+
 
 /* ===== EDUCATION SECTION ===== */
 .education {
-    padding: 50px 5%;
+    padding: 30px 5%;
 }
 
 .timeline {
     position: relative;
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .timeline::before {
     content: '';
     position: absolute;
-    left: 30px;
+    left: 50%;
     top: 0;
     bottom: 0;
     width: 2px;
     background: linear-gradient(180deg, #00ffff, #00ff88);
+    transform: translateX(-50%);
+    z-index: 0;
 }
 
 .timeline-item {
     position: relative;
-    padding-left: 80px;
+    width: 44%;
     margin-bottom: 20px;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 56%;
+}
+
+.timeline-item:nth-child(even) {
+    left: 0%;
 }
 
 .timeline-dot {
     position: absolute;
-    left: 20px;
-    top: 0;
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     background: #00ffff;
     border-radius: 50%;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    top: 10px;
+    z-index: 1;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+    left: -48px;
+    transform: translateX(-50%);
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+    right: -48px;
+    transform: translateX(50%);
 }
 
 .timeline-content {
     background: rgba(0, 255, 255, 0.05);
-    padding: 1rem 1.5rem;
-    border-radius: 15px;
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
 }
 
 .timeline-content:hover {
-    transform: translateX(10px);
     border-color: #00ffff;
     box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
 }
 
-
-
-
-
-
-
 .timeline-content h3 {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: #00ffff;
-    margin-bottom: 0.3rem;
-}
-
-.timeline-content h4 {
-    font-size: 0.95rem;
-    color: #00ff88;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.1rem;
+    line-height: 1.4;
 }
 
 .timeline-content .year {
     display: inline-block;
     background: rgba(0, 255, 255, 0.2);
-    padding: 0.2rem 0.8rem;
+    padding: 0.1rem 0.6rem;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #00ffff;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
 }
 
 .timeline-content p {
     color: #ccc;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
+    margin: 0;
 }
-
 /* ===== CERTIFICATIONS SECTION ===== */
 .certifications {
     padding: 100px 5%;
