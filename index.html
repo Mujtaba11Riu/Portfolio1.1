@@ -1175,177 +1175,161 @@
 
 
 
-
-    <!-- Experience Section -->
-
-    <!-- Skills Section -->
-
-
-
     <section id="skills" class="skills">
         <div class="container">
             <h2 class="section-title">Professional Experience & Skills</h2>
-
-            <section id="experience" class="experience">
-                <div class="container">
-
-                    <div class="experience-grid">
-                        <div class="experience-card">
-                            <div class="experience-header">
-                                <h3>DevSecOps Intern</h3>
-                                <span class="duration">Currently Working</span>
-                            </div>
-                            <h4>PHI Consulting</h4>
-                            <p>Working on DevSecOps practices, security automation, and continuous
-                                integration/deployment
-                                pipelines</p>
-                        </div>
-                        <!-- 
-                        <div class="experience-card">
-                            <div class="experience-header">
-                                <h3>Visiting Manager</h3>
-                                <span class="duration">Weekend Operations</span>
-                            </div>
-                            <h4>Khoraak Khaana | F10 Markaz Islamabad</h4>
-                            <p>Responsible for weekend operations management (Saturday & Sunday)</p>
-                        </div> -->
-
-                        <!-- <div class="experience-card">
-                            <div class="experience-header">
-                                <h3>Cashier & Manager</h3>
-                                <span class="duration">2 Years</span>
-                            </div>
-                            <h4>ZAMO Shawarma | F10 Markaz Islamabad</h4>
-                            <p>Managed daily operations, customer service, and financial transactions</p>
-                        </div> -->
-
-                        <div class="experience-card">
-                            <div class="experience-header">
-                                <h3>Data Entry Operator</h3>
-                                <span class="duration">1.5 Year</span>
-                            </div>
-                            <h4>Torcia Academy | 6th Road</h4>
-                            <p>Data management, record keeping, and administrative support</p>
-                        </div>
-
-                        <!-- <div class="experience-card">
-                            <div class="experience-header">
-                                <h3>All-Rounder</h3>
-                                <span class="duration">1 Year</span>
-                            </div>
-                            <h4>Astore Inn Hotel & Restaurant | Gilgit Baltistan</h4>
-                            <p>Multi-role position handling various operational responsibilities</p>
-                        </div> -->
-
-                        <div class="experience-card">
-                            <div class="experience-header">
-                                <h3>Data Entry Operator</h3>
-                                <span class="duration">8 Months</span>
-                            </div>
-                            <h4>Ropani Foundation</h4>
-                            <p>Data processing and documentation management</p>
-                        </div>
-                    </div>
+            <div class="proj-carousel">
+                <div class="projects-grid" id="expGrid"></div>
+                <div class="cert-nav">
+                    <button class="cert-btn" id="expPrevBtn">
+                        <span class="arrow" style="transform:rotate(180deg)">➜</span> Prev
+                    </button>
+                    <div class="cert-dots" id="expDots"></div>
+                    <button class="cert-btn" id="expNextBtn">
+                        Next <span class="arrow">➜</span>
+                    </button>
                 </div>
-            </section>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const experiences = [
+            { icon: '💼', title: 'DevSecOps Intern', org: 'PHI Consulting', duration: 'Currently Working', desc: 'Working on DevSecOps practices, security automation, and CI/CD pipelines.' },
+            { icon: '🖥️', title: 'Data Entry Operator', org: 'Torcia Academy | 6th Road', duration: '1.5 Year', desc: 'Data management, record keeping, and administrative support.' },
+            { icon: '📋', title: 'Data Entry Operator', org: 'Ropani Foundation', duration: '8 Months', desc: 'Data processing and documentation management.' },
+        ];
+
+        const expPerPage = 6;
+        let expCurrent = 0;
+        const expTotalPages = Math.ceil(experiences.length / expPerPage);
+
+        function renderExp() {
+            const grid = document.getElementById('expGrid');
+            const dots = document.getElementById('expDots');
+            const start = expCurrent * expPerPage;
+            const slice = experiences.slice(start, start + expPerPage);
+
+            grid.innerHTML = slice.map(e => `
+        <div class="project-card">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">${e.icon}</div>
+            <h3>${e.title}</h3>
+            <p style="color:#00ff88; font-size:0.72rem; margin-bottom:0.3rem;">${e.org}</p>
+            <span style="background:rgba(0,255,255,0.2); padding:0.15rem 0.5rem; border-radius:10px; font-size:0.65rem; color:#00ffff; margin-bottom:0.5rem; display:inline-block;">${e.duration}</span>
+            <p style="margin-bottom:0.8rem;">${e.desc}</p>
+        </div>
+    `).join('');
+
+            dots.innerHTML = Array.from({ length: expTotalPages }, (_, i) =>
+                `<div class="cert-dot ${i === expCurrent ? 'active' : ''}" onclick="expGoTo(${i})"></div>`
+            ).join('');
+        }
+
+        function expGoTo(page) { expCurrent = page; renderExp(); }
+
+        document.getElementById('expNextBtn').onclick = () => {
+            if (expCurrent < expTotalPages - 1) { expCurrent++; renderExp(); }
+        };
+        document.getElementById('expPrevBtn').onclick = () => {
+            if (expCurrent > 0) { expCurrent--; renderExp(); }
+        };
+
+        renderExp();
+    </script>
 
 
 
 
 
 
-
-
-
-
-            <div class="skills-category">
-                <h3>Technical Skills</h3>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Penetration Testing</span>
-                            <span class="skill-percentage">85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Ethical Hacking</span>
-                            <span class="skill-percentage">90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 90%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Network Security</span>
-                            <span class="skill-percentage">80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 80%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Linux System Administration</span>
-                            <span class="skill-percentage">75%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Web Application Testing</span>
-                            <span class="skill-percentage">85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Programming (C++, Java, Python)</span>
-                            <span class="skill-percentage">70%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 70%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">Bug Bounty Hunting</span>
-                            <span class="skill-percentage">75%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">CTF Competitions</span>
-                            <span class="skill-percentage">80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 80%"></div>
-                        </div>
-                    </div>
-
+    <div class="skills-category">
+        <h3>Technical Skills</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Penetration Testing</span>
+                    <span class="skill-percentage">85%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 85%"></div>
                 </div>
             </div>
 
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Ethical Hacking</span>
+                    <span class="skill-percentage">90%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 90%"></div>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Network Security</span>
+                    <span class="skill-percentage">80%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 80%"></div>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Linux System Administration</span>
+                    <span class="skill-percentage">75%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Web Application Testing</span>
+                    <span class="skill-percentage">85%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 85%"></div>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Programming (C++, Java, Python)</span>
+                    <span class="skill-percentage">70%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 70%"></div>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">Bug Bounty Hunting</span>
+                    <span class="skill-percentage">75%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-info">
+                    <span class="skill-name">CTF Competitions</span>
+                    <span class="skill-percentage">80%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 80%"></div>
+                </div>
+            </div>
 
         </div>
+    </div>
+
+
+    </div>
     </section>
 
 
