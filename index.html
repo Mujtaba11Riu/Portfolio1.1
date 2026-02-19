@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syed Mujtaba Zaidi | Cybersecurity Portfolio</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>emailjs.init("AndsvpB-Uk0sALIFx");</script>
 
 </head>
 
@@ -1242,187 +1244,195 @@
 
 
 
-    <div class="skills-category">
-        <h3>Technical Skills</h3>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Penetration Testing</span>
-                    <span class="skill-percentage">85%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 85%"></div>
+
+
+
+
+    <section id="technical-skills" class="skills" style="padding: 40px 5%;">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="proj-carousel">
+                <div class="projects-grid" id="skillsGrid"></div>
+                <div class="cert-nav">
+                    <button class="cert-btn" id="skillPrevBtn">
+                        <span class="arrow" style="transform:rotate(180deg)">➜</span> Prev
+                    </button>
+                    <div class="cert-dots" id="skillDots"></div>
+                    <button class="cert-btn" id="skillNextBtn">
+                        Next <span class="arrow">➜</span>
+                    </button>
                 </div>
             </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Ethical Hacking</span>
-                    <span class="skill-percentage">90%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 90%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Network Security</span>
-                    <span class="skill-percentage">80%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 80%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Linux System Administration</span>
-                    <span class="skill-percentage">75%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 75%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Web Application Testing</span>
-                    <span class="skill-percentage">85%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 85%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Programming (C++, Java, Python)</span>
-                    <span class="skill-percentage">70%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 70%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">Bug Bounty Hunting</span>
-                    <span class="skill-percentage">75%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 75%"></div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">CTF Competitions</span>
-                    <span class="skill-percentage">80%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" style="width: 80%"></div>
-                </div>
-            </div>
-
         </div>
-    </div>
-
-
-    </div>
     </section>
 
+    <script>
+        const skills = [
+            { icon: '🔐', name: 'Penetration Testing', percent: 85 },
+            { icon: '⚔️', name: 'Ethical Hacking', percent: 90 },
+            { icon: '🌐', name: 'Network Security', percent: 80 },
+            { icon: '🐧', name: 'Linux System Administration', percent: 75 },
+            { icon: '🕸️', name: 'Web Application Testing', percent: 85 },
+            { icon: '💻', name: 'Programming (C++, Java, Python)', percent: 70 },
+            { icon: '🐛', name: 'Bug Bounty Hunting', percent: 75 },
+            { icon: '🚩', name: 'CTF Competitions', percent: 80 },
+        ];
+
+        const skillPerPage = 6;
+        let skillCurrent = 0;
+        const skillTotalPages = Math.ceil(skills.length / skillPerPage);
+
+        function renderSkills() {
+            const grid = document.getElementById('skillsGrid');
+            const dots = document.getElementById('skillDots');
+            const start = skillCurrent * skillPerPage;
+            const slice = skills.slice(start, start + skillPerPage);
+
+            grid.innerHTML = slice.map(s => `
+        <div class="project-card">
+            <div style="font-size:1.8rem; margin-bottom:0.5rem;">${s.icon}</div>
+            <h3 style="margin-bottom:0.6rem;">${s.name}</h3>
+            <div style="width:100%; height:6px; background:rgba(0,255,255,0.1); border-radius:10px; overflow:hidden; margin-bottom:0.3rem;">
+                <div style="width:${s.percent}%; height:100%; background:linear-gradient(90deg,#00ffff,#00ff88); border-radius:10px; box-shadow:0 0 8px rgba(0,255,255,0.4);"></div>
+            </div>
+            <p style="color:#00ffff; font-size:0.72rem; text-align:right;">${s.percent}%</p>
+        </div>
+    `).join('');
+
+            dots.innerHTML = Array.from({ length: skillTotalPages }, (_, i) =>
+                `<div class="cert-dot ${i === skillCurrent ? 'active' : ''}" onclick="skillGoTo(${i})"></div>`
+            ).join('');
+        }
+
+        function skillGoTo(page) { skillCurrent = page; renderSkills(); }
+
+        document.getElementById('skillNextBtn').onclick = () => {
+            if (skillCurrent < skillTotalPages - 1) { skillCurrent++; renderSkills(); }
+        };
+        document.getElementById('skillPrevBtn').onclick = () => {
+            if (skillCurrent > 0) { skillCurrent--; renderSkills(); }
+        };
+
+        renderSkills();
+    </script>
 
 
 
 
-    <!-- Contact Section -->
 
 
 
-    <!-- new changes  -->
+
+
 
 
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
+            <div class="proj-carousel">
+                <div
+                    style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; max-width:900px; margin:0 auto;">
 
-            <div class="contact-content">
-                <div class="contact-info">
-
-
-                    <!-- HTML mein yeh changes karein -->
-                    <div class="contact-item">
-                        <div class="contact-icon">💼</div>
-                        <a href="https://www.linkedin.com/in/syedmujtaba773/" target="_blank" class="contact-btn">
-                            <h3>LinkedIn</h3>
-                        </a>
+                    <div class="project-card" style="align-items:center; text-align:center;">
+                        <div style="font-size:2rem; margin-bottom:0.5rem;">💼</div>
+                        <h3 style="margin-bottom:0.3rem;">LinkedIn</h3>
+                        <p style="margin-bottom:0.8rem; font-size:0.68rem;">syedmujtaba773</p>
+                        <a href="https://www.linkedin.com/in/syedmujtaba773/" target="_blank" class="cert-link">Connect
+                            →</a>
                     </div>
 
-                    <div class="contact-item">
-                        <div class="contact-icon">🐙</div>
-                        <a href="https://github.com/Mujtaba11Riu" target="_blank" class="contact-btn">
-                            <h3>GitHub</h3>
-                        </a>
+                    <div class="project-card" style="align-items:center; text-align:center;">
+                        <div style="font-size:2rem; margin-bottom:0.5rem;">🐙</div>
+                        <h3 style="margin-bottom:0.3rem;">GitHub</h3>
+                        <p style="margin-bottom:0.8rem; font-size:0.68rem;">Mujtaba11Riu</p>
+                        <a href="https://github.com/Mujtaba11Riu" target="_blank" class="cert-link">Connect →</a>
                     </div>
 
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <a href="mailto:syedmujtaba773@gmail.com" target="_blank" class="contact-btn">
-                            <h3>Email</h3>
-                        </a>
+                    <div class="project-card" style="align-items:center; text-align:center;">
+                        <div style="font-size:2rem; margin-bottom:0.5rem;">📧</div>
+                        <h3 style="margin-bottom:0.3rem;">Email</h3>
+                        <p style="margin-bottom:0.8rem; font-size:0.68rem;">syedmujtaba773@gmail.com</p>
+                        <a href="mailto:syedmujtaba773@gmail.com" class="cert-link">Connect →</a>
                     </div>
 
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <a href="https://wa.me/923118334874" target="_blank" class="contact-btn">
-                            <h3>WhatsApp</h3>
-                        </a>
-                    </div>
-
-
-                </div>
-
-
-
-
-                <div class="contact-form-container">
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="Your Name" required>
+                    <!-- Form -->
+                    <div class="project-card" style="grid-column: 1 / -1;">
+                        <h3 style="color:#00ffff; margin-bottom:1rem; font-size:0.9rem;">Send a Message</h3>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-bottom:0.8rem;">
+                            <input type="text" id="contactName" placeholder="Your Name"
+                                style="padding:0.6rem 1rem; background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.2); border-radius:8px; color:#fff; font-size:0.8rem; outline:none;">
+                            <input type="email" id="contactEmail" placeholder="Your Email"
+                                style="padding:0.6rem 1rem; background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.2); border-radius:8px; color:#fff; font-size:0.8rem; outline:none;">
                         </div>
-                        <div class="form-group">
-                            <input type="email" id="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
+                        <textarea id="contactMessage" rows="4" placeholder="Your Message"
+                            style="width:100%; padding:0.6rem 1rem; background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.2); border-radius:8px; color:#fff; font-size:0.8rem; outline:none; resize:vertical; font-family:inherit; margin-bottom:0.8rem;"></textarea>
+                        <button onclick="sendEmail()" id="sendBtn" class="cert-link"
+                            style="border:none; cursor:pointer; width:100%; justify-content:center; padding:0.6rem;">Send
+                            Message →</button>
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("AndsvpB-Uk0sALIFx");
+
+        function sendEmail() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            if (!name || !email || !message) {
+                alert('Sab fields bharein!');
+                return;
+            }
+
+            document.getElementById('sendBtn').innerText = 'Sending...';
+
+            emailjs.send('service_h82udlq', 'template_hmztzpc', {
+                from_name: name,
+                from_email: email,
+                message: message,
+            }).then(() => {
+                document.getElementById('sendBtn').innerText = 'Message Sent ✅';
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactEmail').value = '';
+                document.getElementById('contactMessage').value = '';
+                setTimeout(() => {
+                    document.getElementById('sendBtn').innerText = 'Send Message →';
+                }, 3000);
+            }).catch((err) => {
+                console.error(err);
+                document.getElementById('sendBtn').innerText = 'Failed ❌ Try Again';
+                setTimeout(() => {
+                    document.getElementById('sendBtn').innerText = 'Send Message →';
+                }, 3000);
+            });
+        }
+    </script>
 
 
 
-    <!-- Footer -->
 
 
 
-    <footer class="footer">
-        <div class="container">
+<footer class="footer">
+    <div class="container">
+        <button class="btn btn-primary" style="font-family: monospace; letter-spacing: 1px;">
+            &copy; 2025 Syed Mujtaba Zaidi | Professional Hacker Portfolio
+        </button>
+        <br><br>
+        <button class="btn btn-primary" style="font-family: monospace; letter-spacing: 3px; background: transparent; border: 2px solid #00ffff; color: #00ffff;">
+            [ H4X0R S1NC3 2O21 ]
+        </button>
+        <br><br>
+        
+    </div>
+</footer>
 
-            <button class="btn btn-primary">&copy; 2025 Syed Mujtaba Zaidi | Professional Hacker Portfolio </button>
-            <br><br>
-
-            <button class="btn btn-primary">H4X0R S1NC3 2O21 </button>
-
-        </div>
-    </footer>
-
-    <script src="js/script.js"></script>
+<script src="js/script.js"></script>
 </body>
-
 </html>
