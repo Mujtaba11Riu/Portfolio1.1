@@ -3317,7 +3317,7 @@ body {
 .section-title {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 3rem;
+    /* margin-bottom: 1rem; */
     background: linear-gradient(45deg, #00ffff, #00ff88);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3343,9 +3343,10 @@ body {
 
 
 .about-text h3 {
-    font-size: 1.3rem;
+   font-size: 1.3rem;
     color: #00ffff;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.2rem;
+
 }
 
 .about-text p {
