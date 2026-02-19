@@ -3290,7 +3290,7 @@ body {
 
 /* ===== SECTION TITLES ===== */
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
     /* margin-bottom: 1rem; */
     background: linear-gradient(45deg, #00ffff, #00ff88);
@@ -3492,207 +3492,305 @@ body {
 
 
 /* ===== CERTIFICATIONS SECTION ===== */
+
+
 .certifications {
-    padding: 100px 5%;
-    background: rgba(255, 255, 255, 0.02);
+    padding: 20px 5%;
+}
+
+.cert-carousel {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .cert-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
 }
 
-.cert-card {
+.cert-item {
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    background: rgba(0, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    text-align: center;
+    align-items: center;
+    gap: 0.4rem;
     transition: all 0.3s;
 }
 
-.cert-card:hover {
-    transform: translateY(-10px);
+.cert-item:hover {
     border-color: #00ffff;
-    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
+    transform: translateY(-3px);
 }
 
-.cert-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+.cert-item .cert-icon {
+    font-size: 1.8rem;
 }
 
-.cert-card h3 {
-    font-size: 1.3rem;
+.cert-item h4 {
+    font-size: 0.82rem;
     color: #00ffff;
-    margin-bottom: 0.5rem;
+    margin: 0;
+    line-height: 1.3;
 }
 
-.cert-card p {
+.cert-item p {
+    font-size: 0.72rem;
     color: #aaa;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin: 0;
 }
 
-.cert-link {
-    margin-top: auto;
-    align-self: center;
-    display: inline-block;
-    padding: 0.7rem 1.5rem;
-    background: transparent;
-    border: 2px solid #00ffff;
+.cert-item a {
+    font-size: 0.72rem;
     color: #00ffff;
     text-decoration: none;
-    border-radius: 25px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    transition: all 0.3s;
+    margin-top: 0.2rem;
+    background: rgba(0, 255, 255, 0.1);
+}
+.cert-item a:hover {
+    background: linear-gradient(135deg, #00ffff, #00ff88);
+    color: #0a0e27;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    transform: translateY(-2px);
+    border-color: transparent;
+}
+.cert-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.8rem;
+}
+
+.cert-btn {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    color: #00ffff;
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cert-btn:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.cert-btn .arrow {
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.cert-btn:hover .arrow {
+    transform: translateX(5px);
+}
+
+.cert-dots {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.cert-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.3);
+    cursor: pointer;
     transition: all 0.3s;
 }
 
-.cert-link:hover {
+.cert-dot.active {
     background: #00ffff;
-    color: #0a0e27;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
 }
 
+
+
+
 /* ===== PROJECTS SECTION ===== */
+
+
 .projects {
-    padding: 100px 5%;
+    padding: 40px 5%;
+}
+
+.proj-carousel {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .project-card {
     display: flex;
     flex-direction: column;
     background: rgba(0, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
+    padding: 1rem;
+    border-radius: 10px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-3px);
     border-color: #00ffff;
-    box-shadow: 0 15px 40px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
 }
 
 .project-card h3 {
-    font-size: 1.5rem;
+    font-size: 0.82rem;
     color: #00ffff;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
 }
 
 .project-card p {
     color: #ccc;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    font-size: 0.72rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
 }
 
 .project-tags {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.3rem;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.6rem;
 }
 
 .project-tags span {
     background: rgba(0, 255, 255, 0.2);
-    padding: 0.3rem 1rem;
-    border-radius: 15px;
-    font-size: 0.85rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.65rem;
     color: #00ffff;
 }
 
+.cert-link {
+    margin-top: auto;
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    color: #00ffff;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.cert-link:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+.cert-link:hover {
+    background: linear-gradient(135deg, #00ffff, #00ff88);
+    color: #0a0e27;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    transform: translateY(-2px);
+    border-color: transparent;
+}
+
+
+
+
+
+
 /* ===== ACHIEVEMENTS SECTION ===== */
 .achievements {
-    padding: 100px 5%;
+    padding: 40px 5%;
     background: rgba(255, 255, 255, 0.02);
 }
 
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .achievement-card {
     display: flex;
     flex-direction: column;
+    align-items: center;
     background: rgba(0, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
+    padding: 0.8rem;
+    border-radius: 10px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     text-align: center;
     transition: all 0.3s;
 }
 
 .achievement-card:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-3px);
     border-color: #00ffff;
-    box-shadow: 0 15px 40px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
 }
 
 .achievement-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    animation: bounce 2s infinite;
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+    animation: none;
 }
 
 .achievement-card h3 {
-    font-size: 1.4rem;
+    font-size: 0.78rem;
     color: #00ffff;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.15rem;
+    line-height: 1.2;
 }
 
 .team-name {
     color: #00ff88;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    font-size: 0.68rem;
+    margin-bottom: 0.2rem;
 }
 
 .rank {
     color: #fff;
-    font-weight: bold;
-    background: rgba(6, 236, 236, 0.262);
-    padding: 0.5rem 1rem;
+    font-size: 0.65rem;
+    background: rgba(0, 255, 255, 0.2);
+    padding: 0.15rem 0.5rem;
     border-radius: 20px;
     display: inline-block;
-    margin-bottom: 1rem;
+    margin-bottom: 0.3rem;
 }
 
 .achievement-card p {
     color: #ccc;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.achievement-link {
-    margin-top: auto;
-    align-self: center;
-    padding: 0.6rem 1.5rem;
-    border: 2px solid #00ffff;
-    border-radius: 25px;
-    color: #00ffff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s;
-}
-
-.achievement-link:hover {
-    background: #00ffff;
-    color: #0a0e27;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    font-size: 0.68rem;
+    line-height: 1.3;
+    margin: 0;
 }
 
 /* ===== EXPERIENCE SECTION ===== */
