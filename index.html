@@ -1107,11 +1107,59 @@
 
 
 
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Professional Experience & Skills</h2>
+            <div class="proj-carousel">
+                <div class="projects-grid" id="expGrid"></div>
+                <div class="cert-nav">
+                    <button class="cert-btn" id="expPrevBtn">
+                        <span class="arrow" style="transform:rotate(180deg)">➜</span> Prev
+                    </button>
+                    <div class="cert-dots" id="expDots"></div>
+                    <button class="cert-btn" id="expNextBtn">
+                        Next <span class="arrow">➜</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const experiences = [
+            { icon: '💼', title: 'DevSecOps Intern', org: 'PHI Consulting', duration: 'Currently Working', desc: 'Working on DevSecOps practices, security automation, and CI/CD pipelines.' },
+            { icon: '🖥️', title: 'Data Entry Operator', org: 'Torcia Academy | 6th Road', duration: '1.5 Year', desc: 'Data management, record keeping, and administrative support.' },
+            { icon: '📋', title: 'Data Entry Operator', org: 'Ropani Foundation', duration: '8 Months', desc: 'Data processing and documentation management.' },
+        ];
+        const expPerPage = 6;
+        let expCurrent = 0;
+        const expTotalPages = Math.ceil(experiences.length / expPerPage);
+        function renderExp() {
+            const grid = document.getElementById('expGrid');
+            const dots = document.getElementById('expDots');
+            const start = expCurrent * expPerPage;
+            const slice = experiences.slice(start, start + expPerPage);
+            grid.innerHTML = slice.map(e => `
+            <div class="project-card">
+                <div style="font-size:1.8rem; margin-bottom:0.4rem;">${e.icon}</div>
+                <h3>${e.title}</h3>
+                <p style="color:#00ff88; font-size:0.72rem; margin-bottom:0.3rem;">${e.org}</p>
+                <span style="background:rgba(0,255,255,0.2); padding:0.15rem 0.5rem; border-radius:10px; font-size:0.65rem; color:#00ffff; margin-bottom:0.5rem; display:inline-block;">${e.duration}</span>
+                <p style="margin-bottom:0.8rem;">${e.desc}</p>
+            </div>
+        `).join('');
+            dots.innerHTML = Array.from({ length: expTotalPages }, (_, i) =>
+                `<div class="cert-dot ${i === expCurrent ? 'active' : ''}" onclick="expGoTo(${i})"></div>`
+            ).join('');
+        }
+        function expGoTo(page) { expCurrent = page; renderExp(); }
+        document.getElementById('expNextBtn').onclick = () => { if (expCurrent < expTotalPages - 1) { expCurrent++; renderExp(); } };
+        document.getElementById('expPrevBtn').onclick = () => { if (expCurrent > 0) { expCurrent--; renderExp(); } };
+        renderExp();
+    </script>
 
 
     <!-- Achievements Section -->
-
-
     <section id="achievements" class="achievements">
         <div class="container">
             <h2 class="section-title">Achievements & Competitions</h2>
@@ -1141,103 +1189,29 @@
         const achievePerPage = 6;
         let achieveCurrent = 0;
         const achieveTotalPages = Math.ceil(achievements.length / achievePerPage);
-
         function renderAchievements() {
             const grid = document.getElementById('achieveGrid');
             const dots = document.getElementById('achieveDots');
             const start = achieveCurrent * achievePerPage;
             const slice = achievements.slice(start, start + achievePerPage);
-
             grid.innerHTML = slice.map(a => `
-    <div class="achievement-card">
-        <div class="achievement-icon">${a.icon}</div>
-        <h3 style="margin-bottom:0.6rem;">${a.title}</h3>
-        <p style="white-space:pre-line; margin-bottom:0.8rem;">${a.desc}</p>
-        <a href="${a.link}" target="_blank" class="cert-link" style="margin-top:auto;">View on LinkedIn →</a>
-    </div>
-`).join('');
-
+            <div class="achievement-card">
+                <div class="achievement-icon">${a.icon}</div>
+                <h3 style="margin-bottom:0.6rem;">${a.title}</h3>
+                <p style="white-space:pre-line; margin-bottom:0.8rem;">${a.desc}</p>
+                <a href="${a.link}" target="_blank" class="cert-link" style="margin-top:auto;">View on LinkedIn →</a>
+            </div>
+        `).join('');
             dots.innerHTML = Array.from({ length: achieveTotalPages }, (_, i) =>
                 `<div class="cert-dot ${i === achieveCurrent ? 'active' : ''}" onclick="achieveGoTo(${i})"></div>`
             ).join('');
         }
-
         function achieveGoTo(page) { achieveCurrent = page; renderAchievements(); }
-
-        document.getElementById('achieveNextBtn').onclick = () => {
-            if (achieveCurrent < achieveTotalPages - 1) { achieveCurrent++; renderAchievements(); }
-        };
-        document.getElementById('achievePrevBtn').onclick = () => {
-            if (achieveCurrent > 0) { achieveCurrent--; renderAchievements(); }
-        };
-
+        document.getElementById('achieveNextBtn').onclick = () => { if (achieveCurrent < achieveTotalPages - 1) { achieveCurrent++; renderAchievements(); } };
+        document.getElementById('achievePrevBtn').onclick = () => { if (achieveCurrent > 0) { achieveCurrent--; renderAchievements(); } };
         renderAchievements();
     </script>
 
-
-
-
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">Professional Experience & Skills</h2>
-            <div class="proj-carousel">
-                <div class="projects-grid" id="expGrid"></div>
-                <div class="cert-nav">
-                    <button class="cert-btn" id="expPrevBtn">
-                        <span class="arrow" style="transform:rotate(180deg)">➜</span> Prev
-                    </button>
-                    <div class="cert-dots" id="expDots"></div>
-                    <button class="cert-btn" id="expNextBtn">
-                        Next <span class="arrow">➜</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        const experiences = [
-            { icon: '💼', title: 'DevSecOps Intern', org: 'PHI Consulting', duration: 'Currently Working', desc: 'Working on DevSecOps practices, security automation, and CI/CD pipelines.' },
-            { icon: '🖥️', title: 'Data Entry Operator', org: 'Torcia Academy | 6th Road', duration: '1.5 Year', desc: 'Data management, record keeping, and administrative support.' },
-            { icon: '📋', title: 'Data Entry Operator', org: 'Ropani Foundation', duration: '8 Months', desc: 'Data processing and documentation management.' },
-        ];
-
-        const expPerPage = 6;
-        let expCurrent = 0;
-        const expTotalPages = Math.ceil(experiences.length / expPerPage);
-
-        function renderExp() {
-            const grid = document.getElementById('expGrid');
-            const dots = document.getElementById('expDots');
-            const start = expCurrent * expPerPage;
-            const slice = experiences.slice(start, start + expPerPage);
-
-            grid.innerHTML = slice.map(e => `
-        <div class="project-card">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">${e.icon}</div>
-            <h3>${e.title}</h3>
-            <p style="color:#00ff88; font-size:0.72rem; margin-bottom:0.3rem;">${e.org}</p>
-            <span style="background:rgba(0,255,255,0.2); padding:0.15rem 0.5rem; border-radius:10px; font-size:0.65rem; color:#00ffff; margin-bottom:0.5rem; display:inline-block;">${e.duration}</span>
-            <p style="margin-bottom:0.8rem;">${e.desc}</p>
-        </div>
-    `).join('');
-
-            dots.innerHTML = Array.from({ length: expTotalPages }, (_, i) =>
-                `<div class="cert-dot ${i === expCurrent ? 'active' : ''}" onclick="expGoTo(${i})"></div>`
-            ).join('');
-        }
-
-        function expGoTo(page) { expCurrent = page; renderExp(); }
-
-        document.getElementById('expNextBtn').onclick = () => {
-            if (expCurrent < expTotalPages - 1) { expCurrent++; renderExp(); }
-        };
-        document.getElementById('expPrevBtn').onclick = () => {
-            if (expCurrent > 0) { expCurrent--; renderExp(); }
-        };
-
-        renderExp();
-    </script>
 
 
 
@@ -1419,20 +1393,22 @@
 
 
 
-<footer class="footer">
-    <div class="container">
-        <button class="btn btn-primary" style="font-family: monospace; letter-spacing: 1px;">
-            &copy; 2025 Syed Mujtaba Zaidi | Professional Hacker Portfolio
-        </button>
-        <br><br>
-        <button class="btn btn-primary" style="font-family: monospace; letter-spacing: 3px; background: transparent; border: 2px solid #00ffff; color: #00ffff;">
-            [ H4X0R S1NC3 2O21 ]
-        </button>
-        <br><br>
-        
-    </div>
-</footer>
+    <footer class="footer">
+        <div class="container">
+            <button class="btn btn-primary" style="font-family: monospace; letter-spacing: 1px;">
+                &copy; 2025 Syed Mujtaba Zaidi | Professional Hacker Portfolio
+            </button>
+            <br><br>
+            <button class="btn btn-primary"
+                style="font-family: monospace; letter-spacing: 3px; background: transparent; border: 2px solid #00ffff; color: #00ffff;">
+                [ H4X0R S1NC3 2O21 ]
+            </button>
+            <br><br>
 
-<script src="js/script.js"></script>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
 </body>
+
 </html>
