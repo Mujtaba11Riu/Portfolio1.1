@@ -4089,23 +4089,26 @@ body {
     }
 
     /* FOOTER MOBILE FIX */
+    @media (max-width: 768px) {
     .footer {
-        padding: 1.5rem 5%;
+        padding: 1.5rem 3%;
     }
 
-    .footer .btn {
-        display: block;
-        width: 90%;
-        max-width: 300px;
-        margin: 0 auto 1rem auto;
-        font-size: 0.72rem;
-        padding: 0.7rem 1rem;
-        letter-spacing: 0.5px;
-        white-space: normal;
-        word-break: break-word;
-        text-align: center;
-        line-height: 1.5;
+    .footer > .container > div {
+        flex-direction: column !important;
+        gap: 0.6rem !important;
     }
+
+    .footer > .container > div > span {
+        font-size: 0.65rem !important;
+        padding: 0.45rem 0.8rem !important;
+        letter-spacing: 0.5px !important;
+        white-space: normal !important;
+        text-align: center !important;
+        width: fit-content !important;
+        max-width: 85vw !important;
+    }
+
 }
 
 
