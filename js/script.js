@@ -118,21 +118,7 @@ function drawNeural() {
         ctx.fill();
     });
 
-    // Mouse node
-    if (MOUSE.x !== null) {
-        const mglow = ctx.createRadialGradient(MOUSE.x, MOUSE.y, 0, MOUSE.x, MOUSE.y, 20);
-        mglow.addColorStop(0, 'rgba(0, 255, 136, 0.4)');
-        mglow.addColorStop(1, 'rgba(0, 255, 136, 0)');
-        ctx.beginPath();
-        ctx.fillStyle = mglow;
-        ctx.arc(MOUSE.x, MOUSE.y, 20, 0, Math.PI * 2);
-        ctx.fill();
 
-        ctx.beginPath();
-        ctx.arc(MOUSE.x, MOUSE.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 255, 136, 0.8)';
-        ctx.fill();
-    }
 
     requestAnimationFrame(drawNeural);
 }
@@ -144,6 +130,76 @@ drawNeural();
 
 
 
+
+
+
+
+// ===== NEURAL NETWORK ARROW CURSOR =====
+const arrowSVG = `
+<svg width="35" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main arrow outline -->
+  <polygon points="2,2 2,40 13,29 17,46 24,43 20,27 35,27"
+           fill="none" stroke="#00ffff" stroke-width="1.2" stroke-linejoin="round" opacity="0.9"/>
+  
+  <!-- Internal lines -->
+  <line x1="2" y1="2" x2="18" y2="24" stroke="#00ffff" stroke-width="0.7" opacity="0.6"/>
+  <line x1="2" y1="2" x2="32" y2="24" stroke="#00ffff" stroke-width="0.7" opacity="0.5"/>
+  <line x1="2" y1="18" x2="18" y2="24" stroke="#00ffff" stroke-width="0.6" opacity="0.5"/>
+  <line x1="12" y1="26" x2="22" y2="18" stroke="#00ffff" stroke-width="0.6" opacity="0.4"/>
+  <line x1="12" y1="18" x2="22" y2="24" stroke="#00ffff" stroke-width="0.6" opacity="0.4"/>
+  <line x1="16" y1="40" x2="12" y2="26" stroke="#00ffff" stroke-width="0.7" opacity="0.5"/>
+  <line x1="8" y1="12" x2="18" y2="16" stroke="#00ffff" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Glowing dots -->
+  <circle cx="2" cy="2" r="2.2" fill="#00ffff" opacity="1"/>
+  <circle cx="2" cy="36" r="1.8" fill="#00ffff" opacity="0.9"/>
+  <circle cx="32" cy="24" r="1.8" fill="#00ffff" opacity="0.9"/>
+  <circle cx="12" cy="26" r="1.5" fill="#00ffff" opacity="0.8"/>
+  <circle cx="16" cy="40" r="1.5" fill="#00ffff" opacity="0.8"/>
+  <circle cx="22" cy="38" r="1.5" fill="#00ffff" opacity="0.8"/>
+  <circle cx="18" cy="24" r="1.5" fill="#00ffff" opacity="0.8"/>
+  <circle cx="2" cy="18" r="1.2" fill="#00ffff" opacity="0.7"/>
+  <circle cx="12" cy="18" r="1.2" fill="#00ffff" opacity="0.7"/>
+  <circle cx="22" cy="18" r="1.2" fill="#00ffff" opacity="0.6"/>
+  <circle cx="8" cy="12" r="1" fill="#00ffff" opacity="0.6"/>
+  <circle cx="18" cy="16" r="1" fill="#00ffff" opacity="0.5"/>
+</svg>
+`;
+
+const cursorMain = document.createElement('div');
+cursorMain.style.cssText = `
+    position: fixed;
+    width: 35px;
+    height: 35px;
+    pointer-events: none;
+    z-index: 99999;
+    filter: drop-shadow(0 0 4px #00ffff) drop-shadow(0 0 10px #00ffff88);
+    transition: transform 0.1s ease;
+`;
+cursorMain.innerHTML = arrowSVG;
+document.body.appendChild(cursorMain);
+
+// Hide default cursor
+document.body.style.cursor = 'none';
+document.querySelectorAll('a, button, input, textarea').forEach(el => {
+    el.style.cursor = 'none';
+});
+
+document.addEventListener('mousemove', (e) => {
+    cursorMain.style.left = e.clientX + 'px';
+    cursorMain.style.top = e.clientY + 'px';
+});
+
+// Click effect
+document.addEventListener('mousedown', () => {
+    cursorMain.style.filter = 'drop-shadow(0 0 12px #00ffff) drop-shadow(0 0 25px #00ffffff)';
+    cursorMain.style.transform = 'scale(1.2)';
+});
+
+document.addEventListener('mouseup', () => {
+    cursorMain.style.filter = 'drop-shadow(0 0 4px #00ffff) drop-shadow(0 0 10px #00ffff88)';
+    cursorMain.style.transform = 'scale(1)';
+});
 
 
 
