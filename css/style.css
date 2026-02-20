@@ -4018,6 +4018,9 @@ body {
     font-family: inherit;
 }
 
+
+
+
 /* ===== FOOTER ===== */
 .footer {
     background: rgba(0, 0, 0, 0.3);
@@ -4061,32 +4064,49 @@ body {
     .section-title {
         font-size: 2rem;
     }
-    
+
     .timeline::before {
         left: 15px;
     }
-    
+
     .timeline-dot {
         left: 5px;
     }
-    
+
     .timeline-item {
         padding-left: 50px;
     }
-    
+
     .contact-content {
         grid-template-columns: 1fr;
     }
-    
+
     .projects-grid,
     .cert-grid,
     .achievements-grid,
     .experience-grid {
         grid-template-columns: 1fr;
     }
+
+    /* FOOTER MOBILE FIX */
+    .footer {
+        padding: 1.5rem 5%;
+    }
+
+    .footer .btn {
+        display: block;
+        width: 90%;
+        max-width: 300px;
+        margin: 0 auto 1rem auto;
+        font-size: 0.72rem;
+        padding: 0.7rem 1rem;
+        letter-spacing: 0.5px;
+        white-space: normal;
+        word-break: break-word;
+        text-align: center;
+        line-height: 1.5;
+    }
 }
-
-
 
 
 
