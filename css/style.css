@@ -3820,6 +3820,23 @@ body {
 
 
 
+/* Contact Grid - Desktop */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Mobile par 1 column */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 
 
 
