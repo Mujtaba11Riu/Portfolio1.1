@@ -3777,22 +3777,8 @@ body {
     line-height: 1.2;
 }
 
-.team-name {
-    color: #00ff88;
-    font-weight: bold;
-    font-size: 0.68rem;
-    margin-bottom: 0.2rem;
-}
 
-.rank {
-    color: #fff;
-    font-size: 0.65rem;
-    background: rgba(0, 255, 255, 0.2);
-    padding: 0.15rem 0.5rem;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 0.3rem;
-}
+
 
 .achievement-card p {
     color: #ccc;
@@ -3807,46 +3793,9 @@ body {
     padding: 100px 5%;
 }
 
-.experience-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
 
-.experience-card {
-    background: rgba(0, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    transition: all 0.3s;
-}
 
-.experience-card:hover {
-    transform: translateY(-10px);
-    border-color: #00ffff;
-    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
-}
 
-.experience-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.8rem;
-    flex-wrap: wrap;
-}
-
-.experience-card h3 {
-    font-size: 1.4rem;
-    color: #00ffff;
-}
-
-.duration {
-    background: rgba(0, 255, 255, 0.2);
-    padding: 0.3rem 1rem;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    color: #00ffff;
-}
 
 .experience-card h4 {
     font-size: 1.1rem;
@@ -3861,72 +3810,20 @@ body {
 }
 
 /* ===== SKILLS SECTION ===== */
+
+
 .skills {
     padding: 100px 5%;
     background: rgba(255, 255, 255, 0.02);
 }
 
-.skills-category {
-    margin-bottom: 4rem;
-}
 
-.skills-category h3 {
-    font-size: 2rem;
-    color: #00ffff;
-    margin-bottom: 2rem;
-    text-align: center;
-}
 
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
 
-.skill-card {
-    background: rgba(0, 255, 255, 0.05);
-    padding: 1.5rem;
-    border-radius: 10px;
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    transition: all 0.3s;
-}
 
-.skill-card:hover {
-    border-color: #00ffff;
-    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
-}
 
-.skill-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.8rem;
-}
 
-.skill-name {
-    color: #fff;
-    font-weight: 500;
-}
 
-.skill-percentage {
-    color: #00ffff;
-    font-weight: bold;
-}
-
-.skill-bar {
-    width: 100%;
-    height: 10px;
-    background: rgba(0, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, #00ffff, #00ff88);
-    border-radius: 10px;
-    transition: width 1.5s ease;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
 
 /* ===== CONTACT SECTION ===== */
 .contact {
@@ -4029,35 +3926,8 @@ body {
     border-top: 1px solid rgba(0, 255, 255, 0.2);
 }
 
-.footer p {
-    color: #ccc;
-    margin-bottom: 0.5rem;
-}
 
-.footer-tagline {
-    color: #00ffff;
-    font-weight: bold;
-    font-family: monospace;
-    margin-bottom: 1rem;
-}
 
-.social-links {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.social-links a {
-    color: #00ffff;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.social-links a:hover {
-    color: #00ff88;
-    transform: translateY(-3px);
-}
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
@@ -4277,46 +4147,3 @@ body {
 
 
 
-/* Alternative - More Glowing Buttons */
-.contact-btn {
-    display: inline-block;
-    padding: 0.6rem 1.2rem; 
-    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 136, 0.1));
-    border: 2px solid #00ffff;
-    color: #00ffff;
-    text-decoration: none;
-    border-radius: 30px !important;
-    transition: all 0.4s ease;
-    margin-top: 10px;
-    font-weight: 600;
-    text-align: center;
-    min-width: 140px;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.contact-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 136, 0.2));
-    border-radius: 30px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.contact-btn:hover::before {
-    opacity: 1;
-}
-
-.contact-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 255, 255, 0.4);
-    color: #fff;
-    border-color: #00ff88;
-}

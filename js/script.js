@@ -511,35 +511,3 @@ mobileMenuItems.forEach(item => {
 });
 
 
-
-
-// Add this to your existing script.js
-function adjustHeroLayout() {
-    const heroAnimation = document.querySelector('.hero-animation');
-    const heroContent = document.querySelector('.hero-content');
-
-    if (window.innerWidth <= 768) {
-        // Mobile adjustments
-        if (heroAnimation) {
-            heroAnimation.style.margin = '0 auto 1rem auto';
-            heroAnimation.style.width = '300px';
-            heroAnimation.style.height = '200px';
-        }
-
-        // Reduce gap between name and typing text
-        if (heroContent) {
-            heroContent.style.gap = '0.5rem';
-        }
-    } else {
-        // Desktop adjustments
-        if (heroAnimation) {
-            heroAnimation.style.margin = '0';
-            heroAnimation.style.width = '320px';
-            heroAnimation.style.height = '220px';
-        }
-    }
-}
-
-// Run on load and resize
-window.addEventListener('DOMContentLoaded', adjustHeroLayout);
-window.addEventListener('resize', adjustHeroLayout);
