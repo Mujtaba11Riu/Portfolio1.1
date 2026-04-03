@@ -20,11 +20,7 @@
     <nav class="mobile-navbar">
         <div class="mobile-nav-container">
             <div class="mobile-logo"> S.M.Zaidi</div>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+
         </div>
         <div class="mobile-menu" id="mobileMenu">
             <a href="#home" class="mobile-menu-item">🏠 Home</a>
@@ -39,9 +35,7 @@
 
 
 
-
     <!-- LEFT SIDEBAR NAVIGATION -->
-
 
     <div class="drawer-icons">
         <a href="#home" class="nav-pill">
@@ -77,14 +71,7 @@
 
 
 
-
-
-
     <!-- HERO SECTION -->
-
-
-
-
 
     <section id="home" class="hero">
         <div class="hero-content">
@@ -93,10 +80,7 @@
         </div>
 
 
-
-
         <!-- ANIMATION CONTAINER (RIGHT SIDE) -->
-
 
         <div class="hero-animation-container">
 
@@ -398,7 +382,7 @@
 
                 <div class="malware-simulation">
                     <div class="malware-container">
-                        
+
                         <!-- Main Malware Analysis Dashboard -->
 
                         <div class="malware-dashboard">
@@ -826,11 +810,6 @@
 
 
 
-
-
-
-
-
     <!-- About Section -->
 
 
@@ -932,16 +911,7 @@
 
 
 
-
-
-
-
-
-
     <!-- Certifications Section -->
-
-
-
 
 
     <section id="certifications" class="certifications">
@@ -1016,12 +986,7 @@
 
 
 
-
-
-
     <!-- Projects Section -->
-
-
 
     <section id="projects" class="projects">
         <div class="container">
@@ -1091,9 +1056,6 @@
 
         renderProjects();
     </script>
-
-
-
 
 
 
@@ -1208,13 +1170,6 @@
 
 
 
-
-
-
-
-
-
-
     <section id="technical-skills" class="skills" style="padding: 40px 5%;">
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
@@ -1285,66 +1240,51 @@
 
 
 
-
-
-
-
-
-
-
-
-
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
-            <div class="proj-carousel">
 
-                <div class="contact-grid">
-               
-                    <div class="project-card" style="align-items:center; text-align:center;">
-                        <div style="font-size:2rem; margin-bottom:0.5rem; color:#00ffff;"><i
-                                class="fab fa-linkedin"></i></div>
-                        <h3 style="margin-bottom:0.3rem;">LinkedIn</h3>
-                       
-                        <a href="https://www.linkedin.com/in/syedmujtaba773/" target="_blank" class="cert-link">Connect
-                            →</a>
-                    </div>
+            <div class="contact-grid">
 
-                    <div class="project-card" style="align-items:center; text-align:center;">
-                        <div style="font-size:2rem; margin-bottom:0.5rem; color:#00ffff;"><i class="fab fa-github"></i>
-                        </div>
-                        <h3 style="margin-bottom:0.3rem;">GitHub</h3>
-                        
-                        <a href="https://github.com/Mujtaba11Riu" target="_blank" class="cert-link">Connect →</a>
-                    </div>
 
-                    <div class="project-card" style="align-items:center; text-align:center;">
-                        <div style="font-size:2rem; margin-bottom:0.5rem; color:#00ffff;"><i
-                                class="fas fa-envelope"></i></div>
-                        <h3 style="margin-bottom:0.3rem;">Email</h3>
-                        
-                        <a href="mailto:syedmujtaba773@gmail.com" class="cert-link">Connect →</a>
-                    </div>
 
-                    <!-- Form -->
-                    <div class="project-card" style="grid-column: 1 / -1;">
-                        <h3 style="color:#00ffff; margin-bottom:1rem; font-size:0.9rem;">Send a Message</h3>
-                        
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-bottom:0.8rem;">
-                            
-                            <input type="text" id="contactName" placeholder="Your Name"
-                                style="padding:0.6rem 1rem; background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.2); border-radius:8px; color:#fff; font-size:0.8rem; outline:none;">
-                            <input type="email" id="contactEmail" placeholder="Your Email"
-                                style="padding:0.6rem 1rem; background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.2); border-radius:8px; color:#fff; font-size:0.8rem; outline:none;">
-                        </div>
-                        <textarea id="contactMessage" rows="4" placeholder="Your Message"
-                            style="width:100%; padding:0.6rem 1rem; background:rgba(0,255,255,0.05); border:1px solid rgba(0,255,255,0.2); border-radius:8px; color:#fff; font-size:0.8rem; outline:none; resize:vertical; font-family:inherit; margin-bottom:0.8rem;"></textarea>
-                        <button onclick="sendEmail()" id="sendBtn" class="cert-link"
-                            style="border:none; cursor:pointer; width:100%; justify-content:center; padding:0.6rem;">Send
-                            Message →</button>
-                    </div>
-
+                <div class="project-card center">
+                    <a href="https://www.linkedin.com/in/syedmujtaba773/" target="_blank" class="project-link">
+                        <i class="fab fa-linkedin contact-icon"></i>
+                        <h3>LinkedIn</h3>
+                    </a>
                 </div>
+
+                <div class="project-card center">
+                    <a href="https://github.com/Mujtaba11Riu" target="_blank" class="project-link">
+                        <i class="fab fa-github contact-icon"></i>
+                        <h3>GitHub</h3>
+                    </a>
+                </div>
+
+                <div class="project-card center">
+                    <a href="mailto:syedmujtaba773@gmail.com" class="project-link">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <h3>Email</h3>
+                    </a>
+                </div>
+
+
+
+                <!-- Contact Form -->
+                <div class="project-card contact-form-card">
+
+
+                    <div class="form-grid">
+                        <input type="text" id="contactName" placeholder="Your Name">
+                        <input type="email" id="contactEmail" placeholder="Your Email">
+                    </div>
+
+                    <textarea id="contactMessage" rows="4" placeholder="Your Message"></textarea>
+
+                    <button onclick="sendEmail()" id="sendBtn" class="form-submit">Send Message →</button>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1400,12 +1340,9 @@
             <div style="display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap;">
                 <span
                     style="font-family:monospace; font-size:0.82rem; color:#0a0e27; background:linear-gradient(45deg,#00ffff,#00ff88); padding:0.5rem 1.2rem; border-radius:50px; white-space:nowrap;">
-                    &copy; 2025 Syed Mujtaba Zaidi | Professional Hacker Portfolio
+                    &copy; 2025 Syed Mujtaba Zaidi | Professional Hacker Portfolio [ H4X0R S1NC3 2O21 ]
                 </span>
-                <span
-                    style="font-family:monospace; letter-spacing:3px; font-size:0.82rem; border:2px solid #00ffff; color:#00ffff; padding:0.5rem 1.2rem; border-radius:50px; white-space:nowrap;">
-                    [ H4X0R S1NC3 2O21 ]
-                </span>
+
             </div>
         </div>
     </footer>

@@ -1,4 +1,5 @@
 // ===== NEURAL NETWORK BACKGROUND =====
+
 const canvas = document.createElement('canvas');
 canvas.id = 'neuralCanvas';
 canvas.style.cssText = `
@@ -127,13 +128,6 @@ drawNeural();
 
 
 
-
-
-
-
-
-
-
 // ===== NEURAL NETWORK ARROW CURSOR =====
 const arrowSVG = `
 <svg width="35" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
@@ -200,19 +194,6 @@ document.addEventListener('mouseup', () => {
     cursorMain.style.filter = 'drop-shadow(0 0 4px #00ffff) drop-shadow(0 0 10px #00ffff88)';
     cursorMain.style.transform = 'scale(1)';
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

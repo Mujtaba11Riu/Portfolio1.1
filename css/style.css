@@ -31,7 +31,7 @@ body {
     left: 0;
     width: 100%;
     background: rgba(10, 14, 27, 0.98);
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     z-index: 10000;
     box-shadow: 0 2px 20px rgba(0, 255, 255, 0.2);
 }
@@ -171,8 +171,6 @@ body {
 
 /* ===== HERO SECTION ===== */
 
-
-/* ===== HERO SECTION UPDATES ===== */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -453,7 +451,9 @@ body {
     }
 }
 
+
 /* Hero Content Styling */
+
 .hero-content h1 {
     font-size: 2.2rem;
     margin-bottom: 0.5rem;
@@ -526,7 +526,6 @@ body {
 }
 
 /* ===== ANIMATED LAPTOP ===== */
-
 
 .laptop {
     position: relative;
@@ -618,15 +617,6 @@ body {
     50% { transform: translateY(-10px) rotate(-5deg); }
     75% { transform: translateY(-30px) rotate(3deg); }
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1087,19 +1077,7 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
 /* ===== PENETRATION TESTER SIMULATION ===== */
-
-
 
 .pentest-simulation {
     position: absolute;
@@ -1134,7 +1112,7 @@ body {
     z-index: 10;
     box-shadow: 0 0 40px rgba(255, 165, 0, 0.25),
                 inset 0 0 30px rgba(255, 165, 0, 0.1);
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
 }
 
 .pentest-header {
@@ -1589,17 +1567,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* ===== WEB SECURITY TESTER SIMULATION ===== */
 
 
@@ -1636,7 +1603,7 @@ body {
     z-index: 10;
     box-shadow: 0 0 40px rgba(66, 133, 244, 0.25),
                 inset 0 0 30px rgba(66, 133, 244, 0.1);
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
 }
 
 .websec-header {
@@ -2121,19 +2088,6 @@ body {
         font-size: 0.5rem;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2719,12 +2673,6 @@ body {
 
 
 
-
-
-
-
-
-
 /* ===== SECURITY RESEARCHER SIMULATION ===== */
 
 
@@ -3283,11 +3231,6 @@ body {
 
 
 
-
-
-
-
-
 /* ===== SECTION TITLES ===== */
 .section-title {
     font-size: 2rem;
@@ -3819,122 +3762,143 @@ body {
 
 
 
-
-/* Contact Grid - Desktop */
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* Mobile par 1 column */
-@media (max-width: 768px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-
-
-
-
-
 /* ===== CONTACT SECTION ===== */
 .contact {
     padding: 100px 5%;
 }
 
-.contact-content {
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: #00ffff;
+}
+
+/* ===== GRID ===== */
+.contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 3rem;
-    max-width: 1200px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
     margin: 0 auto;
 }
 
-.contact-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.contact-item {
-    background: rgba(0, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
-    border: 1px solid rgba(0, 255, 255, 0.2);
+/* ===== PROJECT CARD ===== */
+.project-card {
+    background: rgba(0,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0,255,255,0.2);
     text-align: center;
     transition: all 0.3s;
 }
 
-.contact-item:hover {
+.project-card:hover {
     transform: translateY(-5px);
     border-color: #00ffff;
-    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 10px 20px rgba(0,255,255,0.2);
 }
 
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== ICON ===== */
 .contact-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.contact-item h3 {
-    font-size: 1.2rem;
-    color: #00ffff;
+    font-size: 2rem;
     margin-bottom: 0.5rem;
+    color: #ffffff;
 }
 
-.contact-item a {
-    color: #ccc;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.contact-item a:hover {
+/* ===== LINKS ===== */
+.cert-link {
+    display: inline-block;
+    margin-top: 0.5rem;
     color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
 }
 
-.contact-form-container {
-    background: rgba(0, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 15px;
-    border: 1px solid rgba(0, 255, 255, 0.2);
-}
-
-.contact-form .form-group {
-    margin-bottom: 1.5rem;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 1rem;
-    background: rgba(0, 255, 255, 0.05);
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    border-radius: 10px;
+.cert-link:hover {
     color: #fff;
-    font-size: 1rem;
+}
+
+/* ===== CONTACT FORM ===== */
+.contact-form-card {
+    grid-column: 1 / -1;
+    background: rgba(0,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0,255,255,0.2);
+}
+
+/* ===== FORM GRID ===== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+/* ===== INPUTS & TEXTAREA ===== */
+input, textarea {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: rgba(0,255,255,0.05);
+    border: 1px solid rgba(0,255,255,0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* ===== BUTTON ===== */
+.form-submit {
+    width: 100%;
+    padding: 0.6rem;
+    background: #00ffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
     transition: all 0.3s;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: #00ffff;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+.form-submit:hover {
+    background: #00aaaa;
 }
 
-.contact-form textarea {
-    resize: vertical;
-    font-family: inherit;
+/* Form elements spacing uniform */
+.contact-form-card input,
+.contact-form-card textarea,
+.contact-form-card button {
+    margin-bottom: 0.8rem; /* uniform spacing */
 }
 
 
 
 
+
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form-card {
+        grid-column: auto;
+    }
+}
 /* ===== FOOTER ===== */
 .footer {
     background: rgba(0, 0, 0, 0.3);
@@ -3942,8 +3906,6 @@ body {
     text-align: center;
     border-top: 1px solid rgba(0, 255, 255, 0.2);
 }
-
-
 
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -4000,18 +3962,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-/* ========================= */
-/* MOBILE HERO FIX ONLY */
-/* ========================= */
 
 @media (max-width: 768px) {
 
@@ -4087,9 +4037,6 @@ body {
 
 
 
-
-
-
 @media (max-width: 768px) {
 
     /* FORCE SAME SIZE FOR ALL SIMULATIONS */
@@ -4119,11 +4066,6 @@ body {
         margin-bottom: 30px;
     }
 }
-
-
-
-
-
 
 
 
@@ -4158,9 +4100,4 @@ body {
         transform: scale(1.5);
     }
 }
-
-
-
-
-
 
