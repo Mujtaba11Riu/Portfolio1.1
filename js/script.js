@@ -682,4 +682,92 @@ const achievements = [
 
 
 
-//
+//Skill 
+
+
+ const skills = [
+            { icon: '<i class="fas fa-user-secret"></i>', name: 'Penetration Testing', percent: 85 },
+            { icon: '<i class="fas fa-shield-virus"></i>', name: 'Ethical Hacking', percent: 90 },
+            { icon: '<i class="fas fa-globe"></i>', name: 'Network Security', percent: 80 },
+            { icon: '<i class="fab fa-linux"></i>', name: 'Linux System Administration', percent: 75 },
+            { icon: '<i class="fas fa-spider"></i>', name: 'Web Application Testing', percent: 85 },
+            { icon: '<i class="fas fa-code"></i>', name: 'Programming (C++, Java, Python)', percent: 70 },
+            { icon: '<i class="fas fa-bug"></i>', name: 'Bug Bounty Hunting', percent: 75 },
+            { icon: '<i class="fas fa-flag"></i>', name: 'CTF Competitions', percent: 80 },
+        ];
+
+        const skillPerPage = 6;
+        let skillCurrent = 0;
+        const skillTotalPages = Math.ceil(skills.length / skillPerPage);
+
+        function renderSkills() {
+            const grid = document.getElementById('skillsGrid');
+            const dots = document.getElementById('skillDots');
+            const start = skillCurrent * skillPerPage;
+            const slice = skills.slice(start, start + skillPerPage);
+
+            grid.innerHTML = slice.map(s => `
+        <div class="project-card">
+            <div style="font-size:1.8rem; margin-bottom:0.5rem;">${s.icon}</div>
+            <h3 style="margin-bottom:0.6rem;">${s.name}</h3>
+            <div style="width:100%; height:6px; background:rgba(0,255,255,0.1); border-radius:10px; overflow:hidden; margin-bottom:0.3rem;">
+                <div style="width:${s.percent}%; height:100%; background:linear-gradient(90deg,#00ffff,#00ff88); border-radius:10px; box-shadow:0 0 8px rgba(0,255,255,0.4);"></div>
+            </div>
+            <p style="color:#00ffff; font-size:0.72rem; text-align:right;">${s.percent}%</p>
+        </div>
+    `).join('');
+
+            dots.innerHTML = Array.from({ length: skillTotalPages }, (_, i) =>
+                `<div class="cert-dot ${i === skillCurrent ? 'active' : ''}" onclick="skillGoTo(${i})"></div>`
+            ).join('');
+        }
+
+        function skillGoTo(page) { skillCurrent = page; renderSkills(); }
+
+        document.getElementById('skillNextBtn').onclick = () => {
+            if (skillCurrent < skillTotalPages - 1) { skillCurrent++; renderSkills(); }
+        };
+        document.getElementById('skillPrevBtn').onclick = () => {
+            if (skillCurrent > 0) { skillCurrent--; renderSkills(); }
+        };
+
+        renderSkills();
+
+
+ //Email
+
+
+  emailjs.init("AndsvpB-Uk0sALIFx");
+
+        function sendEmail() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            if (!name || !email || !message) {
+                alert('Sab fields bharein!');
+                return;
+            }
+
+            document.getElementById('sendBtn').innerText = 'Sending...';
+
+            emailjs.send('service_h82udlq', 'template_hmztzpc', {
+                from_name: name,
+                from_email: email,
+                message: message,
+            }).then(() => {
+                document.getElementById('sendBtn').innerText = 'Message Sent ✅';
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactEmail').value = '';
+                document.getElementById('contactMessage').value = '';
+                setTimeout(() => {
+                    document.getElementById('sendBtn').innerText = 'Send Message →';
+                }, 3000);
+            }).catch((err) => {
+                console.error(err);
+                document.getElementById('sendBtn').innerText = 'Failed ❌ Try Again';
+                setTimeout(() => {
+                    document.getElementById('sendBtn').innerText = 'Send Message →';
+                }, 3000);
+            });
+        }
