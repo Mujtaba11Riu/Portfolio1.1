@@ -3473,6 +3473,7 @@ body {
     align-items: center;
     gap: 0.4rem;
     transition: all 0.3s;
+    height: 100%;
 }
 
 .cert-item:hover {
@@ -3506,7 +3507,7 @@ body {
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
     transition: all 0.3s;
-    margin-top: 0.2rem;
+    margin-top: auto;
     background: rgba(0, 255, 255, 0.1);
 }
 .cert-item a:hover {
