@@ -492,3 +492,194 @@ mobileMenuItems.forEach(item => {
 });
 
 
+
+// Certification 
+
+const certs = [
+    { icon: '<i class="fas fa-graduation-cap"></i>', title: 'ISC2 CC Certificate', org: 'International Information System Security Certification', link: 'https://drive.google.com/file/d/1wCopSt-Zlgdr4EK52JjaupXckk7ie_sD/view?usp=sharing' },
+    { icon: '<i class="fas fa-user-secret"></i>', title: 'Ethical Hacking', org: 'Honhaar Jawan Govt of Pakistan', link: 'https://drive.google.com/file/d/1fVi3vTYo1pHmVq6Xc_uUkvQmUbEcBQ12/view' },
+    { icon: '<i class="fas fa-bug"></i>', title: 'Penetration Testing', org: 'Honhaar Jawan Govt of Pakistan', link: 'https://drive.google.com/file/d/1pxkYXList-Lf57qNcz6zE0ovadEYeHTr/view' },
+    { icon: '<i class="fas fa-lock"></i>', title: 'Cybersecurity Essentials', org: 'CISCO Networking Academy', link: 'https://drive.google.com/file/d/1DPIMXP7BSMk3Vs2GqCkChQtU8F4mKHZQ/view' },
+    { icon: '<i class="fas fa-shield-halved"></i>', title: 'Intro to Cybersecurity', org: 'CISCO Networking Academy', link: 'https://drive.google.com/file/d/1crhaom0prvjiB4biEiWkrRwGMmNIamBh/view?usp=drive_link' },
+    { icon: '<i class="fas fa-shield-halved"></i>', title: 'Network Defense', org: 'CISCO Networking Academy', link: 'https://drive.google.com/file/d/1bsf6q-_6HG8LmO2P-0cVyKRXxIGJIFrR/view?usp=drive_link' },
+    { icon: '<i class="fas fa-laptop-code"></i>', title: 'Operating Systems Basics', org: 'CISCO Networking Academy', link: 'https://drive.google.com/file/d/1nA8qKdusNjkcWWZXvXKNrnj151oJaeaJ/view' },
+    { icon: '<i class="fas fa-robot"></i>', title: 'Intro to IoT & Digital Transformation', org: 'CISCO Networking Academy', link: 'https://drive.google.com/file/d/1_NrR3LHNP9iKJDUHWtGnQb8QXe1iHbug/view?usp=drive_link' },
+    { icon: '<i class="fas fa-computer"></i>', title: 'IT Essentials', org: 'CISCO - 6 Months', link: 'https://drive.google.com/file/d/1D6mTtJOWydDsCEhjdEHUa_Xxh_KXXzvC/view?usp=drive_link' },
+    { icon: '<i class="fas fa-code"></i>', title: 'C++ Advanced', org: 'CISCO - 6 Months', link: 'https://drive.google.com/file/d/1Aqn6LuY_2b0fR4yRppmBQSgGUx2ufz2r/view' },
+    { icon: '<i class="fas fa-code"></i>', title: 'C++ Essentials 1', org: 'CISCO - 6 Months', link: 'https://drive.google.com/file/d/1UiKR2RcBh92nJ2aHNTMwa0r5aLQ44EbC/view?usp=drive_link' },
+    { icon: '<i class="fas fa-network-wired"></i>', title: 'Getting Started with Cisco Packet Tracer', org: '3 Months Course', link: 'https://drive.google.com/file/d/14Gd4TLKsTNhAk6MnJR85D0crvxzrErbY/view' },
+    { icon: '<i class="fas fa-palette"></i>', title: 'UI/UX Design', org: '3 Months Course', link: 'https://drive.google.com/file/d/1kfux39i1Vm7_6d8h7hvtUuFZ_JmpRnyo/view?usp=drive_link' },
+    { icon: '<i class="fas fa-desktop"></i>', title: 'Basic Computer Course', org: '6 Months Course', link: 'https://drive.google.com/file/d/1ZzCGwXO6Wvp_YHwU74ll0mG-L4neaKhw/view?usp=drive_link' }
+];
+
+
+const perPage = 6;
+let current = 0;
+const totalPages = Math.ceil(certs.length / perPage);
+
+function render() {
+    const grid = document.getElementById('certGrid');
+    const dots = document.getElementById('certDots');
+    const start = current * perPage;
+    const slice = certs.slice(start, start + perPage);
+
+    grid.innerHTML = slice.map(c => `
+        <div class="cert-item">
+            <span class="cert-icon">${c.icon}</span>
+            <h4>${c.title}</h4>
+            <p>${c.org}</p>
+            <a href="${c.link}" target="_blank">View Certificate</a>
+        </div>
+    `).join('');
+
+    dots.innerHTML = Array.from({ length: totalPages }, (_, i) =>
+        `<div class="cert-dot ${i === current ? 'active' : ''}" onclick="goTo(${i})"></div>`
+    ).join('');
+}
+
+function goTo(page) { current = page; render(); }
+
+document.getElementById('nextBtn').onclick = () => {
+    if (current < totalPages - 1) { current++; render(); }
+};
+document.getElementById('prevBtn').onclick = () => {
+    if (current > 0) { current--; render(); }
+};
+
+render();
+
+
+
+
+
+//projects 
+
+const projects = [
+    { title: 'Target Data Collector [DSA]', desc: 'C++ console tool using BST to collect and manage personal data of any target.', tags: ['Security', 'Programming', 'Tracking'], link: 'https://github.com/Mujtaba11Riu/DSA-Project-Target-Data-Collector' },
+    { title: 'Malware / Virus MKPV [Assembly]', desc: 'First professional malware developed using Assembly Language as a learning project.', tags: ['Assembly', 'Development', 'Malware'], link: 'https://github.com/Mujtaba11Riu/3rd-Semester-End-Project-Of-Computer-Organization-and-Assembly-Language-' },
+    { title: 'WiFi Deauther DDOS [DLD]', desc: 'Deauthentication simulation for academic demonstration and defensive research.', tags: ['DDOS', 'WiFi', 'Research'], link: 'https://github.com/Mujtaba11Riu/WiFi-Deauther-DLD-Project' },
+    { title: 'Complete Documentation [Cybersecurity]', desc: 'BURP Suite documentation with practical exercises for hands-on learning.', tags: ['Linux Tool', 'Pentesting', 'Research'], link: 'https://github.com/Mujtaba11Riu/3rd-Semester-End-Project-Of-Cyber-Security' },
+    { title: 'Encryption Decryption [C++]', desc: 'Lightweight C++ tool to encrypt and decrypt files with animations.', tags: ['C++', 'Development', 'Cryptography'], link: 'https://github.com/Mujtaba11Riu/Encryption-Decryption-' },
+    { title: 'Meal Ordering System [Assembly]', desc: 'Assembly language structured meal ordering system.', tags: ['Assembly', 'Development', 'Console App'], link: 'https://github.com/Mujtaba11Riu/Assembly-Language-Project-' },
+    { title: 'Meal Ordering System [Java]', desc: 'OOP project using core Java concepts for meal ordering.', tags: ['Java', 'OOP', 'Console App'], link: 'https://github.com/Mujtaba11Riu/Meal-Ordering-System-Java' },
+    { title: 'Meal Ordering System [C++]', desc: 'Console-based ordering system with categories and billing.', tags: ['C++', 'Console', 'Programming'], link: 'https://github.com/Mujtaba11Riu/meal-ordering-system' },
+    { title: 'Data Structure & Algorithm [DSA]', desc: 'Basic array operations and practice codes for indexing and traversal.', tags: ['C++', 'Algorithm', 'Development'], link: 'https://github.com/Mujtaba11Riu/DSA-Codes' },
+    { title: 'Computer Network [Cisco Packet Tracer]', desc: 'Company System Network Design project report.', tags: ['Networking', 'Packet Tracer', 'Deployment'], link: 'https://github.com/Mujtaba11Riu/3rd-Semester-End-Project-Of-Computer-Network' },
+    { title: 'First ICT Project', desc: 'Basic HTML/CSS project for documentation and structured programming practice.', tags: ['HTML', 'CSS', 'Web'], link: 'https://github.com/Mujtaba11Riu/First_ict_project_Riu' },
+];
+
+const projPerPage = 6;
+let projCurrent = 0;
+const projTotalPages = Math.ceil(projects.length / projPerPage);
+
+function renderProjects() {
+    const grid = document.getElementById('projGrid');
+    const dots = document.getElementById('projDots');
+    const start = projCurrent * projPerPage;
+    const slice = projects.slice(start, start + projPerPage);
+
+    grid.innerHTML = slice.map(p => `
+        <div class="project-card">
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+            <div class="project-tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+            <a href="${p.link}" target="_blank" class="cert-link" style="margin-top:auto; font-size:0.72rem; padding:0.2rem 0.6rem;">View on GitHub →</a>
+        </div>
+    `).join('');
+
+    dots.innerHTML = Array.from({ length: projTotalPages }, (_, i) =>
+        `<div class="cert-dot ${i === projCurrent ? 'active' : ''}" onclick="projGoTo(${i})"></div>`
+    ).join('');
+}
+
+function projGoTo(page) { projCurrent = page; renderProjects(); }
+
+document.getElementById('projNextBtn').onclick = () => {
+    if (projCurrent < projTotalPages - 1) { projCurrent++; renderProjects(); }
+};
+document.getElementById('projPrevBtn').onclick = () => {
+    if (projCurrent > 0) { projCurrent--; renderProjects(); }
+};
+
+renderProjects();
+
+
+
+
+
+
+// Skill 
+
+const experiences = [
+    { icon: '<i class="fas fa-briefcase"></i>', title: 'DevSecOps Intern', org: 'PHI Consulting', duration: 'Currently Working', desc: 'Working on DevSecOps practices, security automation, and CI/CD pipelines.' },
+    { icon: '<i class="fas fa-desktop"></i>', title: 'Data Entry Operator', org: 'Torcia Academy | 6th Road', duration: '1.5 Year', desc: 'Data management, record keeping, and administrative support.' },
+    { icon: '<i class="fas fa-clipboard"></i>', title: 'Data Entry Operator', org: 'Ropani Foundation', duration: '8 Months', desc: 'Data processing and documentation management.' },
+];
+const expPerPage = 6;
+let expCurrent = 0;
+const expTotalPages = Math.ceil(experiences.length / expPerPage);
+function renderExp() {
+    const grid = document.getElementById('expGrid');
+    const dots = document.getElementById('expDots');
+    const start = expCurrent * expPerPage;
+    const slice = experiences.slice(start, start + expPerPage);
+    grid.innerHTML = slice.map(e => `
+            <div class="project-card">
+                <div style="font-size:1.8rem; margin-bottom:0.4rem;">${e.icon}</div>
+                <h3>${e.title}</h3>
+                <p style="color:#00ff88; font-size:0.72rem; margin-bottom:0.3rem;">${e.org}</p>
+                <span style="background:rgba(0,255,255,0.2); padding:0.15rem 0.5rem; border-radius:10px; font-size:0.65rem; color:#00ffff; margin-bottom:0.5rem; display:inline-block;">${e.duration}</span>
+                <p style="margin-bottom:0.8rem;">${e.desc}</p>
+            </div>
+        `).join('');
+    dots.innerHTML = Array.from({ length: expTotalPages }, (_, i) =>
+        `<div class="cert-dot ${i === expCurrent ? 'active' : ''}" onclick="expGoTo(${i})"></div>`
+    ).join('');
+}
+function expGoTo(page) { expCurrent = page; renderExp(); }
+document.getElementById('expNextBtn').onclick = () => { if (expCurrent < expTotalPages - 1) { expCurrent++; renderExp(); } };
+document.getElementById('expPrevBtn').onclick = () => { if (expCurrent > 0) { expCurrent--; renderExp(); } };
+renderExp();
+
+
+
+
+// Achivements 
+
+const achievements = [
+            { icon: '<i class="fas fa-medal"></i>', title: 'CyberInfinity Riphah CTF 2025', desc: 'CTF Competition\nOrganized By Riphah International University.', link: 'https://linkedin.com/in/mujtaba-riu' },
+            { icon: '<i class="fas fa-medal"></i>', title: 'Air CTF 2025 - Top 6 Finalist', desc: 'Competed against top universities\nincluding NUST, GIKI, COMSATS, UET, Bahria.', link: 'https://linkedin.com/in/mujtaba-riu' },
+            { icon: '<i class="fas fa-award"></i>', title: "NaSCon'25 CTF Qualified Finalists", desc: 'FAST-NUCES Islamabad\nCTF Competition.', link: 'https://linkedin.com/in/mujtaba-riu' },
+            { icon: '<i class="fas fa-trophy"></i>', title: 'PCC 2025 Qualifiers', desc: 'Web Exploitation, Cryptography,\nForensics & Reverse Engineering.', link: 'https://linkedin.com/in/mujtaba-riu' },
+            { icon: '<i class="fas fa-medal"></i>', title: 'CUI TECH Fest CTF 2025', desc: 'Solved complicated CTFs.\nContinuous learning & improvement. 🚀', link: 'https://linkedin.com/in/mujtaba-riu' },
+            { icon: '<i class="fas fa-chart-line"></i>', title: 'AirOverflow Wargames', desc: 'RE, Web Exploitation, Forensics,\nCryptography, AI & Miscellaneous.', link: 'https://linkedin.com/in/mujtaba-riu' },
+            { icon: '<i class="fas fa-lock"></i>', title: 'TryHackMe Achievements', desc: 'Current Rank: 1,199,241\n2/98 Badges Earned.', link: 'https://tryhackme.com' },
+        ];
+        const achievePerPage = 6;
+        let achieveCurrent = 0;
+        const achieveTotalPages = Math.ceil(achievements.length / achievePerPage);
+        function renderAchievements() {
+            const grid = document.getElementById('achieveGrid');
+            const dots = document.getElementById('achieveDots');
+            const start = achieveCurrent * achievePerPage;
+            const slice = achievements.slice(start, start + achievePerPage);
+            grid.innerHTML = slice.map(a => `
+            <div class="achievement-card">
+                <div class="achievement-icon">${a.icon}</div>
+                <h3 style="margin-bottom:0.6rem;">${a.title}</h3>
+                <p style="white-space:pre-line; margin-bottom:0.8rem;">${a.desc}</p>
+                <a href="${a.link}" target="_blank" class="cert-link" style="margin-top:auto;">View on LinkedIn →</a>
+            </div>
+        `).join('');
+            dots.innerHTML = Array.from({ length: achieveTotalPages }, (_, i) =>
+                `<div class="cert-dot ${i === achieveCurrent ? 'active' : ''}" onclick="achieveGoTo(${i})"></div>`
+            ).join('');
+        }
+        function achieveGoTo(page) { achieveCurrent = page; renderAchievements(); }
+        document.getElementById('achieveNextBtn').onclick = () => { if (achieveCurrent < achieveTotalPages - 1) { achieveCurrent++; renderAchievements(); } };
+        document.getElementById('achievePrevBtn').onclick = () => { if (achieveCurrent > 0) { achieveCurrent--; renderAchievements(); } };
+        renderAchievements();
+
+
+
+//
