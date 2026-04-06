@@ -140,7 +140,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    color: #aaa;
+    color: #fffefe;
 }
 
 
@@ -149,7 +149,7 @@ body {
 
 .nav-pill .text {
     white-space: nowrap;
-    color: #00ffff;
+    color: hsl(180, 9%, 98%);
     font-size: 0.95rem;
     opacity: 0;
     transform: translateX(-10px);
@@ -3247,7 +3247,10 @@ body {
      display: none;
 }
 
+
+
 /* ===== ABOUT SECTION ===== */
+
 .about {
     padding: 50px 5%;
     background: rgba(255, 255, 255, 0.02);
@@ -3277,8 +3280,9 @@ body {
 .expertise-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
     margin-top: 1.5rem;
+    flex-wrap: wrap; 
 }
 
 .expertise-item {
@@ -3287,9 +3291,18 @@ body {
     border-radius: 15px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;  
+    align-items: center;     
+    text-align: center;      
+    gap: 0.5rem; 
 }
 
-
+.expertise-item .icon {
+    font-size: 2.2rem;
+    flex-shrink: 0;
+    min-width: 30px;
+}
 
 
 
@@ -3298,11 +3311,7 @@ body {
     border-color: #00ffff;
     box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
 }
-.expertise-item .icon {
-    font-size: 1.2rem;
-    flex-shrink: 0;
-    min-width: 30px;
-}
+
 
 .expertise-item h4 {
     margin: 0;
@@ -3383,7 +3392,7 @@ body {
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
 
-    min-height: 140px;
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
