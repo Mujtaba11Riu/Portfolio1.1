@@ -3314,9 +3314,10 @@ body {
 
 
 
-/* ===== EDUCATION SECTION ===== */
+
 
 /* ===== EDUCATION SECTION ===== */
+
 .education {
     padding: 20px 5%;
 }
@@ -3381,6 +3382,12 @@ body {
     border-radius: 8px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
+
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 
 .timeline-content:hover {
@@ -3402,7 +3409,9 @@ body {
     border-radius: 20px;
     font-size: 0.72rem;
     color: #00ffff;
-    margin-bottom: 0.1rem;
+     width: fit-content;
+
+    margin-bottom: 0.2rem;
 }
 
 .timeline-content p {
@@ -3413,10 +3422,34 @@ body {
 
 
 
+/* ===== BUTTON FIXED FROM BOTTOM ===== */
+.timeline-content button {
+    margin-top: auto;  /* pushes button to bottom */
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    cursor: pointer;
+    font-size: 0.72rem;
+    transition: all 0.3s;
+}
+
+.timeline-content button:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+
 
 /* ===== MOBILE EDUCATION ===== */
 
 @media (max-width: 768px) {
+
+    .timeline-content {
+        min-height: 120px; 
+    }
+
     .timeline::before {
         left: 16px;
         display: block;
@@ -3437,6 +3470,8 @@ body {
         height: 12px;
     }
 }
+
+
 
 
 
