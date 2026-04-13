@@ -471,14 +471,14 @@ body {
 
 .hero h2 {
      font-size: 1.3rem;
-    color: #aaa;
+    color: #ffffff;
     margin-bottom: 1rem;
     min-height: 40px;
 }
 
 .hero-description p {
      font-size: 1rem;
-    color: #ccc;
+    color: #ffffff;
     margin-bottom: 1.5rem;
     line-height: 1.6;
 }
@@ -3236,7 +3236,7 @@ body {
     font-size: 2rem;
     text-align: center;
     /* margin-bottom: 1rem; */
-    background: linear-gradient(45deg, #00ffff, #00ff88);
+    background: linear-gradient(45deg,  #ffffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
