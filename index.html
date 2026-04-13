@@ -85,36 +85,152 @@
             <h2 class="typing-text"></h2>
         </div>
 
-        <div class="stop-btn-container" style="margin-top: 20px; text-align: left;">
-                    <button id="stopAnimationBtn" class="btn btn-stop">⏸️ Stop Animation</button>
-                    <button id="startAnimationBtn" class="btn btn-start" style="display: none;">▶️ Start
-                        Animation</button>
-                </div>
+
+        <!-- Button Only for me  -->
+        <div id="stopBtnContainer" class="stop-btn-container"
+            style="margin-top: 20px; text-align: left; display: none;">
+            <button id="stopAnimationBtn" class="btn btn-stop">⏸️ Stop Animation</button>
+            <button id="startAnimationBtn" class="btn btn-start" style="display: none;">▶️ Start Animation</button>
+        </div>
 
         <!-- ANIMATION CONTAINER (RIGHT SIDE) -->
 
         <div class="hero-animation-container">
 
             <div class="hero-animation">
-                <!-- LAPTOP ANIMATION -->
+
+                <!-- LAPTOP ANIMATION (MacBook Pro 3D) -->
                 <div class="laptop">
+                    <!-- SCREEN with Bezel, Notch, Camera -->
                     <div class="laptop-screen">
-                        <div class="shield-icon">🛡️</div>
-                        <div class="terminal-cursor"></div>
-                        <div class="code-lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                        <div class="screen-bezel"></div>
+                        <div class="screen-glare"></div>
+                        <div class="notch"></div>
+                        <div class="camera"></div>
+
+                        <!-- Screen content (defense) -->
+                        <div class="screen-content">
+                            <div class="shield-icon">🛡️</div>
+                            <div class="defense-content">
+                                <div class="defense-line">🛡️ SHIELD: ACTIVE</div>
+                                <div class="defense-line">⚡ AI Defense Layer: ONLINE</div>
+                                <div class="defense-line">🌐 Network Status: SECURE</div>
+                                <div class="defense-line">🔐 Intrusion Blocked: 0</div>
+                                <div class="progress-bar-defense">
+                                    <div class="progress-fill-defense"></div>
+                                </div>
+                                <div class="defense-line">✅ 0 threats detected</div>
+                                <div class="defense-line">🔒 System hardened</div>
+                            </div>
+
                         </div>
                     </div>
+
+                    <!-- BASE (Aluminum) -->
                     <div class="laptop-base"></div>
+
+                    <!-- KEYBOARD (MacBook style) -->
+                    <div class="laptop-keyboard">
+                        <div class="key-row">
+                            <div class="key esc">esc</div>
+                            <div class="key fn">F1</div>
+                            <div class="key fn">F2</div>
+                            <div class="key fn">F3</div>
+                            <div class="key fn">F4</div>
+                            <div class="key fn">F5</div>
+                            <div class="key fn">F6</div>
+                            <div class="key fn">F7</div>
+                            <div class="key fn">F8</div>
+                            <div class="key fn">F9</div>
+                            <div class="key fn">F10</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key num">`</div>
+                            <div class="key num">1</div>
+                            <div class="key num">2</div>
+                            <div class="key num">3</div>
+                            <div class="key num">4</div>
+                            <div class="key num">5</div>
+                            <div class="key num">6</div>
+                            <div class="key num">7</div>
+                            <div class="key num">8</div>
+                            <div class="key num">9</div>
+                            <div class="key num">0</div>
+                            <div class="key num">-</div>
+                            <div class="key num">=</div>
+                            <div class="key backspace">⌫</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key tab">tab</div>
+                            <div class="key letter">Q</div>
+                            <div class="key letter">W</div>
+                            <div class="key letter">E</div>
+                            <div class="key letter">R</div>
+                            <div class="key letter">T</div>
+                            <div class="key letter">Y</div>
+                            <div class="key letter">U</div>
+                            <div class="key letter">I</div>
+                            <div class="key letter">O</div>
+                            <div class="key letter">P</div>
+                            <div class="key letter">[</div>
+                            <div class="key letter">]</div>
+                            <div class="key backspace">\</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key caps">caps</div>
+                            <div class="key letter">A</div>
+                            <div class="key letter">S</div>
+                            <div class="key letter">D</div>
+                            <div class="key letter">F</div>
+                            <div class="key letter">G</div>
+                            <div class="key letter">H</div>
+                            <div class="key letter">J</div>
+                            <div class="key letter">K</div>
+                            <div class="key letter">L</div>
+                            <div class="key letter">;</div>
+                            <div class="key letter">'</div>
+                            <div class="key enter">return</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key shift">shift</div>
+                            <div class="key letter">Z</div>
+                            <div class="key letter">X</div>
+                            <div class="key letter">C</div>
+                            <div class="key letter">V</div>
+                            <div class="key letter">B</div>
+                            <div class="key letter">N</div>
+                            <div class="key letter">M</div>
+                            <div class="key letter">&lt;</div>
+                            <div class="key letter">&gt;</div>
+                            <div class="key letter">?</div>
+                            <div class="key shift">shift</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key ctrl">ctrl</div>
+                            <div class="key cmd">⌘</div>
+                            <div class="key alt">option</div>
+                            <div class="key space"></div>
+                            <div class="key alt">option</div>
+                            <div class="key cmd">⌘</div>
+                            <div class="key ctrl">ctrl</div>
+                        </div>
+                    </div>
+
+
                     <div class="laptop-bottom"></div>
+
+                    <!-- Floating Icons (Right side) -->
                     <div class="floating-icons">
                         <span class="float-icon">🔐</span>
                         <span class="float-icon">💻</span>
                         <span class="float-icon">⚡</span>
                     </div>
                 </div>
+
+
+
+
+
 
 
 
@@ -646,7 +762,7 @@
                             </div>
                         </div>
 
-                       
+
 
                         <!-- Network Nodes Animation -->
 
@@ -730,7 +846,7 @@
 
 
 
-                <!-- 
+
         <div class="hero-description">
             <p>
                 Penetration Tester • Malware Researcher • PQC Explorer.<br>
@@ -742,7 +858,7 @@
                 <a href="#projects" class="btn btn-secondary">View Projects</a>
             </div>
         </div> -->
-                
+
 
 
     </section>
