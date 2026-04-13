@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Hacking Simulation | CEH Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+        }
+
+        /* ===== NEW HACKING SIMULATION ===== */
+        .hacking-simulation-new {
+            position: relative;
+            width: 450px;
+            height: 480px;
+            margin: 0 auto;
+        }
+
+        .hack-terminal {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            border: 2px solid #00ff00;
+            border-radius: 14px;
+            box-shadow: 0 0 35px rgba(0, 255, 0, 0.4), inset 0 0 25px rgba(0, 255, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(2px);
+        }
+
+        .hack-header {
+            background: #0a0a0a;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1.5px solid #00ff00;
+        }
+
+        .hack-dots {
+            display: flex;
+            gap: 8px;
+        }
+        .hdot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+        .hdot.red { background: #ff5f56; }
+        .hdot.yellow { background: #ffbd2e; }
+        .hdot.green { background: #27ca3f; }
+
+        .hack-title {
+            color: #0f0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .hack-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .hack-led {
+            width: 9px;
+            height: 9px;
+            background: #0f0;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #0f0;
+            animation: hackBlink 1s infinite;
+        }
+        .hack-status-text {
+            color: #0f0;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        @keyframes hackBlink {
+            0%, 100% { opacity: 1; transform: scale(1);}
+            50% { opacity: 0.3; transform: scale(0.8);}
+        }
+
+        .hack-body {
+            padding: 18px;
+            height: calc(100% - 90px);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* CEH BADGE */
+        .hack-badge {
+            text-align: center;
+        }
+        .hack-badge-outer {
+            display: inline-block;
+            position: relative;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 200, 0, 0.05));
+            border: 2px solid #0f0;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+        }
+        .hack-badge-inner {
+            position: relative;
+            z-index: 2;
+        }
+        .hack-badge-text {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #0f0, #0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px rgba(0, 255, 0, 0.6);
+        }
+        .hack-badge-sub {
+            color: #0f0;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .hack-badge-glow {
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #0f0, #0ff, #0f0);
+            border-radius: 14px;
+            opacity: 0.25;
+            filter: blur(6px);
+            animation: badgePulse 2.5s infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.45; }
+        }
+
+        /* PROGRESS STEPS */
+        .hack-progress {
+            background: rgba(0, 20, 0, 0.7);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        .hack-progress-title {
+            color: #0f0;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .hack-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .hack-step {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 6px;
+            color: #aaa;
+        }
+        .hack-step.done {
+            color: #0f0;
+            background: rgba(0, 255, 0, 0.1);
+        }
+        .hack-step.active {
+            color: #ffff00;
+            background: rgba(255, 255, 0, 0.1);
+            border-left: 3px solid #ff0;
+        }
+        .hack-step span {
+            font-weight: bold;
+        }
+        .pulse {
+            display: inline-block;
+            animation: spinPulse 1s linear infinite;
+        }
+        @keyframes spinPulse {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* LIVE OUTPUT */
+        .hack-output {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            font-size: 0.7rem;
+            font-family: monospace;
+        }
+        .hack-line {
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+        .success {
+            color: #0f0;
+            font-weight: bold;
+        }
+        .typing {
+            color: #0f0;
+            animation: blinkCursor 1s step-end infinite;
+            border-right: 2px solid #0f0;
+            white-space: nowrap;
+            overflow: hidden;
+            width: fit-content;
+        }
+        @keyframes blinkCursor {
+            0%, 100% { border-color: #0f0; }
+            50% { border-color: transparent; }
+        }
+
+        /* FOOTER */
+        .hack-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 8px 15px;
+            border-top: 1px solid #0f0;
+        }
+        .hack-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #0f0;
+            font-size: 0.7rem;
+            font-family: monospace;
+        }
+
+        /* BINARY RAIN EFFECT (optional) */
+        .hack-binary-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 14px;
+        }
+        .hack-binary-rain::before {
+            content: "10110010 01101001 11001101 00110110 10110010 01101001";
+            position: absolute;
+            font-size: 12px;
+            color: rgba(0, 255, 0, 0.15);
+            white-space: nowrap;
+            animation: rainFall 12s linear infinite;
+            width: 200%;
+        }
+        @keyframes rainFall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="hacking-simulation-new">
+        <div class="hack-terminal">
+            <div class="hack-header">
+                <div class="hack-dots">
+                    <span class="hdot red"></span>
+                    <span class="hdot yellow"></span>
+                    <span class="hdot green"></span>
+                </div>
+                <div class="hack-title">root@ethical-hacker:~#</div>
+                <div class="hack-status">
+                    <span class="hack-led"></span>
+                    <span class="hack-status-text">ACTIVE</span>
+                </div>
+            </div>
+            <div class="hack-body">
+                <div class="hack-badge">
+                    <div class="hack-badge-outer">
+                        <div class="hack-badge-inner">
+                            <div class="hack-badge-text">CEH</div>
+                            <div class="hack-badge-sub">CERTIFIED ETHICAL HACKER</div>
+                        </div>
+                        <div class="hack-badge-glow"></div>
+                    </div>
+                </div>
+                <div class="hack-progress">
+                    <div class="hack-progress-title">🔓 PENETRATION TEST IN PROGRESS</div>
+                    <div class="hack-steps">
+                        <div class="hack-step done">Reconnaissance <span>✓</span></div>
+                        <div class="hack-step done">Scanning <span>✓</span></div>
+                        <div class="hack-step active">Gaining Access <span class="pulse">⟳</span></div>
+                        <div class="hack-step">Maintaining Access</div>
+                        <div class="hack-step">Covering Tracks</div>
+                    </div>
+                </div>
+                <div class="hack-output">
+                    <div class="hack-line">[>] Bypassing firewall... <span class="success">✓</span></div>
+                    <div class="hack-line">[>] Exploiting CVE-2024-XXXX... <span class="pulse">⟳</span></div>
+                    <div class="hack-line typing">[>] root access granted.</div>
+                </div>
+            </div>
+            <div class="hack-footer">
+                <div class="hack-stats">
+                    <span>TARGETS: 12</span>
+                    <span>VULNS: 47</span>
+                    <span>EXPLOITS: 8</span>
+                    <span>ACCESS: ROOT</span>
+                </div>
+            </div>
+        </div>
+        <div class="hack-binary-rain"></div>
+    </div>
+</body>
+</html>

@@ -338,12 +338,22 @@ function startBinaryAnimation() {
     return () => clearInterval(animationInterval);
 }
 
+
+
+
+
+let typingTimeout = null;
+let isTypingActive = true;
+
 function typeText() {
+    if (!isTypingActive) {
+        return;  // Stop ho gaya to kuch mat karo
+    }
+
     const typingElement = document.querySelector('.typing-text');
     const currentText = typingTexts[textIndex];
 
     // ===== HERO ANIMATION SWITCH =====
-    // Hide all first
     if (laptop) {
         laptop.style.display = "block";
         laptop.style.opacity = "1";
@@ -367,14 +377,13 @@ function typeText() {
     if (researcherSimulation) {
         researcherSimulation.style.display = "none";
         researcherSimulation.style.opacity = "0";
-        // Clear previous animation if exists
         if (clearBinaryAnimation) {
             clearBinaryAnimation();
             clearBinaryAnimation = null;
         }
     }
 
-    // Show specific animation based on text
+    // Show specific animation
     if (currentText === "Certified Ethical Hacker") {
         if (laptop) laptop.style.display = "none";
         if (hackingSimulation) {
@@ -408,40 +417,68 @@ function typeText() {
         if (researcherSimulation) {
             researcherSimulation.style.display = "flex";
             researcherSimulation.style.opacity = "1";
-            // Initialize and start binary matrix animation
             setTimeout(() => {
                 initBinaryMatrix();
                 clearBinaryAnimation = startBinaryAnimation();
             }, 100);
         }
     }
-    // For "Cyber Security Specialist" and others, laptop will show
 
     // Typing logic
     if (isDeleting) {
         typingElement.textContent = currentText.substring(0, charIndex - 1);
         charIndex--;
-        typingSpeed = 50; // Faster deleting
+        typingSpeed = 50;
     } else {
         typingElement.textContent = currentText.substring(0, charIndex + 1);
         charIndex++;
-        typingSpeed = 100; // Normal typing speed
+        typingSpeed = 100;
     }
 
-    // When text is complete, wait then start deleting
     if (!isDeleting && charIndex === currentText.length) {
         isDeleting = true;
-        typingSpeed = 1500; // Wait 1.5 seconds before deleting
+        typingSpeed = 1500;
     }
-    // When text is deleted, move to next text
     else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         textIndex = (textIndex + 1) % typingTexts.length;
-        typingSpeed = 500; // Wait 0.5 seconds before typing next
+        typingSpeed = 500;
     }
 
-    setTimeout(typeText, typingSpeed);
+    // Schedule next update (SIRF YAHAN EK BAAR)
+    typingTimeout = setTimeout(typeText, typingSpeed);
 }
+
+
+
+
+document.getElementById('stopAnimationBtn').addEventListener('click', function() {
+    isTypingActive = false;
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+        typingTimeout = null;
+    }
+    document.getElementById('stopAnimationBtn').style.display = 'none';
+    document.getElementById('startAnimationBtn').style.display = 'inline-block';
+});
+
+document.getElementById('startAnimationBtn').addEventListener('click', function() {
+    if (isTypingActive) return;
+    isTypingActive = true;
+    typeText();  // wahi se restart hoga
+    document.getElementById('stopAnimationBtn').style.display = 'inline-block';
+    document.getElementById('startAnimationBtn').style.display = 'none';
+});
+
+
+
+
+
+
+
+
+
+
 
 // Start typing animation when page loads
 window.addEventListener('DOMContentLoaded', () => {

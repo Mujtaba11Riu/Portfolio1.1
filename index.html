@@ -85,6 +85,11 @@
             <h2 class="typing-text"></h2>
         </div>
 
+        <div class="stop-btn-container" style="margin-top: 20px; text-align: left;">
+                    <button id="stopAnimationBtn" class="btn btn-stop">⏸️ Stop Animation</button>
+                    <button id="startAnimationBtn" class="btn btn-start" style="display: none;">▶️ Start
+                        Animation</button>
+                </div>
 
         <!-- ANIMATION CONTAINER (RIGHT SIDE) -->
 
@@ -641,14 +646,7 @@
                             </div>
                         </div>
 
-                        <!-- Floating Security Icons -->
-
-                        <div class="security-icons">
-                            <div class="sicon">🔍</div>
-                            <div class="sicon">📡</div>
-                            <div class="sicon">⚡</div>
-                            <div class="sicon">🛡️</div>
-                        </div>
+                       
 
                         <!-- Network Nodes Animation -->
 
@@ -672,131 +670,67 @@
 
                 <!-- HACKING SIMULATION FOR CERTIFIED ETHICAL HACKER -->
 
-
-
+                <!-- HACKING SIMULATION FOR CERTIFIED ETHICAL HACKER (NEW) -->
                 <div class="hacking-simulation">
-                    <div class="simulation-container">
-                        <!-- Main Hacking Terminal -->
-                        <div class="main-terminal">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <span class="dot red"></span>
-                                    <span class="dot yellow"></span>
-                                    <span class="dot green"></span>
-                                </div>
-                                <div class="terminal-title">root@ethical-hacker:~</div>
-                                <div class="terminal-status">
-                                    <span class="status-led"></span>
-                                    <span class="status-text">ACTIVE</span>
-                                </div>
+                    <div class="hack-terminal">
+                        <div class="hack-header">
+                            <div class="hack-dots">
+                                <span class="hdot red"></span>
+                                <span class="hdot yellow"></span>
+                                <span class="hdot green"></span>
                             </div>
-
-                            <div class="terminal-body">
-                                <div class="terminal-content">
-                                    <!-- CEH Badge -->
-                                    <div class="ceh-badge">
-                                        <div class="badge-outer">
-                                            <div class="badge-inner">
-                                                <!-- <span class="ceh-text">CEH</span> -->
-                                                <div class="badge-subtitle">CERTIFIED ETHICAL HACKER</div>
-                                            </div>
-                                            <div class="badge-glow"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Hacking Progress -->
-                                    <div class="hacking-progress">
-                                        <div class="progress-title">PENETRATION TEST IN PROGRESS</div>
-                                        <div class="progress-steps">
-                                            <div class="step active">
-                                                <span class="step-number">1</span>
-                                                <span class="step-text">Reconnaissance</span>
-                                                <span class="step-check">✓</span>
-                                            </div>
-                                            <div class="step active">
-                                                <span class="step-number">2</span>
-                                                <span class="step-text">Scanning</span>
-                                                <span class="step-check">✓</span>
-                                            </div>
-                                            <div class="step active">
-                                                <span class="step-number">3</span>
-                                                <span class="step-text">Gaining Access</span>
-                                                <span class="step-pulse"></span>
-                                            </div>
-                                            <div class="step">
-                                                <span class="step-number">4</span>
-                                                <span class="step-text">Maintaining Access</span>
-                                            </div>
-                                            <div class="step">
-                                                <span class="step-number">5</span>
-                                                <span class="step-text">Covering Tracks</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Live Terminal Output -->
-                                    <div class="live-terminal">
-                                        <div class="live-output">
-                                            <div class="output-line">
-                                                <span class="prompt">$</span> whoami
-                                            </div>
-                                            <div class="output-line result">
-                                                <span class="user">certified-ethical-hacker</span>
-                                            </div>
-                                            <div class="output-line">
-                                                <span class="prompt">$</span> sudo hack --target corporate-network
-                                            </div>
-                                            <div class="output-line scanning">
-                                                [+] Initializing penetration test...
-                                            </div>
-                                            <div class="output-line success">
-                                                [+] Bypassing firewall... <span class="checkmark">✓</span>
-                                            </div>
-                                            <div class="output-line success">
-                                                [+] Scanning vulnerabilities... <span class="checkmark">✓</span>
-                                            </div>
-                                            <div class="output-line executing">
-                                                [*] Exploiting CVE-2023-XXXX... <span class="pulse">⟳</span>
-                                            </div>
-                                        </div>
-                                        <div class="terminal-cursor"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="terminal-footer">
-                                <div class="footer-stats">
-                                    <span class="stat"><span class="stat-label">TARGETS:</span> 12</span>
-                                    <span class="stat"><span class="stat-label">VULNS:</span> 47</span>
-                                    <span class="stat"><span class="stat-label">EXPLOITS:</span> 8</span>
-                                    <span class="stat"><span class="stat-label">ACCESS:</span> ROOT</span>
-                                </div>
+                            <div class="hack-title">root@ethical-hacker:~#</div>
+                            <div class="hack-status">
+                                <span class="hack-led"></span>
+                                <span class="hack-status-text">ACTIVE</span>
                             </div>
                         </div>
-
-                        <!-- Floating Code Particles -->
-                        <div class="code-particles">
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
-                            <div class="particle"></div>
+                        <div class="hack-body">
+                            <div class="hack-badge">
+                                <div class="hack-badge-outer">
+                                    <div class="hack-badge-inner">
+                                        <div class="hack-badge-text">CEH</div>
+                                        <div class="hack-badge-sub">CERTIFIED ETHICAL HACKER</div>
+                                    </div>
+                                    <div class="hack-badge-glow"></div>
+                                </div>
+                            </div>
+                            <div class="hack-progress">
+                                <div class="hack-progress-title">🔓 PENETRATION TEST IN PROGRESS</div>
+                                <div class="hack-steps">
+                                    <div class="hack-step done">Reconnaissance <span>✓</span></div>
+                                    <div class="hack-step done">Scanning <span>✓</span></div>
+                                    <div class="hack-step active">Gaining Access <span class="pulse">⟳</span></div>
+                                    <div class="hack-step">Maintaining Access</div>
+                                    <div class="hack-step">Covering Tracks</div>
+                                </div>
+                            </div>
+                            <div class="hack-output">
+                                <div class="hack-line">[>] Bypassing firewall... <span class="success">✓</span></div>
+                                <div class="hack-line">[>] Exploiting CVE-2024-XXXX... <span class="pulse">⟳</span>
+                                </div>
+                                <div class="hack-line typing">[>] root access granted.</div>
+                            </div>
+                        </div>
+                        <div class="hack-footer">
+                            <div class="hack-stats">
+                                <span>TARGETS: 12</span>
+                                <span>VULNS: 47</span>
+                                <span>EXPLOITS: 8</span>
+                                <span>ACCESS: ROOT</span>
+                            </div>
                         </div>
                     </div>
+                    <div class="hack-binary-rain"></div>
                 </div>
 
 
 
 
-            </div> <!-- hero-animation closing tag -->
-
-        </div>
 
 
 
+                <!-- 
         <div class="hero-description">
             <p>
                 Penetration Tester • Malware Researcher • PQC Explorer.<br>
@@ -807,7 +741,8 @@
                 <a href="#contact" class="btn btn-primary">Get In Touch</a>
                 <a href="#projects" class="btn btn-secondary">View Projects</a>
             </div>
-        </div>
+        </div> -->
+                
 
 
     </section>
