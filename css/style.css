@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+* {
+    font-family: 'Inter', sans-serif;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -456,7 +460,7 @@ body {
 /* Hero Content Styling */
 
 .hero-content h1 {
-    font-size: 2.2rem;
+    font-size: 3rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(45deg, #00ffff, #00ff88, #00ffff);
     -webkit-background-clip: text;
@@ -535,6 +539,7 @@ body {
 
 
 /* ===== MACBOOK PRO 3D LAPTOP (NEW) ===== */
+
 .hero-animation {
      margin-top: -30px; 
     display: flex;
@@ -899,6 +904,7 @@ body {
 
 
 /* ===== NEW HACKING SIMULATION (CEH) - FIXED HEIGHT ===== */
+
 .hacking-simulation {
     position: absolute;
     top: 0;
@@ -1165,6 +1171,8 @@ body {
 
 
 /* ===== PENETRATION TESTER SIMULATION (RED THEME, FIXED SIZE) ===== */
+
+
 .pentest-simulation {
     position: absolute;
     top: 0;
@@ -1416,6 +1424,7 @@ body {
 
 
 /* Mobile fix for Hacking & Penetration Tester Simulations */
+
 @media (max-width: 768px) {
     /* Hacking Simulation */
     .hack-terminal {
