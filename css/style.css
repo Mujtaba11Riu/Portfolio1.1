@@ -1423,7 +1423,7 @@ body {
 }
 
 
-/* Mobile fix for Hacking & Penetration Tester Simulations */
+
 
 @media (max-width: 768px) {
     /* Hacking Simulation */
@@ -1448,29 +1448,55 @@ body {
         gap: 5px;
     }
 
-    /* Penetration Tester Simulation */
+    /* Penetration Tester Simulation - FIXED */
+    .pentest-simulation {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        top: auto !important;
+        left: auto !important;
+    }
+    .pentest-container {
+        max-width: 300px !important;
+        margin: 0 auto !important;
+    }
     .pentest-terminal {
-        max-width: 280px;
-        margin: 0 auto;
+        max-width: 280px !important;
+        margin: 0 auto !important;
+        transform: scale(0.95) !important;
+        overflow-x: hidden !important;
     }
     .pentest-title, .pstatus-text {
         font-size: 0.65rem;
     }
     .cpt-text {
-        font-size: 0.9rem;
+        font-size: 0.8rem !important;
     }
     .cpt-subtitle {
-        font-size: 0.55rem;
+        font-size: 0.45rem !important;
     }
-    .scan-title, .sstep, .live-scan, .pentest-stats {
-        font-size: 0.6rem;
+    .scan-title {
+        font-size: 0.65rem !important;
+    }
+    .sstep {
+        font-size: 0.5rem !important;
+    }
+    .live-scan {
+        font-size: 0.5rem !important;
     }
     .pentest-stats {
+        font-size: 0.45rem !important;
         flex-wrap: wrap;
-        gap: 5px;
+        gap: 4px;
+    }
+    .network-nodes {
+        display: none !important;
+    }
+    .hero-animation {
+        height: auto !important;
+        min-height: 300px !important;
     }
 }
-
 
 
 
@@ -3927,7 +3953,7 @@ input, textarea {
 
     /* Hero overall spacing */
     .hero {
-        padding-top: 120px;
+        /* padding-top: 120px; */
         padding-bottom: 60px;
         min-height: auto;
     }
@@ -3950,7 +3976,7 @@ input, textarea {
     /* TEXT KO NICHE PUSH KARNA */
     .hero-description {
         position: relative;
-        margin-top: 160px;   /* 👈 YEH MAIN FIX HAI */
+        margin-top: 20px;   /* 👈 YEH MAIN FIX HAI */
         padding: 0 15px;
         text-align: center;
         z-index: 10;
