@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Security Specialist | MacBook Pro 3D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+        }
+
+        /* 3D MacBook Container */
+        .hero-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            perspective: 1200px;
+        }
+
+        .laptop {
+            position: relative;
+            width: 480px;
+            height: 380px;
+            transform-style: preserve-3d;
+            transform: rotateX(3deg) rotateY(-1deg) rotateZ(0.5deg);
+            transition: transform 0.4s ease;
+        }
+
+        .laptop:hover {
+            transform: rotateX(0deg) rotateY(-2deg) translateY(-5px);
+        }
+
+        /* ===== LAPTOP SCREEN (MacBook Style) ===== */
+        .laptop-screen {
+            position: relative;
+            width: 420px;
+            height: 270px;
+            background: #1a1a1a;
+            border-radius: 24px 24px 8px 8px;
+            margin: 0 auto;
+            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(255,255,255,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+
+        /* Screen Bezel + Glare */
+        .screen-bezel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            border-radius: 24px 24px 8px 8px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .screen-glare {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 50%);
+            border-radius: 24px 24px 8px 8px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Notch (MacBook style) */
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 28px;
+            background: #0f0f0f;
+            border-radius: 0 0 18px 18px;
+            z-index: 4;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        /* Camera dot */
+        .camera {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #1a3a2a;
+            border-radius: 50%;
+            box-shadow: 0 0 3px #0f0;
+            z-index: 5;
+        }
+
+        /* Screen Content (Defense) */
+        .screen-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #0a0e1a 0%, #101520 100%);
+            padding: 20px;
+        }
+
+        /* Shield Icon (Top Left inside screen) */
+        .shield-icon {
+            position: absolute;
+            top: 16px;
+            left: 4px;
+            font-size: 2.2rem;
+            filter: drop-shadow(0 0 6px #0ff);
+            animation: shieldPulse 2s infinite;
+            z-index: 6;
+        }
+
+        @keyframes shieldPulse {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 2px #0ff; opacity: 0.9; }
+            50% { transform: scale(1.08); text-shadow: 0 0 10px #0ff; opacity: 1; }
+        }
+
+        /* Defense Content (Centered) */
+        .defense-content {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: bold;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 1px 20px;
+            width: 85%;
+            border: 1px solid rgba(0,255,255,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .defense-line {
+            margin: 8px 0;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 2px rgba(0,255,255,0.4);
+        }
+
+        .progress-bar-defense {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin: 14px 0;
+            overflow: hidden;
+        }
+        .progress-fill-defense {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #00ff88);
+            border-radius: 10px;
+            animation: fillProgress 2s ease-out;
+            box-shadow: 0 0 4px #0ff;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        /* Terminal Cursor (bottom right) */
+        .terminal-cursor {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            width: 8px;
+            height: 14px;
+            background: #0ff;
+            animation: blink 1s step-end infinite;
+            border-radius: 2px;
+            z-index: 5;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== LAPTOP BASE (Aluminum) ===== */
+        .laptop-base {
+            width: 440px;
+            height: 12px;
+            background: linear-gradient(180deg, #b0b5c0 0%, #8a8f9a 100%);
+            border-radius: 0 0 20px 20px;
+            margin: -2px auto 0;
+            box-shadow: 0 8px 12px rgba(0,0,0,0.3);
+        }
+
+        /* MacBook Keyboard Area */
+        .laptop-keyboard {
+            width: 400px;
+            margin: 8px auto 0;
+            background: #2c2c2e;
+            border-radius: 18px;
+            padding: 12px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid #555;
+        }
+
+        /* Key rows */
+        .key-row {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 7px;
+        }
+        .key-row:last-child {
+            margin-bottom: 0;
+        }
+        /* MacBook style keys (black, low profile) */
+        .key {
+            background: #1c1c1e;
+            border-radius: 8px;
+            box-shadow: 0 1px 0 #444, inset 0 1px 0 #3a3a3c;
+            color: #e0e0e0;
+            font-size: 0.6rem;
+            font-family: 'SF Pro', 'Segoe UI', monospace;
+            text-align: center;
+            line-height: 24px;
+            font-weight: 500;
+            transition: all 0.05s;
+            height: 26px;
+        }
+        .key:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 1px 2px #000;
+        }
+        /* Key widths */
+        .key.fn { width: 34px; }
+        .key.esc { width: 40px; }
+        .key.num { width: 34px; }
+        .key.letter { width: 34px; }
+        .key.space { width: 110px; }
+        .key.enter { width: 60px; }
+        .key.shift { width: 74px; }
+        .key.ctrl { width: 48px; }
+        .key.alt { width: 48px; }
+        .key.cmd { width: 48px; }
+        .key.tab { width: 52px; }
+        .key.caps { width: 60px; }
+        .key.backspace { width: 60px; }
+
+    
+
+        /* Bottom shadow for depth */
+        .laptop-bottom {
+            width: 460px;
+            height: 6px;
+            background: rgba(0,0,0,0.3);
+            margin: 2px auto 0;
+            border-radius: 50%;
+            filter: blur(4px);
+        }
+
+        /* Floating Icons (Right side of laptop) */
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .float-icon {
+            position: absolute;
+            font-size: 1.8rem;
+            animation: floatAround 7s infinite ease-in-out;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 3px #0ff);
+        }
+        .float-icon:nth-child(1) { top: 3%; right: -5%; animation-delay: 0s; }
+        .float-icon:nth-child(2) { bottom: 15%; right: -2%; animation-delay: 2.5s; }
+        .float-icon:nth-child(3) { top: 45%; right: -8%; animation-delay: 5s; }
+
+        @keyframes floatAround {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            30% { transform: translateY(-14px) rotate(5deg); }
+            60% { transform: translateY(5px) rotate(-3deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero-animation {
+                transform: scale(0.8);
+            }
+            .float-icon {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-animation">
+        <div class="laptop">
+            <!-- SCREEN with Bezel, Notch, Camera -->
+            <div class="laptop-screen">
+                <div class="screen-bezel"></div>
+                <div class="screen-glare"></div>
+                <div class="notch"></div>
+                <div class="camera"></div>
+                
+                <!-- Screen content (defense) -->
+                <div class="screen-content">
+                    <div class="shield-icon">🛡️</div>
+                    <div class="defense-content">
+                        <div class="defense-line"> SHIELD: ACTIVE</div>
+                        <div class="defense-line">⚡ AI Defense Layer: ONLINE</div>
+                        <div class="defense-line">🌐 Network Status: SECURE</div>
+                        <div class="defense-line">🔐 Intrusion Blocked: 0</div>
+                        <div class="progress-bar-defense">
+                            <div class="progress-fill-defense"></div>
+                        </div>
+                        <div class="defense-line">✅ 0 threats detected</div>
+                        <div class="defense-line">🔒 System hardened</div>
+                    </div>
+                    <div class="terminal-cursor"></div>
+                </div>
+            </div>
+
+            <!-- BASE (Aluminum) -->
+            <div class="laptop-base"></div>
+
+            <!-- KEYBOARD (MacBook style) -->
+            <div class="laptop-keyboard">
+                <div class="key-row">
+                    <div class="key esc">esc</div>
+                    <div class="key fn">F1</div>
+                    <div class="key fn">F2</div>
+                    <div class="key fn">F3</div>
+                    <div class="key fn">F4</div>
+                    <div class="key fn">F5</div>
+                    <div class="key fn">F6</div>
+                    <div class="key fn">F7</div>
+                    <div class="key fn">F8</div>
+                    <div class="key fn">F9</div>
+                    <div class="key fn">F10</div>
+                </div>
+                <div class="key-row">
+                    <div class="key num">`</div>
+                    <div class="key num">1</div>
+                    <div class="key num">2</div>
+                    <div class="key num">3</div>
+                    <div class="key num">4</div>
+                    <div class="key num">5</div>
+                    <div class="key num">6</div>
+                    <div class="key num">7</div>
+                    <div class="key num">8</div>
+                    <div class="key num">9</div>
+                    <div class="key num">0</div>
+                    <div class="key num">-</div>
+                    <div class="key num">=</div>
+                    <div class="key backspace">⌫</div>
+                </div>
+                <div class="key-row">
+                    <div class="key tab">tab</div>
+                    <div class="key letter">Q</div>
+                    <div class="key letter">W</div>
+                    <div class="key letter">E</div>
+                    <div class="key letter">R</div>
+                    <div class="key letter">T</div>
+                    <div class="key letter">Y</div>
+                    <div class="key letter">U</div>
+                    <div class="key letter">I</div>
+                    <div class="key letter">O</div>
+                    <div class="key letter">P</div>
+                    <div class="key letter">[</div>
+                    <div class="key letter">]</div>
+                    <div class="key backspace">\</div>
+                </div>
+                <div class="key-row">
+                    <div class="key caps">caps</div>
+                    <div class="key letter">A</div>
+                    <div class="key letter">S</div>
+                    <div class="key letter">D</div>
+                    <div class="key letter">F</div>
+                    <div class="key letter">G</div>
+                    <div class="key letter">H</div>
+                    <div class="key letter">J</div>
+                    <div class="key letter">K</div>
+                    <div class="key letter">L</div>
+                    <div class="key letter">;</div>
+                    <div class="key letter">'</div>
+                    <div class="key enter">return</div>
+                </div>
+                <div class="key-row">
+                    <div class="key shift">shift</div>
+                    <div class="key letter">Z</div>
+                    <div class="key letter">X</div>
+                    <div class="key letter">C</div>
+                    <div class="key letter">V</div>
+                    <div class="key letter">B</div>
+                    <div class="key letter">N</div>
+                    <div class="key letter">M</div>
+                    <div class="key letter">&lt;</div>
+                    <div class="key letter">&gt;</div>
+                    <div class="key letter">?</div>
+                    <div class="key shift">shift</div>
+                </div>
+                <div class="key-row">
+                    <div class="key ctrl">ctrl</div>
+                    <div class="key cmd">⌘</div>
+                    <div class="key alt">option</div>
+                    <div class="key space"></div>
+                    <div class="key alt">option</div>
+                    <div class="key cmd">⌘</div>
+                    <div class="key ctrl">ctrl</div>
+                </div>
+            </div>
+
+            <!-- Touchpad -->
+            <div class="touchpad"></div>
+            <div class="laptop-bottom"></div>
+
+            <!-- Floating Icons (Right side) -->
+            <div class="floating-icons">
+                <span class="float-icon">🔐</span>
+                <span class="float-icon">💻</span>
+                <span class="float-icon">⚡</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
