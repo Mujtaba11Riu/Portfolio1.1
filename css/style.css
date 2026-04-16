@@ -3801,7 +3801,7 @@ body {
 }
 
 .expertise-item {
-    background: rgba(0, 255, 255, 0.05);
+    background: rgba(87, 255, 255, 0.05);
     padding: 1.2rem;
     border-radius: 15px;
     border: 1px solid rgba(0, 255, 255, 0.2);
@@ -3902,16 +3902,15 @@ body {
 
 .timeline-content {
     background: rgba(0, 255, 255, 0.05);
-    padding: 1.4rem 1.7rem;
+    padding: 1.5rem 1.8rem;           /* padding thoda bada */
     border-radius: 8px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
-
-    min-height: 100px;
+    min-height: 140px;                /* pehle 100px tha, ab 140px */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    gap: 12px;   
 }
 
 .timeline-content:hover {
@@ -3930,9 +3929,9 @@ body {
     display: inline-block;
     background: rgba(0, 255, 255, 0.2);
     padding: 0.1rem 0.5rem;
-    border-radius: 20px;
+    border-radius: 4px;
     font-size: 0.72rem;
-    color: #00ffff;
+    color: #ffffff;
     width: fit-content;
 
     margin-bottom: 0.2rem;
@@ -4087,6 +4086,21 @@ section {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Make certificates cards width same as projects cards */
 .cert-carousel {
     max-width: 900px;  /* match projects carousel */
@@ -4206,6 +4220,10 @@ section {
 
 
 
+
+
+
+
 /* ===== PROJECTS SECTION ===== */
 
 
@@ -4233,12 +4251,13 @@ section {
     border-radius: 10px;
     border: 1px solid rgba(0, 255, 255, 0.2);
     transition: all 0.3s;
-    
+    min-height: 220px;
     /* Diploma card jaisi settings */
     height: 100%;               /* sab cards ki height equal */
     justify-content: space-between;  /* content upar, button neeche (ya center chahiye to center) */
     align-items: center;        /* horizontally center */
     text-align: center;
+    gap: 10px;
 }
 
 .project-card:hover {
@@ -4338,6 +4357,8 @@ section {
     border: 1px solid rgba(0, 255, 255, 0.2);
     text-align: center;
     transition: all 0.3s;
+    min-height:220px;
+    gap: 10px;
 }
 
 .achievement-card:hover {
