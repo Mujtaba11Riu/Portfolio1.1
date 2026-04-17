@@ -3768,7 +3768,7 @@ body {
 
 .about {
     padding: 50px 5%;
-    background: rgba(255, 255, 255, 0.02);
+    /* background: rgba(255, 255, 255, 0.02); */
 }
 
 .about-content {
@@ -4364,7 +4364,7 @@ section {
 /* ===== ACHIEVEMENTS SECTION ===== */
 .achievements {
     padding: 40px 5%;
-    background: rgba(255, 255, 255, 0.02);
+    /* background: rgba(255, 255, 255, 0.02); */
 }
 
 .achievements-grid {
@@ -4447,7 +4447,7 @@ section {
 
 .skills {
     padding: 100px 5%;
-    background: rgba(255, 255, 255, 0.02);
+    /* background: rgba(255, 255, 255, 0.02); */
 }
 
 
