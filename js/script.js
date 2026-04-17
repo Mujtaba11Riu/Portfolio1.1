@@ -737,6 +737,8 @@ const achievements = [
         let skillCurrent = 0;
         const skillTotalPages = Math.ceil(skills.length / skillPerPage);
 
+
+
         function renderSkills() {
             const grid = document.getElementById('skillsGrid');
             const dots = document.getElementById('skillDots');
@@ -744,20 +746,25 @@ const achievements = [
             const slice = skills.slice(start, start + skillPerPage);
 
             grid.innerHTML = slice.map(s => `
-        <div class="project-card">
+         <div class="project-card">
             <div style="font-size:1.8rem; margin-bottom:0.5rem;">${s.icon}</div>
             <h3 style="margin-bottom:0.6rem;">${s.name}</h3>
             <div style="width:100%; height:6px; background:rgba(0,255,255,0.1); border-radius:10px; overflow:hidden; margin-bottom:0.3rem;">
                 <div style="width:${s.percent}%; height:100%; background:linear-gradient(90deg,#00ffff,#00ff88); border-radius:10px; box-shadow:0 0 8px rgba(0,255,255,0.4);"></div>
             </div>
             <p style="color:#00ffff; font-size:0.72rem; text-align:right;">${s.percent}%</p>
-        </div>
-    `).join('');
+         </div>
+             `).join('');
+
+
+    
 
             dots.innerHTML = Array.from({ length: skillTotalPages }, (_, i) =>
                 `<div class="cert-dot ${i === skillCurrent ? 'active' : ''}" onclick="skillGoTo(${i})"></div>`
             ).join('');
         }
+
+
 
         function skillGoTo(page) { skillCurrent = page; renderSkills(); }
 
