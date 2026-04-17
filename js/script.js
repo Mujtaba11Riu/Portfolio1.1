@@ -203,7 +203,7 @@ const typingTexts = [
     "Certified Ethical Hacker",
     "Certified Penetration Tester",
     "Web & App Security Tester",
-    "Malware Analyst & Developer",
+    "Malware Analyst & Reasearcher",
     "Security Researcher"
 ];
 
