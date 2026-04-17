@@ -1,5 +1,8 @@
 // ===== NEURAL NETWORK BACKGROUND =====
 
+
+
+// ===== NEURAL NETWORK BACKGROUND (FIXED ZOOM ISSUE) =====
 const canvas = document.createElement('canvas');
 canvas.id = 'neuralCanvas';
 canvas.style.cssText = `
@@ -14,41 +17,45 @@ canvas.style.cssText = `
 document.body.prepend(canvas);
 
 const ctx = canvas.getContext('2d');
-
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-const nodes = [];
+let nodes = [];
 const NODES_COUNT = 80;
 const MAX_DISTANCE = 150;
 const MOUSE = { x: null, y: null };
 
+// Function to initialize nodes based on current window size
+function initNodes() {
+    nodes = [];
+    for (let i = 0; i < NODES_COUNT; i++) {
+        nodes.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25,
+            radius: Math.random() * 2.5 + 1,
+            pulse: Math.random() * Math.PI * 2,
+        });
+    }
+}
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initNodes(); // 👈 YAHI FIX HAI: zoom pe nodes regenerate honge
+}
+window.addEventListener('resize', resize);
+
+// Mouse move
 window.addEventListener('mousemove', e => {
     MOUSE.x = e.clientX;
     MOUSE.y = e.clientY;
 });
-
 window.addEventListener('mouseleave', () => {
     MOUSE.x = null;
     MOUSE.y = null;
 });
 
-for (let i = 0; i < NODES_COUNT; i++) {
-    nodes.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        radius: Math.random() * 2.5 + 1,
-        pulse: Math.random() * Math.PI * 2,
-    });
-}
-
 function drawNeural() {
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Move nodes
@@ -66,8 +73,8 @@ function drawNeural() {
             const dy = MOUSE.y - n.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < 200) {
-                n.x -= dx * 0.003;  // 0.01 → 0.003
-                n.y -= dy * 0.003;  // 0.01 → 0.003
+                n.x -= dx * 0.003;
+                n.y -= dy * 0.003;
             }
         }
     });
@@ -78,7 +85,6 @@ function drawNeural() {
             const dx = nodes[i].x - nodes[j].x;
             const dy = nodes[i].y - nodes[j].y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-
             if (dist < MAX_DISTANCE) {
                 const alpha = (1 - dist / MAX_DISTANCE) * 0.15;
                 const gradient = ctx.createLinearGradient(
@@ -87,7 +93,6 @@ function drawNeural() {
                 );
                 gradient.addColorStop(0, `rgba(0, 255, 255, ${alpha})`);
                 gradient.addColorStop(1, `rgba(0, 255, 136, ${alpha})`);
-
                 ctx.beginPath();
                 ctx.strokeStyle = gradient;
                 ctx.lineWidth = 0.8;
@@ -102,8 +107,6 @@ function drawNeural() {
     nodes.forEach(n => {
         const pulse = Math.sin(n.pulse) * 0.5 + 0.5;
         const r = n.radius + pulse * 1.5;
-
-        // Glow
         const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
         glow.addColorStop(0, `rgba(0, 255, 255, ${0.1 * pulse})`);
         glow.addColorStop(1, 'rgba(0, 255, 255, 0)');
@@ -111,20 +114,24 @@ function drawNeural() {
         ctx.fillStyle = glow;
         ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
         ctx.fill();
-
-        // Core
         ctx.beginPath();
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(0, 255, 255, ${0.3 + pulse * 0.2})`;
         ctx.fill();
     });
 
-
-
     requestAnimationFrame(drawNeural);
 }
 
+// Initial setup
+initNodes();
+resize(); // sets canvas size and nodes
 drawNeural();
+
+
+
+
+
 
 
 
