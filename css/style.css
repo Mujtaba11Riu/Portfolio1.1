@@ -219,6 +219,9 @@ body {
     }
 }
 
+
+
+
 /* For Mobile */
 @media (max-width: 768px) {
     .hero {
@@ -407,6 +410,17 @@ body {
         justify-content: flex-start;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* Mobile Layout (Max-width: 768px) */
 @media (max-width: 768px) {
