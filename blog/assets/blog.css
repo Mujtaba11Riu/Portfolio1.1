@@ -9,6 +9,12 @@ body {
     color: #fff;
     line-height: 1.6;
 }
+
+
+body, h1, h2, h3, p, a, button, .tag, .meta, pre, code {
+    font-family: 'Inter', sans-serif;
+}
+
 .container {
     max-width: 1100px;
     margin: 0 auto;

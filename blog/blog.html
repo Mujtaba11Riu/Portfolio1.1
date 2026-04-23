@@ -3,69 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth Bypass | Cyber Security Blog</title>
+    <title>Authentication Bypass | Syed Mujtaba Zaidi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Shared blog CSS -->
+    <link rel="stylesheet" href="../blog/assets/blog.css">
+    <!-- Post-specific customizations (keeping the unique post style) -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            color: #fff;
-            line-height: 1.6;
-            padding: 2rem;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 2rem;
-            border: 1px solid rgba(0,255,255,0.2);
-        }
-        h1 {
-            font-size: 2rem;
-            background: linear-gradient(45deg, #00ffff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-        .meta {
-            color: #00ffff;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0,255,255,0.2);
-            padding-bottom: 0.5rem;
-        }
-        h2 {
+        /* These styles only for blog post content – not overriding layout */
+        .post-body h2 {
             color: #00ff88;
-            margin: 1.5rem 0 0.5rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
         }
-        p {
+        .post-body p {
             margin-bottom: 1rem;
-            color: #ddd;
-        }
-        code {
-            background: #0a0e27;
-            padding: 0.2rem 0.4rem;
-            border-radius: 6px;
-            font-family: monospace;
-            color: #00ffff;
         }
         pre {
-            background: #0a0e27;
+            background: #0f1222;
             padding: 1rem;
             border-radius: 12px;
             overflow-x: auto;
             margin: 1rem 0;
             border-left: 3px solid #00ffff;
         }
-        .back-btn {
+        code {
+            font-family: monospace;
+            color: #00ff88;
+            background: rgba(0,255,255,0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+        }
+        .tags {
+            margin: 1rem 0;
+        }
+        .tag {
+            background: rgba(0,255,255,0.2);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+            color: #00ffff;
+        }
+        .back-blog {
             display: inline-block;
             margin-top: 2rem;
             background: rgba(0,255,255,0.1);
@@ -76,67 +57,68 @@
             text-decoration: none;
             transition: 0.3s;
         }
-        .back-btn:hover {
+        .back-blog:hover {
             background: #00ffff;
             color: #0a0e27;
-        }
-        .tag {
-            background: rgba(0,255,255,0.2);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-            margin-right: 0.5rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-
-         <div style="margin-bottom: 20px;">
-            <a href="../index.html" class="top-btn" style="background: rgba(0,255,255,0.1); border: 1px solid #00ffff; padding: 0.5rem 1.2rem; border-radius: 40px; color: #00ffff; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                <i class="fas fa-arrow-left"></i> Back to Portfolio
-            </a>
+        <div class="blog-header">
+            <h1><i class="fas fa-shield-alt"></i> Authentication Bypass</h1>
+            <p>How Hackers Bypass Login Screens</p>
+            <a href="../index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
         </div>
-        
-        <div class="tag">🛡️ Web Security</div>
-        <div class="tag">🔓 Authentication</div>
-        <h1>Authentication Bypass – How Hackers Bypass Login Screens</h1>
-        <div class="meta">📅 April 16, 2026 | ✍️ Syed Mujtaba Zaidi | ⏱️ 5 min read</div>
-        
-        <p>Authentication bypass vulnerabilities are among the most critical flaws in web applications. They allow an attacker to gain unauthorized access without valid credentials. In this post, we’ll explore common techniques and how to prevent them.</p>
-        
-        <h2>🔍 What is Authentication Bypass?</h2>
-        <p>Authentication bypass occurs when an attacker circumvents the login mechanism to access restricted areas. This can happen due to logic flaws, improper session handling, or weak password policies.</p>
-        
-        <h2>⚠️ Common Bypass Techniques</h2>
-        <p><strong>1. SQL Injection on Login Forms</strong><br>
-        Entering <code>' OR '1'='1' -- </code> in the username field can sometimes bypass authentication if input is not sanitized.</p>
-        <p><strong>2. Parameter Manipulation</strong><br>
-        Changing URL parameters like <code>/admin?bypass=true</code> or modifying cookies.</p>
-        <p><strong>3. Session Prediction</strong><br>
-        If session tokens are predictable (e.g., sequential numbers), an attacker can guess valid sessions.</p>
-        <p><strong>4. Forced Browsing</strong><br>
-        Directly accessing <code>/admin/dashboard.php</code> without login.</p>
-        
-        <h2>🛡️ Real‑World Example (Dummy)</h2>
-        <pre><code>POST /login HTTP/1.1
+
+        <div class="tags">
+            <span class="tag">🛡️ Web Security</span>
+            <span class="tag">🔓 Authentication</span>
+            <span class="tag">🐞 SQLi</span>
+        </div>
+
+        <div class="post-body">
+            <p>Authentication bypass vulnerabilities are among the most critical flaws in web applications. They allow an attacker to gain unauthorized access without valid credentials. In this post, we'll explore common techniques and how to prevent them.</p>
+
+            <h2>🔍 What is Authentication Bypass?</h2>
+            <p>Authentication bypass occurs when an attacker circumvents the login mechanism to access restricted areas. This can happen due to logic flaws, improper session handling, or weak password policies.</p>
+
+            <h2>⚠️ Common Bypass Techniques</h2>
+            <p><strong>1. SQL Injection on Login Forms</strong><br>
+            Entering <code>' OR '1'='1' --</code> in the username field can sometimes bypass authentication if input is not sanitized.</p>
+            
+            <p><strong>2. Parameter Manipulation</strong><br>
+            Changing URL parameters like <code>/admin?bypass=true</code> or modifying cookies.</p>
+            
+            <p><strong>3. Session Prediction</strong><br>
+            If session tokens are predictable (e.g., sequential numbers), an attacker can guess valid sessions.</p>
+            
+            <p><strong>4. Forced Browsing</strong><br>
+            Directly accessing <code>/admin/dashboard.php</code> without login.</p>
+
+            <h2>🛡️ Real‑World Example (Dummy)</h2>
+            <pre><code>POST /login HTTP/1.1
 Host: vulnerable-site.com
 Content-Type: application/x-www-form-urlencoded
 
 username=admin' OR '1'='1'--&password=anything</code></pre>
-        <p>If the backend concatenates strings without parameterized queries, the query becomes always true, granting access.</p>
-        
-        <h2>✅ How to Prevent</h2>
-        <p>✔ Use parameterized queries / ORM.<br>
-        ✔ Implement multi-factor authentication.<br>
-        ✔ Use strong, random session tokens.<br>
-        ✔ Always validate access control on the server side.<br>
-        ✔ Regular penetration testing.</p>
-        
-        <p>Authentication is the first line of defense – don't let it be your weakest link. Keep learning, keep hacking ethically! 🚀</p>
-        
-        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <p>If the backend concatenates strings without parameterized queries, the query becomes always true, granting access.</p>
+
+            <h2>✅ How to Prevent</h2>
+            <p>✔ Use parameterized queries / ORM.<br>
+            ✔ Implement multi-factor authentication.<br>
+            ✔ Use strong, random session tokens.<br>
+            ✔ Always validate access control on the server side.<br>
+            ✔ Regular penetration testing.</p>
+
+            <p>Authentication is the first line of defense – don't let it be your weakest link. Keep learning, keep hacking ethically! 🚀</p>
+
+            <a href="../index.html" class="back-blog"><i class="fas fa-arrow-left"></i> Back to Blog Home</a>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-laptop-code"></i> Syed Mujtaba Zaidi – Ethical Hacking & Cybersecurity
+        </div>
     </div>
 </body>
 </html>
