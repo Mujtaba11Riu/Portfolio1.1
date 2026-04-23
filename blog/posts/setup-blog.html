@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Up Dev Environment | Syed Mujtaba</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f5f7fc;
+            color: #1a1e2b;
+            line-height: 1.6;
+        }
+
+        /* Blog Container */
+        .blog-container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1.5rem;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: #1a3b5d;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .blog-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            color: #0a2b3e;
+        }
+
+        .blog-meta {
+            font-size: 0.9rem;
+            color: #5b6e8c;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Content */
+        .blog-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1e3a5f;
+        }
+
+        .blog-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: #2c5282;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+            color: #2d3748;
+        }
+
+        .blog-content ul, .blog-content ol {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .blog-content li {
+            margin: 0.5rem 0;
+        }
+
+        /* Code blocks */
+        pre {
+            background: #1e2937;
+            padding: 1.2rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        code {
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .inline-code {
+            background: #e9eef3;
+            color: #c7254e;
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Info / Note boxes */
+        .note-box {
+            background: #eef2ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box {
+            background: #fff3e3;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        /* Images (placeholder if you add screenshots) */
+        .blog-image {
+            margin: 1.8rem 0;
+            text-align: center;
+        }
+
+        .blog-image img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .caption {
+            font-size: 0.85rem;
+            color: #5b6e8c;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 0.6rem 1rem;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+
+        /* Footer / Back link */
+        .blog-footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1e3a5f;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #0f2c44;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .blog-title {
+                font-size: 1.8rem;
+            }
+            .blog-container {
+                padding: 1rem;
+            }
+            pre {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <div class="blog-header">
+            <div class="blog-category">📘 Tutorial</div>
+            <h1 class="blog-title">Setting Up Your Development Environment:<br>Visual Studio & SQL Server for Beginners</h1>
+            <div class="blog-meta">
+                <span>🕒 April 23, 2026</span>
+                <span>✍️ Syed Mujtaba Zaidi</span>
+                <span>⏱ 8 min read</span>
+            </div>
+        </div>
+
+        <div class="blog-content">
+            <p>As a cybersecurity student and developer, building applications that talk to a database is a must-have skill. Whether you're creating a registration form or a full incident case management system like <strong>MalTrack</strong>, the first real step is setting up your tools correctly. In this guide, I'll show you exactly how to install and configure Visual Studio and SQL Server — the same process I used for my hands-on projects.</p>
+
+            <h2>🔧 Part 1: Installing SQL Server & SSMS</h2>
+            <p>SQL Server is our database engine. SSMS (SQL Server Management Studio) gives us a graphical interface to manage it.</p>
+            <ul>
+                <li><strong>Download SQL Server 2025 Developer Edition</strong> (free, full-featured for development).</li>
+                <li>Run the installer → choose <strong>Basic</strong> installation (simplest).</li>
+                <li>Download <strong>SSMS</strong> from Microsoft and install it.</li>
+            </ul>
+            <div class="note-box">
+                💡 <strong>Tip:</strong> The Developer Edition is the same as Enterprise but licensed for non-production use — perfect for students and developers.
+            </div>
+
+            <h2>⚙️ Part 2: Configuring SQL Server for Development</h2>
+            <p>By default, SQL Server uses Windows Authentication only. To allow our C# app to connect with a username/password, we enable <strong>Mixed Mode</strong> and set up the <code class="inline-code">sa</code> account.</p>
+            <ol>
+                <li>Open SSMS and connect using Windows Authentication.</li>
+                <li>Right-click your server → <strong>Properties</strong> → <strong>Security</strong> → select <strong>SQL Server and Windows Authentication mode</strong>.</li>
+                <li>Go to <strong>Security → Logins → sa</strong> → right-click <strong>Properties</strong>.</li>
+                <li>Set a strong password (e.g., <code class="inline-code">MalTrack@123</code>) and in <strong>Status</strong> tab, enable the login.</li>
+                <li><strong>Restart</strong> the SQL Server service (right-click server → Restart).</li>
+            </ol>
+            <div class="warning-box">
+                ⚠️ Never forget the <code class="inline-code">sa</code> password — store it securely. In production, you'd create a dedicated user with limited privileges.
+            </div>
+
+            <h2>🗄️ Part 3: Creating Your Database & Table</h2>
+            <p>Now, let's create our working database and a <code class="inline-code">Users</code> table.</p>
+            <pre><code>-- Create the database
+CREATE DATABASE SM;
+GO
+USE SM;
+
+-- Create Users table
+CREATE TABLE Users (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100),
+    Email NVARCHAR(100),
+    Password NVARCHAR(100)
+);</code></pre>
+            <p>Run this in SSMS's query editor, and you'll have a table ready to store registrations.</p>
+
+            <h2>💻 Part 4: Building the Registration Form in C#</h2>
+            <p>We'll use a Windows Forms App (.NET Framework) for simplicity and full compatibility.</p>
+            <ol>
+                <li>Open Visual Studio → <strong>Create a new project</strong> → <strong>Windows Forms App (.NET Framework)</strong>.</li>
+                <li>Name your project (e.g., <code class="inline-code">RegistrationDemo</code>).</li>
+                <li>From the Toolbox, drag two Labels and TextBoxes for Name and Email, and one Label and TextBox for Password. Set the password TextBox's <code class="inline-code">PasswordChar</code> to <code class="inline-code">*</code>.</li>
+                <li>Add a Button, change its <strong>Text</strong> to "Register" and <strong>Name</strong> to <code class="inline-code">btnRegister</code>.</li>
+            </ol>
+            <p>Double-click the button to generate the click event, then paste this code:</p>
+            <pre><code>using System;
+using System.Data.SqlClient;
+using System.Windows.Forms;
+
+namespace RegistrationDemo
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            string name = txtName.Text.Trim();
+            string email = txtEmail.Text.Trim();
+            string password = txtPassword.Text;
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please fill all fields.");
+                return;
+            }
+
+            // ⚠️ Change Server or Password according to your setup
+            string connString = "Data Source=localhost;Initial Catalog=SM;User ID=sa;Password=MalTrack@123;TrustServerCertificate=true;";
+            string query = "INSERT INTO Users (Name, Email, Password) VALUES (@name, @email, @pass)";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@pass", password);
+
+                try
+                {
+                    conn.Open();
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                        MessageBox.Show("Registration successful!");
+                    else
+                        MessageBox.Show("Registration failed.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+        }
+    }
+}</code></pre>
+            <p>Don't forget to add the <code class="inline-code">using System.Data.SqlClient;</code> at the top of your file.</p>
+
+            <h2>🚀 Part 5: Run & Test</h2>
+            <p>Press <strong>F5</strong> to run your app. Enter some test data (Name, Email, Password) and click Register.</p>
+            <p>If everything is configured correctly, you'll see "Registration successful!" Now verify in SSMS:</p>
+            <pre><code>SELECT * FROM SM.dbo.Users;</code></pre>
+            <p>You should see your inserted row. That means your environment is <strong>100% working</strong>.</p>
+
+            <div class="note-box">
+                ✅ <strong>Why this matters:</strong> This simple registration form proves that your C# app can talk to SQL Server. You can now build login systems, dashboards, case management, and report generators on top of this foundation.
+            </div>
+
+            <h2>🔐 Security Notes for Real Projects</h2>
+            <ul>
+                <li><strong>Never store plain-text passwords.</strong> Use hashing (bcrypt, SHA256 with salt) before saving to the database.</li>
+                <li><strong>Always use parameterized queries</strong> (like we did) to prevent SQL injection. Avoid concatenating strings.</li>
+                <li><strong>Keep connection strings secure.</strong> For production, store them in <code class="inline-code">App.config</code> or environment variables.</li>
+            </ul>
+
+            <h2>📌 What's Next?</h2>
+            <p>With your environment ready, you can now build the complete <strong>MalTrack</strong> project — a Malware Incident Response & Case Management System. Future posts will cover login authentication, dashboard design, and dynamic reporting.</p>
+            <p>If you faced any issues, feel free to reach out via my <a href="/contact" style="color:#1e3a5f;">contact</a> page or drop a comment. Happy coding!</p>
+        </div>
+
+        <div class="blog-footer">
+            <a href="/blog/blog_main_page.html" class="back-link">← Back to all blogs</a>
+        </div>
+    </div>
+</body>
+</html>
