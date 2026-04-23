@@ -3,15 +3,26 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-    color: #fff;
+    color: #eacdcd;
     line-height: 1.6;
 }
 
 
-body, h1, h2, h3, p, a, button, .tag, .meta, pre, code {
+body,
+h1,
+h2,
+h3,
+p,
+a,
+button,
+.tag,
+.meta,
+pre,
+code {
     font-family: 'Inter', sans-serif;
 }
 
@@ -20,22 +31,26 @@ body, h1, h2, h3, p, a, button, .tag, .meta, pre, code {
     margin: 0 auto;
     padding: 2rem 1.5rem;
 }
+
 /* Header / Navbar */
 .blog-header {
     margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(0,255,255,0.2);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
     padding-bottom: 1rem;
 }
+
 .blog-header h1 {
     font-size: 2rem;
     background: linear-gradient(45deg, #00ffff, #00ff88);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .blog-header p {
     color: #aaa;
     margin-top: 0.5rem;
 }
+
 .back-home {
     display: inline-block;
     margin-top: 0.5rem;
@@ -43,23 +58,27 @@ body, h1, h2, h3, p, a, button, .tag, .meta, pre, code {
     text-decoration: none;
     font-size: 0.9rem;
 }
+
 .back-home i {
     margin-right: 5px;
 }
+
 /* Pinned Blog Card */
 .pinned-card {
     background: rgba(0, 255, 255, 0.05);
-    border: 1px solid rgba(0,255,255,0.3);
+    border: 1px solid rgba(0, 255, 255, 0.3);
     border-radius: 20px;
     padding: 1.5rem;
     margin-bottom: 2.5rem;
     transition: 0.3s;
 }
+
 .pinned-card:hover {
     border-color: #00ffff;
-    box-shadow: 0 10px 25px rgba(0,255,255,0.2);
+    box-shadow: 0 10px 25px rgba(0, 255, 255, 0.2);
     transform: translateY(-3px);
 }
+
 .pinned-badge {
     display: inline-block;
     background: #00ffff20;
@@ -69,39 +88,46 @@ body, h1, h2, h3, p, a, button, .tag, .meta, pre, code {
     font-size: 0.7rem;
     margin-bottom: 0.8rem;
 }
+
 .pinned-card h3 {
     font-size: 1.4rem;
     color: #00ffff;
     margin-bottom: 0.5rem;
 }
+
 .pinned-card p {
     color: #ccc;
     margin-bottom: 0.8rem;
 }
+
 .read-more {
     color: #00ff88;
     text-decoration: none;
     font-weight: bold;
 }
+
 /* Sticky Tabs */
 .tabs-container {
     position: sticky;
     top: 0;
-    background: rgba(10,14,27,0.95);
+    background: rgba(10, 14, 27, 0.95);
     backdrop-filter: blur(12px);
     padding: 0.8rem 0;
     margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(0,255,255,0.2);
+    border-radius: 3rem;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
     z-index: 100;
 }
+
 .tabs {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
 }
+
 .tab-btn {
-    background: rgba(0,255,255,0.1);
+    background: rgba(0, 255, 255, 0.1);
     border: none;
     padding: 0.5rem 1.2rem;
     border-radius: 40px;
@@ -111,67 +137,236 @@ body, h1, h2, h3, p, a, button, .tag, .meta, pre, code {
     cursor: pointer;
     transition: 0.3s;
 }
+
 .tab-btn.active {
     background: #00ffff;
     color: #0a0e27;
     font-weight: bold;
 }
+
 .tab-btn:hover:not(.active) {
-    background: rgba(0,255,255,0.2);
+    background: rgba(0, 255, 255, 0.2);
     color: #fff;
 }
+
 /* Blog Posts Grid */
 .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
+
 .post-card {
     background: rgba(0, 255, 255, 0.05);
-    border: 1px solid rgba(0,255,255,0.2);
+    border: 1px solid rgba(0, 255, 255, 0.2);
     border-radius: 16px;
     padding: 1.2rem;
     transition: 0.3s;
 }
+
 .post-card:hover {
     transform: translateY(-5px);
     border-color: #00ffff;
-    box-shadow: 0 8px 20px rgba(0,255,255,0.15);
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.15);
 }
+
 .post-category {
     display: inline-block;
-    background: rgba(0,255,255,0.2);
+    background: rgba(0, 255, 255, 0.2);
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
     font-size: 0.7rem;
     color: #00ffff;
     margin-bottom: 0.8rem;
 }
+
 .post-card h4 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: #fff;
 }
+
 .post-card p {
     color: #bbb;
     font-size: 0.85rem;
     margin-bottom: 1rem;
 }
+
 .post-link {
     color: #00ff88;
     text-decoration: none;
     font-size: 0.85rem;
 }
+
 .footer {
     text-align: center;
     margin-top: 3rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(0,255,255,0.2);
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
     font-size: 0.8rem;
     color: #888;
 }
+
 @media (max-width: 650px) {
-    .container { padding: 1.5rem; }
-    .tabs { gap: 0.3rem; }
-    .tab-btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
+    .container {
+        padding: 1.5rem;
+    }
+
+    .tabs {
+        gap: 0.3rem;
+    }
+
+    .tab-btn {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.8rem;
+    }
+}
+
+
+
+
+
+
+
+
+/* Additional styles only for post layout – extends blog.css */
+.post-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.article-header {
+    margin-bottom: 2rem;
+    border-left: 3px solid #00ffff;
+    padding-left: 1.5rem;
+}
+
+.tag-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background: rgba(0, 255, 255, 0.15);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    color: #00ffff;
+}
+
+.article-meta {
+    color: #aaa;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.blog-content h2 {
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #00ffff;
+    border-left: 3px solid #00ff88;
+    padding-left: 1rem;
+}
+
+.blog-content h3 {
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    color: #00ff88;
+}
+
+.blog-content p {
+    margin-bottom: 1rem;
+}
+
+pre {
+    background: #0d1117;
+    padding: 1rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border-left: 3px solid #00ffff;
+}
+
+code {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #00ff88;
+}
+
+.inline-code {
+    background: rgba(0, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    color: #00ffff;
+}
+
+.summary-box {
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background: rgba(0, 255, 136, 0.1);
+    border-color: #00ff88;
+}
+
+.alert-danger {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: #ff4444;
+}
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.learning-card {
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.back-to-blog {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: #00ffff;
+    text-decoration: none;
+}
+
+.back-to-blog i {
+    margin-right: 5px;
+}
+
+@media (max-width: 650px) {
+    .article-header {
+        padding-left: 1rem;
+    }
+
+    .blog-content h2 {
+        font-size: 1.3rem;
+    }
 }

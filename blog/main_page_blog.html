@@ -1,101 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Syed Mujtaba Zaidi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet">
     <!-- External CSS (shared) -->
-    <link rel="stylesheet" href="assets/blog.css">
+    <link rel="stylesheet" href="../css/blog.css">
 </head>
+
 <body>
 
-<div class="container">
-    <div class="blog-header">
-        <h1><i class="fas fa-blog"></i> Welcome to My Blog</h1>
-        <p>Cybersecurity insights, labs, and CTF writeups</p>
-        <a href="../index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
-    </div>
+    <div class="container">
+        <div class="blog-header">
+            <h1><i class="fas fa-blog"></i> Welcome to My Blog</h1>
+            <p>Cybersecurity insights, labs, and CTF writeups</p>
+            <a href="../index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
 
-    <!-- PINNED BLOG -->
-    <div class="pinned-card">
-        <div class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</div>
-        <h3>Authentication Bypass – How Hackers Bypass Login Screens</h3>
-        <p>Learn about common authentication bypass techniques like SQL injection, parameter manipulation, and session prediction. Includes real-world example and prevention tips.</p>
-        <a href="posts/auth-bypass.html" class="read-more">Read Full Blog →</a>
-    </div>
+        <!-- PINNED BLOG -->
+        <div class="pinned-card">
+            <div class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</div>
+            <h3>Authentication Bypass – How Hackers Bypass Login Screens</h3>
+            <p>Learn about common authentication bypass techniques like SQL injection, parameter manipulation, and
+                session prediction. Includes real-world example and prevention tips.</p>
+            <a href="posts/auth-bypass.html" class="read-more">Read Full Blog →</a>
+        </div>
 
-    <!-- STICKY TABS -->
-    <div class="tabs-container">
-        <div class="tabs">
-            <button class="tab-btn active" data-filter="all">All</button>
-            <button class="tab-btn" data-filter="project">Projects</button>
-            <button class="tab-btn" data-filter="lab">Labs</button>
-            <button class="tab-btn" data-filter="ctf">CTF Writeups</button>
+        <!-- STICKY TABS -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="tutorial">Tutorials</button>
+                <button class="tab-btn" data-filter="project">Projects</button>
+                <button class="tab-btn" data-filter="lab">Labs</button>
+                <button class="tab-btn" data-filter="ctf">CTF Writeups</button>
+
+            </div>
+        </div>
+
+        <!-- DYNAMIC POSTS GRID -->
+        <div id="postsContainer" class="posts-grid"></div>
+
+        <div class="footer">
+            <i class="fas fa-laptop-code"></i> Syed Mujtaba Zaidi – Ethical Hacking & Cybersecurity
         </div>
     </div>
 
-    <!-- DYNAMIC POSTS GRID -->
-    <div id="postsContainer" class="posts-grid"></div>
+    <script>
+        // ----- BLOG POSTS DATABASE -----
+        const posts = [
 
-    <div class="footer">
-        <i class="fas fa-laptop-code"></i> Syed Mujtaba Zaidi – Ethical Hacking & Cybersecurity
-    </div>
-</div>
+            {
+                title: "Setting Up Visual Studio & SQL Server for Beginners",
+                category: "tutorial",
+                excerpt: "Complete step-by-step guide to install Visual Studio and SQL Server, configure authentication",
+                url: "tutorials/setup-dev-environment.html"
+            },
 
-<script>
-    // ----- BLOG POSTS DATABASE -----
-    const posts = [
-        {
-            title: "Authentication Bypass (SQLi)",
-            category: "project",
-            excerpt: "How attackers bypass login using SQL injection and how to prevent it.",
-            url: "posts/auth-bypass.html"
-        },
-        {
-            title: "XSS Lab – Steal Session Cookies",
-            category: "lab",
-            excerpt: "Interactive lab demonstrating reflected and stored XSS attacks.",
-            url: "#"
-        },
-        {
-            title: "CTF 2025 – Web Challenge Writeup",
-            category: "ctf",
-            excerpt: "Step-by-step solution for a web CTF challenge (JWT bypass).",
-            url: "#"
-        },
-        {
-            title: "PortSwigger Labs: SQLi Union Attack",
-            category: "lab",
-            excerpt: "Walkthrough of SQL injection union attack on a vulnerable web app.",
-            url: "#"
-        },
-        {
-            title: "Malware Analysis 101 (Dummy)",
-            category: "project",
-            excerpt: "Basic static and dynamic analysis of a Windows trojan.",
-            url: "#"
-        },
-        {
-            title: "HackTheBox – Machine Writeup",
-            category: "ctf",
-            excerpt: "Rooting a Linux machine using privilege escalation techniques.",
-            url: "#"
-        }
-    ];
 
-    function renderPosts(filter) {
-        const container = document.getElementById('postsContainer');
-        let filtered = posts;
-        if (filter !== 'all') {
-            filtered = posts.filter(post => post.category === filter);
-        }
-        if (filtered.length === 0) {
-            container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No posts found in this category yet. Coming soon!</p>';
-            return;
-        }
-        container.innerHTML = filtered.map(post => `
+
+
+            {
+                title: "Authentication Bypass (SQLi)",
+                category: "project",
+                excerpt: "How attackers bypass login using SQL injection and how to prevent it.",
+                url: "posts/auth-bypass.html"
+            },
+            {
+                title: "XSS Lab – Steal Session Cookies",
+                category: "lab",
+                excerpt: "Interactive lab demonstrating reflected and stored XSS attacks.",
+                url: "#"
+            },
+            {
+                title: "CTF 2025 – Web Challenge Writeup",
+                category: "ctf",
+                excerpt: "Step-by-step solution for a web CTF challenge (JWT bypass).",
+                url: "#"
+            },
+
+
+            {
+                title: "PortSwigger Labs: SQLi Union Attack",
+                category: "lab",
+                excerpt: "Walkthrough of SQL injection union attack on a vulnerable web app.",
+                url: "#"
+            },
+            {
+                title: "Malware Analysis 101 (Dummy)",
+                category: "project",
+                excerpt: "Basic static and dynamic analysis of a Windows trojan.",
+                url: "#"
+            },
+            {
+                title: "HackTheBox – Machine Writeup",
+                category: "ctf",
+                excerpt: "Rooting a Linux machine using privilege escalation techniques.",
+                url: "#"
+            }
+        ];
+
+        function renderPosts(filter) {
+            const container = document.getElementById('postsContainer');
+            let filtered = posts;
+            if (filter !== 'all') {
+                filtered = posts.filter(post => post.category === filter);
+            }
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No posts found in this category yet. Coming soon!</p>';
+                return;
+            }
+            container.innerHTML = filtered.map(post => `
             <div class="post-card">
                 <div class="post-category">${post.category.toUpperCase()}</div>
                 <h4>${post.title}</h4>
@@ -103,19 +123,20 @@
                 <a href="${post.url}" class="post-link">Read More →</a>
             </div>
         `).join('');
-    }
+        }
 
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            renderPosts(tab.getAttribute('data-filter'));
+        const tabs = document.querySelectorAll('.tab-btn');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderPosts(tab.getAttribute('data-filter'));
+            });
         });
-    });
 
-    renderPosts('all');
-</script>
+        renderPosts('all');
+    </script>
 
 </body>
+
 </html>
