@@ -7,10 +7,9 @@
 body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-    color: #eacdcd;
+    color: #ffffff;
     line-height: 1.6;
 }
-
 
 body,
 h1,
@@ -47,7 +46,7 @@ code {
 }
 
 .blog-header p {
-    color: #aaa;
+    color: #ffffff;
     margin-top: 0.5rem;
 }
 
@@ -96,7 +95,7 @@ code {
 }
 
 .pinned-card p {
-    color: #ccc;
+    color: #ffffff;
     margin-bottom: 0.8rem;
 }
 
@@ -131,7 +130,7 @@ code {
     border: none;
     padding: 0.5rem 1.2rem;
     border-radius: 40px;
-    color: #ccc;
+    color: #ffffff;
     font-family: inherit;
     font-size: 0.9rem;
     cursor: pointer;
@@ -146,7 +145,7 @@ code {
 
 .tab-btn:hover:not(.active) {
     background: rgba(0, 255, 255, 0.2);
-    color: #fff;
+    color: #ffffff;
 }
 
 /* Blog Posts Grid */
@@ -183,11 +182,11 @@ code {
 .post-card h4 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #fff;
+    color: #ffffff;
 }
 
 .post-card p {
-    color: #bbb;
+    color: #ffffff;
     font-size: 0.85rem;
     margin-bottom: 1rem;
 }
@@ -204,7 +203,7 @@ code {
     padding-top: 1rem;
     border-top: 1px solid rgba(0, 255, 255, 0.2);
     font-size: 0.8rem;
-    color: #888;
+    color: #ffffff;
 }
 
 @media (max-width: 650px) {
@@ -221,13 +220,6 @@ code {
         font-size: 0.8rem;
     }
 }
-
-
-
-
-
-
-
 
 /* Additional styles only for post layout – extends blog.css */
 .post-container {
@@ -257,7 +249,7 @@ code {
 }
 
 .article-meta {
-    color: #aaa;
+    color: #ffffff;
     font-size: 0.85rem;
     margin-top: 1rem;
     display: flex;
@@ -281,6 +273,7 @@ code {
 
 .blog-content p {
     margin-bottom: 1rem;
+    color: #ffffff;
 }
 
 pre {
@@ -311,6 +304,7 @@ code {
     border-radius: 16px;
     padding: 1.5rem;
     margin: 1.5rem 0;
+    color: #ffffff;
 }
 
 .summary-grid {
@@ -318,6 +312,7 @@ code {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
+    color: #ffffff;
 }
 
 .alert {
@@ -325,6 +320,7 @@ code {
     border-radius: 12px;
     margin: 1.5rem 0;
     border-left: 4px solid;
+    color: #ffffff;
 }
 
 .alert-success {
@@ -348,6 +344,7 @@ code {
     background: rgba(0, 255, 255, 0.05);
     border-radius: 12px;
     padding: 1rem;
+    color: #ffffff;
 }
 
 .back-to-blog {

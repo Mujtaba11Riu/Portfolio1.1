@@ -1,19 +1,72 @@
-/* tutorial-specific styles that extend the main blog.css (dark theme) */
+/* =============================================
+   TUTORIAL.CSS – Complete Standalone Style
+   Font 16px, headings ke baad 100px space
+   ============================================= */
 
-/* Post meta line */
-.blog-meta-line {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin: 1rem 0 2rem;
-    color: #aaa;
-    font-size: 0.85rem;
-    flex-wrap: wrap;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.blog-meta-line i {
-    margin-right: 5px;
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    color: #ffffff;
+    line-height: 1.65;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header – left align */
+.blog-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    padding-bottom: 1rem;
+    text-align: left;
+}
+
+.blog-header h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(45deg, #00ffff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.blog-header p {
+    color: #ffffff;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Back button (small version for top) */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 0.3rem 0.9rem;
+    border-radius: 40px;
     color: #00ffff;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 0.8rem;
 }
+
+.back-link:hover {
+    background: #00ffff;
+    color: #0a0e27;
+}
+
+/* Tags */
 .post-tags {
     display: flex;
     justify-content: center;
@@ -21,106 +74,183 @@
     margin-bottom: 1rem;
     flex-wrap: wrap;
 }
+
 .tag {
-    background: rgba(0,255,255,0.2);
+    background: rgba(0, 255, 255, 0.15);
     color: #00ffff;
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
-/* Content headings */
+
+/* Meta line */
+.blog-meta-line {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 1rem 0 2rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.blog-meta-line i {
+    margin-right: 6px;
+    color: #00ffff;
+}
+
+/* Blog content */
+.blog-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+/* Headings ke BAAD 100px gap */
 .blog-content h2 {
+    font-size: 1.8rem;
     color: #00ff88;
-    margin-top: 2rem;
+    margin-top: 100px;      /* 100px space pehle se bhi, but ensure baad bhi */
+    margin-bottom: 1rem;
     border-left: 3px solid #00ffff;
     padding-left: 1rem;
 }
+
+/* h2 ke baad extra 100px (agar next element kuch bhi ho) */
+.blog-content h2 + * {
+    margin-top: 50px;
+}
+
 .blog-content h3 {
+    font-size: 1.5rem;
     color: #00ffff;
-    margin-top: 1.5rem;
+    margin-top: 100px;
+    margin-bottom: 0.75rem;
 }
+
+/* h3 ke baad bhi 100px */
+.blog-content h3 + * {
+    margin-top: 100px;
+}
+
+/* Paragraphs and normal content ke beech normal gap */
 .blog-content p {
-    color: #ddd;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    line-height: 1.7;
 }
-.blog-content ul, .blog-content ol {
-    color: #ccc;
+
+.blog-content ul, 
+.blog-content ol {
+    color: #ffffff;
+    margin: 1rem 0 1rem 1.8rem;
 }
+
 .blog-content li {
     margin: 0.5rem 0;
+    font-size: 1rem;
 }
+
 /* Code blocks */
 .blog-content pre {
-    background: #0f1222;
+    background: #0d1117;
     border-left: 3px solid #00ffff;
     border-radius: 12px;
     padding: 1.2rem;
     overflow-x: auto;
+    margin: 1.5rem 0;
 }
+
 code {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
     color: #00ff88;
 }
+
 .inline-code {
-    background: rgba(0,255,255,0.1);
+    background: rgba(0, 255, 255, 0.1);
     color: #00ffff;
-    padding: 0.2rem 0.4rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 6px;
     font-family: monospace;
+    font-size: 0.9rem;
 }
-/* Note and warning boxes */
+
+/* Note & Warning boxes */
 .note-box {
-    background: rgba(0,255,255,0.1);
+    background: rgba(0, 255, 255, 0.08);
     border-left: 4px solid #00ffff;
     padding: 1rem 1.2rem;
-    border-radius: 10px;
+    border-radius: 12px;
     margin: 1.5rem 0;
-    color: #ddd;
+    color: #ffffff;
+    font-size: 1rem;
 }
+
 .warning-box {
-    background: rgba(255,100,0,0.1);
+    background: rgba(255, 100, 0, 0.08);
     border-left: 4px solid #ff8800;
     padding: 1rem 1.2rem;
-    border-radius: 10px;
+    border-radius: 12px;
     margin: 1.5rem 0;
-    color: #ddd;
+    color: #ffffff;
+    font-size: 1rem;
 }
-/* Tables */
-.blog-content table {
-    background: rgba(0,0,0,0.3);
-    border-collapse: collapse;
-    width: 100%;
-}
-.blog-content th, .blog-content td {
-    border: 1px solid #2a3a5a;
-    padding: 0.5rem 1rem;
-}
-.blog-content th {
-    background: #1e2a3a;
-    color: #00ffff;
-}
+
 /* Links */
 .inline-link {
     color: #00ff88;
     text-decoration: none;
     border-bottom: 1px dotted #00ff88;
 }
+
 .inline-link:hover {
     color: #00ffff;
+    border-bottom-color: #00ffff;
 }
-/* Back link */
-.back-link {
+
+/* Blog footer / back link (bottom) */
+.blog-footer {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+/* Bottom back-link (slightly larger than top) */
+.blog-footer .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    background: rgba(0,255,255,0.1);
-    padding: 0.4rem 1rem;
-    border-radius: 30px;
+    gap: 0.5rem;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
     color: #00ffff;
     text-decoration: none;
     transition: 0.2s;
+    font-size: 0.95rem;
 }
-.back-link:hover {
+
+.blog-footer .back-link:hover {
     background: #00ffff;
     color: #0a0e27;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .container {
+        padding: 1.5rem;
+    }
+    .blog-header h1 {
+        font-size: 1.8rem;
+    }
+    .blog-content h2 {
+        font-size: 1.5rem;
+        margin-top: 70px;
+    }
+    .blog-content h3 {
+        font-size: 1.3rem;
+        margin-top: 70px;
+    }
+    body {
+        font-size: 15px;
+    }
 }
