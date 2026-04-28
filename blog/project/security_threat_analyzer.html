@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="A Python-based desktop application that uses STRIDE & DREAD threat modeling frameworks with live CVE data from NIST NVD API to perform automated security risk analysis.">
+    <title>Security Threat Analyzer – Automated Risk Assessment Tool | Syed Mujtaba</title>
+    <link rel="stylesheet" href="../../css/blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container post-container">
+        <!-- Back to blog main page -->
+        <a href="../main_page_blog.html" class="back-to-blog">
+            ← Back to all posts
+        </a>
+
+        <!-- Article Header -->
+        <article>
+            <div class="article-header">
+                <div class="tag-row">
+                    <span class="tag">Python</span>
+                    <span class="tag">Threat Modeling</span>
+                    <span class="tag">Cybersecurity Tool</span>
+                    <span class="tag">GUI Application</span>
+                </div>
+                <h1>Security Threat Analyzer: Automating STRIDE & DREAD Risk Assessment with Live CVE Data</h1>
+                <div class="article-meta">
+                    <span>📅 April 28, 2026</span>
+                    <span>⏱ 6 min read</span>
+                    <span>🔒 Project Showcase</span>
+                </div>
+            </div>
+
+            <div class="blog-content">
+                <p>During my 4th semester end project at <strong>Riphah International University</strong>, I developed a security
+                    desktop application that brings industry‑grade threat modeling to your fingertips. The
+                    <strong>Security Threat Analyzer</strong> is an interactive Python tool that automatically
+                    identifies security threats (using <strong>STRIDE</strong>), quantifies their severity
+                    (<strong>DREAD scoring</strong>), and enriches the findings with real‑world <strong>CVE
+                        data</strong> from the NIST NVD API—all packaged in a user‑friendly interface.</p>
+
+                <div class="alert alert-success">
+                    <strong>🚀 Project Goal</strong><br>
+                    To create a centralized, easy‑to‑use threat modeler that helps security analysts and students
+                    quickly visualize potential risks in a system (web apps, servers, networks) without manually heavy
+                    spreadsheets.
+                </div>
+
+                <h2>Project Architecture Overview</h2>
+                <p>The application follows a modular, layered architecture. The GUI (built with Tkinter) serves as the
+                    control center, where users enter system details. This input is then processed by three core
+                    engines, each handling a distinct part of the threat assessment process:</p>
+
+                <div class="summary-box">
+                    <strong>⚙️ Core Modules</strong>
+                    <div class="summary-grid">
+                        <div>🔄 <strong>STRIDE Analyzer</strong>: Maps services to threat types (Spoofing, Tampering,
+                            Repudiation, Info Disclosure, DoS, Elevation of Privilege).</div>
+                        <div>📊 <strong>DREAD Scorer</strong>: Quantifies risk with damage, reproducibility,
+                            exploitability, affected users & discoverability.</div>
+                        <div>🌐 <strong>CVE Lookup</strong>: Fetches real‑world vulnerability intelligence via NIST NVD
+                            API (with offline cache).</div>
+                        <div>📄 <strong>Report Generator</strong>: Exports professional PDF reports with all findings.
+                        </div>
+                    </div>
+                </div>
+
+                <h2>STRIDE Threat Analysis Engine</h2>
+                <p>The STRIDE module lets users select active services (e.g., FTP, SSH, HTTP, RDP) and specify whether
+                    authentication and encryption are in use. Based on this, it cross‑references <strong>pre‑defined
+                        threat rules</strong> and flags relevant threats. For example, if the user indicates no
+                    encryption, the tool automatically adds "Information Disclosure" to the list.</p>
+
+                <pre><code>def analyze(self, services, has_auth, has_encryption):
+    # Step 1: Check each selected service against threat rules
+    for service in services:
+        if service in THREAT_RULES:
+            for threat_type, description in THREAT_RULES[service].items():
+                self._add_threat(threat_type, service, description)
+    
+    # Step 2: Add threats related to missing authentication
+    if not has_auth:
+        for threat_type, description in NO_AUTH_THREATS.items():
+            self._add_threat(threat_type, "No Authentication", description)
+    
+    # Step 3: Add threats related to missing encryption
+    if not has_encryption:
+        for threat_type, description in NO_ENCRYPTION_THREATS.items():
+            self._add_threat(threat_type, "No Encryption", description)</code></pre>
+
+                <p>This logical approach ensures that even if a user is not an expert, the application can still guide
+                    them toward potential security gaps.</p>
+
+                <h2>DREAD Scoring: Quantifying the Risk</h2>
+                <p>Once threats are identified, the DREAD Scorer steps in to quantify their severity. Each threat is
+                    scored (1–10) on five factors, which are then averaged to produce an overall risk level
+                    (<strong>Critical, High, Medium, Low</strong>). The module also calculates an overall risk score for
+                    the entire system.</p>
+
+                <pre><code>DREAD_SCORES = {
+    "Information Disclosure": {
+        "Damage": 9, "Reproducibility": 9,
+        "Exploitability": 8, "Affected Users": 9,
+        "Discoverability": 8
+    },
+    "Elevation of Privilege": {
+        "Damage": 10, "Reproducibility": 6,
+        "Exploitability": 7, "Affected Users": 8,
+        "Discoverability": 5
+    }
+}</code></pre>
+
+                <p>The weighted averages help analysts prioritize which threats to address first—extremely useful when
+                    working under time or budget constraints.</p>
+
+                <h2>Real‑World Context via CVE Lookup</h2>
+                <p>The CVE module connects to the <strong>NIST National Vulnerability Database (NVD)</strong> and
+                    fetches actual vulnerability data based on the services entered by the user (e.g., "FTP", "SSH").
+                    The results include CVE IDs, descriptions, CVSS scores, and severity levels. To respect API rate
+                    limits and improve responsiveness, the module implements a local JSON cache—reducing repetitive
+                    network calls.</p>
+
+                <pre><code>def search(self, keyword, max_results=3):
+    # First, check the local cache
+    if keyword in self.cache:
+        return self.cache[keyword][:max_results]
+
+    # If not cached, query the NVD API
+    params = {"keywordSearch": keyword, "resultsPerPage": max_results}
+    response = requests.get(self.API_URL, params=params, timeout=10)
+    if response.status_code == 200:
+        results = self.parser.parse(response.json())
+        self.cache[keyword] = results      # Store in cache
+        self._save_cache()
+        return results
+    else:
+        return self._get_offline_data(keyword)   # Fallback to sample data when offline</code></pre>
+
+                <div class="alert alert-danger">
+                    <strong>⚠️ Offline Support</strong><br>
+                    Even without an internet connection, the CVE engine falls back to a sample dataset (covering common
+                    services like FTP, SSH, HTTP). This ensures the application remains functional for classroom or
+                    offline scenarios.
+                </div>
+
+                <h2>Interactive GUI with Custom Branding</h2>
+                <p>The front end uses <strong>Tkinter</strong>, providing a clean, dual‑panel interface reminiscent of
+                    professional security tools. The left panel collects user inputs (services, checkboxes), while the
+                    right panel displays results. Features include:</p>
+                <ul>
+                    <li><strong>Custom shield‑lock icon</strong> drawn dynamically using Pillow—adding a professional,
+                        brand‑centric feel.</li>
+                    <li><strong>Threaded analysis</strong> to prevent the UI from freezing during API calls.</li>
+                    <li><strong>Report generation</strong> using ReportLab, allowing users to export findings as
+                        polished PDFs.</li>
+                </ul>
+
+                <pre><code># Example: MainWindow integrates all modules
+self.stride_analyzer = StrideAnalyzer()
+self.dread_scorer = DreadScorer()
+self.cve_lookup = CveLookup()
+self.report_generator = ReportGenerator()
+self.pdf_exporter = PdfExporter()
+
+# When user clicks "Analyze"
+results = self._run_analysis()
+self.results_panel.display_results(results)</code></pre>
+
+                <div class="learning-grid">
+                    <div class="learning-card">
+                        <strong>🎓 Key Takeaways</strong>
+                        <p>✓ Deep understanding of STRIDE & DREAD threat modeling<br>✓ Practical API integration (NIST
+                            NVD)<br>✓ Multithreading in Tkinter for responsive GUIs<br>✓ Caching strategies for external
+                            services</p>
+                    </div>
+                    <div class="learning-card">
+                        <strong>🔧 Tech Stack</strong>
+                        <p>Python 3.x | Tkinter (GUI) | Requests (API) | ReportLab (PDF) | Pillow (Graphics) | JSON
+                            (Caching)</p>
+                    </div>
+                </div>
+
+                <h2>Why This Project Matters</h2>
+                <p>The Security Threat Analyzer lowers the barrier to professional threat modeling. Instead of wrestling
+                    with spreadsheets or memorizing threat taxonomies, users can interactively explore vulnerabilities
+                    and see real CVE examples. This tool is especially valuable for students in cybersecurity programs,
+                    offering a hands‑on bridge between classroom theory and industry practice.</p>
+
+                <p>The full source code is open for exploration and collaboration. Feel free to examine, modify, and
+                    adapt the modules for your own security workflows.</p>
+
+                <h2>Conclusion & Future Plans</h2>
+                <p>What started as a senior project has evolved into a reusable asset for my security toolbox. The
+                    modular design makes it easy to extend—I plan to add more threat rule sets, integrate additional
+                    vulnerability databases (e.g., CWE), and possibly convert it into a web‑based tool.</p>
+
+                <p><em>Have thoughts, suggestions, or want to contribute? Check out the repository, open an issue, or
+                        reach out via GitHub. Let’s make threat modeling accessible to everyone.</em></p>
+            </div>
+        </article>
+
+        <!-- Footer -->
+        <footer class="footer" style="margin-top: 3rem;">
+            <p>Syed Mujtaba Zaidi – Cybersecurity & Systems Research</p>
+            <p><a href="https://github.com/Mujtaba11Riu/Operating-System-Project/tree/main/security_threat_analyzer"
+                    target="_blank" style="color:#00ffff;">View Project on GitHub →</a></p>
+        </footer>
+    </div>
+</body>
+
+</html>
