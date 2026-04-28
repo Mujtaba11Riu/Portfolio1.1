@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Portfolio | Keylogger Detector Tool – Real‑time Threat Detection</title>
+    <!-- external CSS – exact location as specified -->
+    <link rel="stylesheet" href="/css/blog.css">
+    <!-- Font Awesome (optional icons, does not break anything) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- minimal inline for fallback (only to preserve structure if CSS missing) -->
+    <style>
+        /* very minimal fallback – actual styling comes from /css/blog.css */
+        .blog-content ul,
+        .blog-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-badge {
+            display: inline-block;
+            background: #00ffff20;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+        }
+
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #00ffff20;
+            border: 1px solid #00ffff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .github-btn:hover {
+            background: #00ffff;
+            color: #0a0e27;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container post-container">
+        <!-- blog header – consistent with existing blog design -->
+        <div class="blog-header">
+            <h1><i class="fas fa-shield-alt"></i> Mujtaba's Security Lab</h1>
+            <p>Detection Engineering • Python • Endpoint Security</p>
+            <a href="/" class="back-home"><i class="fas fa-arrow-left"></i> back to portfolio</a>
+        </div>
+
+        <article>
+            <div class="article-header">
+                <div class="tag-row">
+                    <span class="tag"><i class="fas fa-code-branch"></i> open source</span>
+                    <span class="tag"><i class="fas fa-shield-virus"></i> real-time monitoring</span>
+                    <span class="tag"><i class="fab fa-windows"></i> windows security</span>
+                    <span class="tag"><i class="fas fa-flask"></i> ethical testing</span>
+                </div>
+                <h2>Keylogger Detector Tool — Process Scanning, Hook Detection & Active Response</h2>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar-alt"></i> April 27, 2026</span>
+                    <span><i class="fas fa-user-astronaut"></i> Syed Mujtaba Zaidi, Ammar Akhtar Butt & Ameer
+                        Hamza</span>
+                    <span><i class="fas fa-graduation-cap"></i> BS Cyber Security (Fall 2024) · Riphah International
+                        University</span>
+                </div>
+            </div>
+
+            <div class="blog-content">
+                <!-- Project introduction -->
+                <p><strong>Keylogger Detector Tool</strong> is a desktop security application designed to detect and
+                    terminate malicious keyloggers on Windows systems in real time. Unlike conventional antivirus
+                    solutions that rely solely on hash databases, this tool combines signature‑based detection, keyword
+                    analysis, and behavioral indicators (keyboard hooks, suspicious DLL injection). It provides a
+                    lightweight, transparent, and actionable interface for students, security analysts, and
+                    privacy‑conscious users. The project is fully open source and includes a <strong>Fake Keylogger
+                        Simulator</strong> for safe ethical testing without risking real keystroke capture.</p>
+
+                <!-- core features grid -->
+                <div class="summary-box">
+                    <strong><i class="fas fa-microchip"></i> Key capabilities</strong>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 0.8rem; margin-top: 1rem;">
+                        <div><i class="fas fa-search"></i> Real‑time process enumeration (psutil)</div>
+                        <div><i class="fas fa-skull-crosswalk"></i> Automatic threat flagging (25+ known names)</div>
+                        <div><i class="fas fa-keyboard"></i> Global keyboard hook & DLL inspection (ctypes)</div>
+                        <div><i class="fas fa-trash-alt"></i> One‑click termination of suspicious processes</div>
+                        <div><i class="fas fa-robot"></i> Built‑in Fake Keylogger Simulator for safe demos</div>
+                        <div><i class="fas fa-file-alt"></i> Persistent threat logging (threat_log.txt)</div>
+                        <div><i class="fas fa-filter"></i> Live search filter & whitelist management</div>
+                        <div><i class="fas fa-sync-alt"></i> Optional auto‑scan every 30 seconds</div>
+                    </div>
+                </div>
+
+                <h2>Detection Methodology — Three Layered Defense</h2>
+                <p>The tool uses a multi‑stage heuristic approach. A running process is considered suspicious if it
+                    matches any of the following layers:</p>
+                <ul>
+                    <li><strong>Layer 1 – Known executable names</strong> : Built‑in signature list of common keylogger
+                        filenames (e.g., <code>keylogger.exe</code>, <code>spyagent.exe</code>, <code>hooker.exe</code>,
+                        <code>record.exe</code>). Fast fingerprinting for commodity malware.</li>
+                    <li><strong>Layer 2 – Keyword scanning</strong> : Process name and full command line are scanned for
+                        red‑flag terms: “hook”, “keylog”, “record”, “capture”, “log”, “inject”. This catches renamed or
+                        obfuscated instances.</li>
+                    li>
+                    <li><strong>Layer 3 – Hook / DLL injection check</strong> : Using Windows API via
+                        <code>ctypes</code>, the tool inspects loaded modules and detects global keyboard hooks
+                        (<code>SetWindowsHookEx</code>). This behavioral layer is critical for zero‑day or fileless
+                        keyloggers that bypass static signatures.</li>
+                </ul>
+                <p>If any layer triggers, the process is instantly displayed in the “DETECTED THREATS” table, and a
+                    timestamped entry is written to <code>threat_log.txt</code>.</p>
+
+                <h2>Architecture & Technologies</h2>
+                <p>The project is written in <strong>Python 3.10+</strong> and follows a modular, event‑driven design to
+                    keep the GUI responsive during background scans.</p>
+                <ul>
+                    <li><strong>GUI</strong> – Tkinter with a custom dark theme (GitHub‑style), real‑time table updates,
+                        start/stop controls, whitelist editor, and live search.</li>
+                    <li><strong>Process enumeration & management</strong> – <code>psutil</code> library: fetch all
+                        running processes (PID, name, exe path, command line) and terminate selected processes.</li>
+                    <li><strong>Low‑level hook detection</strong> – <code>ctypes</code> + <code>user32.dll</code> /
+                        <code>kernel32.dll</code> to inspect global hooks and suspicious DLLs.</li>
+                    <li><strong>Concurrency</strong> – Python <code>threading</code> module: background scan thread
+                        keeps the UI alive and supports the auto‑scan feature.</li>
+                    <li><strong>Persistence & logging</strong> – Plaintext log file (<code>threat_log.txt</code>) with
+                        timestamps, process names, PIDs, and detection reason.</li>
+                    <li><strong>Safe testing environment</strong> – <code>keylogger_simulator.py</code> mimics a
+                        keylogger’s behaviour (window, loop, dummy process name) but never captures real keystrokes.
+                    </li>
+                </ul>
+
+                <h2>Fake Keylogger Simulator – Ethical Testing</h2>
+                <p>To demonstrate detection capabilities without any real risk, the repository includes a <strong>Fake
+                        Keylogger Simulator</strong>. Running this script creates a dummy process that behaves like a
+                    keylogger (name contains “keylog”, it may attempt to show a hidden‑style window). The detector
+                    immediately flags it as a threat, proving the tool’s effectiveness. Educators and students can use
+                    this simulator for live demonstrations, capture‑the‑flag exercises, or security training.</p>
+                <div
+                    style="background: #0d1117; padding: 1rem; border-radius: 12px; border-left: 3px solid #00ffff; margin: 1rem 0;">
+                    <i class="fas fa-terminal"></i> <strong>Quick demo workflow:</strong><br>
+                    Terminal 1: <code>python keylogger_simulator.py</code> → starts dummy keylogger process.<br>
+                    Terminal 2: <code>python keylogger_detector.py</code> → click “START SCAN” → threat appears
+                    instantly.<br>
+                    Select threat → Click “Kill Selected” → process terminated.
+                </div>
+
+                <h2>Installation & Usage Guide</h2>
+                <p><strong>Prerequisites:</strong> Python 3.10 or newer (ensure <code>pip</code> is available).</p>
+                <pre style="background: #0d1117; padding: 1rem; border-radius: 12px; overflow-x: auto;"><code># 1. Install required dependency (psutil)
+pip install psutil
+
+# 2. Clone or download the repository
+git clone https://github.com/Mujtaba11Riu/Project-of-Software-Engineering-Keylogger-Detector-Tool.git
+cd Project-of-Software-Engineering-Keylogger-Detector-Tool
+
+# 3. Run the detector
+python keylogger_detector.py
+
+# (Optional) For safe demonstration, run the simulator in another terminal
+python keylogger_simulator.py</code></pre>
+                <p><strong>Using the interface:</strong><br>
+                    • Click <strong>“START SCAN”</strong> to manually scan all running processes.<br>
+                    • Enable <strong>“Auto-Scan (30s)”</strong> for continuous monitoring.<br>
+                    • Detected threats appear in the red‑highlighted table. Select any record and press <strong>“Kill
+                        Selected”</strong> to terminate the malicious process.<br>
+                    • Use <strong>“Search”</strong> to filter processes by name or PID.<br>
+                    • The <strong>“View File”</strong> button opens <code>threat_log.txt</code> containing full
+                    historical alerts.<br>
+                    • Add trusted executables to the whitelist to prevent false positives (e.g., system processes).</p>
+                <p><strong>Building a standalone .exe (optional):</strong><br>
+                    <code>pip install pyinstaller</code><br>
+                    <code>pyinstaller --onefile --windowed keylogger_detector.py</code>
+                </p>
+
+                <h2>Project Structure</h2>
+                <pre style="background: #0d1117; padding: 1rem; border-radius: 12px;"><code>keylogger-detector-tool/
+├── keylogger_detector.py      # Main application (GUI + detection engine)
+├── keylogger_simulator.py     # Fake keylogger for safe ethical testing
+├── requirements.txt           # Dependencies (psutil)
+├── README.txt                 # Full documentation, usage, FAQ
+└── threat_log.txt             # Auto‑generated log file (first scan)</code></pre>
+
+                <h2>Why This Project Matters</h2>
+                <p>Keyloggers remain one of the most prevalent threats for credential theft, corporate espionage, and
+                    privacy invasion. Most free anti‑keylogger tools lack transparency or rely on outdated signature
+                    databases. This project demonstrates how a combination of static (names, keywords) and dynamic (hook
+                    inspection) techniques can build an effective, low‑overhead detector. It also serves as an
+                    educational resource for students learning about Windows internals, process monitoring, and
+                    defensive programming.</p>
+
+                <h2>Future Roadmap</h2>
+                <ul>
+                    <li>Machine learning anomaly detection based on process behaviour (CPU spikes, keystroke frequency).
+                    </li>
+                    <li>Network traffic analysis to detect remote keyloggers sending data to C2 servers.</li>
+                    <li>Cloud‑based signature updates (automatic pull from a remote repository).</li>
+                    <li>Cross‑platform support (Linux and macOS) using eBPF or similar low‑level hooks.</li>
+                    <li>Export reports in JSON / CSV for security orchestration platforms.</li>
+                </ul>
+
+                <!-- conclusion -->
+                 
+                <div class="alert alert-success"
+                    style="background: rgba(0,255,136,0.05); border-left-color: #00ff88; padding: 1.2rem; border-radius: 16px;">
+                    <i class="fas fa-lightbulb"></i> <strong>Final Remarks</strong><br>
+                    The Keylogger Detector Tool transforms a theoretical software engineering assignment into a
+                    functional, ready‑to‑use security utility. It successfully merges layered architecture
+                    (presentation, business logic, data persistence) with event‑driven responsiveness. The inclusion of
+                    a fake simulator highlights ethical testing practices. This project reflects a deep understanding of
+                    endpoint detection, Windows API, and user‑centric design.
+                </div>
+
+                <!-- GitHub source code link (explicitly at the end) -->
+                <hr>
+                <div style="text-align: center; margin: 2rem 0 1rem 0;">
+                    <a href="https://github.com/Mujtaba11Riu/Project-of-Software-Engineering-Keylogger-Detector-Tool"
+                        target="_blank" class="github-btn" style="font-size: 1.1rem; padding: 0.75rem 1.8rem;">
+                        <i class="fab fa-github"></i> View Source Code on GitHub
+                    </a>
+                    <p style="margin-top: 0.8rem; font-size: 0.85rem; opacity: 0.8;">Full source code, documentation,
+                        and fake simulator – open for contributions and feedback.</p>
+                </div>
+            </div>
+        </article>
+
+        <div class="footer">
+            <p><i class="fas fa-code"></i> developed by Syed Mujtaba Zaidi, Ammar Akhtar Butt & Ameer Hamza</p>
+            <p>Riphah International University – BS Cyber Security (Fall 2024) | Keylogger Detector Tool v1.0</p>
+        </div>
+    </div>
+</body>
+
+</html>
