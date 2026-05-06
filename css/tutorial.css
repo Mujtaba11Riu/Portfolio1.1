@@ -109,7 +109,7 @@ body {
     color: #00ff88;
     margin-top: 100px;      /* 100px space pehle se bhi, but ensure baad bhi */
     margin-bottom: 1rem;
-    border-left: 3px solid #00ffff;
+    /* border-left: 3px solid #00ffff; */
     padding-left: 1rem;
 }
 

